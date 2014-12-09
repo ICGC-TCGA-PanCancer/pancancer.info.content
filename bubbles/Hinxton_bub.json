@@ -1,0 +1,10 @@
+[
+          {"name": "Hinxton", "total": 262, "uploaded": 398, "latitude": 52.082869, "longitude": 0.18269 , "radius": 20, "fillKey": "orange", "match": 176,"tumour": 129, "normal": 91},
+          {"name": "Hinxton", "total": 262, "uploaded": 398, "latitude": 52.082869, "longitude": 0.18269 , "radius": 30.381679389313, "fillKey": "green"}        {"name": "Hinxton", "total": 41, "uploaded": 55, "latitude": 52.082869, "longitude": 0.18269 , "radius": 15, "fillKey": "orange","match": 23, "tumour": 20, "normal": 20, "project": "PRAD-UK"},
+        {"name": "Hinxton", "total": 41, "uploaded": 55, "latitude": 52.082869, "longitude": 0.18269 , "radius": 20.1219512195122, "fillKey": "green", "project": "PRAD-UK"}        {"name": "Hinxton", "total": 41, "uploaded": 90, "latitude": 52.082869, "longitude": 0.18269 , "radius": 15, "fillKey": "orange","match": 45, "tumour": 0, "normal": , "project": "BRCA-UK"},
+        {"name": "Hinxton", "total": 41, "uploaded": 90, "latitude": 52.082869, "longitude": 0.18269 , "radius": 32.9268292682927, "fillKey": "green", "project": "BRCA-UK"},
+        {"name": "Hinxton", "total": 102, "uploaded": 102, "latitude": 52.082869, "longitude": 0.18269 , "radius": 15, "fillKey": "orange","match": 32, "tumour": 70, "normal": 32, "project": "CMDI-UK"},
+        {"name": "Hinxton", "total": 102, "uploaded": 102, "latitude": 52.082869, "longitude": 0.18269 , "radius": 15, "fillKey": "green", "project": "CMDI-UK"},
+        {"name": "Hinxton", "total": 78, "uploaded": 152, "latitude": 52.082869, "longitude": 0.18269 , "radius": 15, "fillKey": "orange","match": 76, "tumour": 39, "normal": 39, "project": "BOCA-UK"},
+        {"name": "Hinxton", "total": 78, "uploaded": 152, "latitude": 52.082869, "longitude": 0.18269 , "radius": 29.2307692307692, "fillKey": "green", "project": "BOCA-UK"},
+]

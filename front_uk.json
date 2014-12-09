@@ -1,0 +1,5 @@
+[
+          {"name": "Cambridge", "total": 500, "uploaded": 504, "latitude": 52.202544, "longitude": 0.131237 , "radius": 20, "fillKey": "orange","match": 165,"tumour": 58, "normal": 60},
+          {"name": "Cambridge", "total": 500, "uploaded": 504, "latitude": 52.202544, "longitude": 0.131237 , "radius": 20.16, "fillKey": "green"},
+          {"name": "Hinxton", "total": 262, "uploaded": 398, "latitude": 52.082869, "longitude": 0.18269 , "radius": 20, "fillKey": "orange", "match": 176,"tumour": 129, "normal": 91},
+          {"name": "Hinxton", "total": 262, "uploaded": 398, "latitude": 52.082869, "longitude": 0.18269 , "radius": 30.381679389313, "fillKey": "green"}]

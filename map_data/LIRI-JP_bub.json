@@ -1,0 +1,3 @@
+[
+        {"name": "Tokyo", "total": 530, "uploaded": 530, "latitude": 35.684219, "longitude": 139.755020, "radius": 30, "fillKey": "orange","match": 260, "tumour": 270, "normal": 260, "project": "LIRI-JP"},
+        {"name": "Tokyo", "total": 530, "uploaded": 530, "latitude": 35.684219, "longitude": 139.755020, "radius": 30, "fillKey": "green", "project": "LIRI-JP"}]
