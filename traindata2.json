@@ -1,0 +1,24 @@
+[
+       {"name": "Chicago(ICGC)", "total": 0, "aligned": 0, "latitude": 41.891519, "longitude": -87.629159, "radius": 15, "fillKey": "gt60"},
+       {"name": "Chicago(ICGC)", "total": 0, "aligned": 0, "latitude": 41.891519, "longitude": -87.629159, "radius": 3, "fillKey": "gt70"},
+
+       {"name": "Chicago(TCGA)", "total": 0, "aligned": 0, "latitude": 41.891519, "longitude": -87.629159, "radius": 15, "fillKey": "gt60"},
+       {"name": "Chicago(TCGA)", "total": 0, "aligned": 0, "latitude": 41.891519, "longitude": -87.629159, "radius": 3, "fillKey": "gt70"},
+
+       {"name": "Barcelona", "total": 192, "aligned": 0, "latitude": 41.378691, "longitude": 2.175547, "radius": 20, "fillKey": "gt60"},
+       {"name": "Barcelona", "total": 192, "aligned": 0, "latitude": 41.378691, "longitude": 2.175547, "radius": 3, "fillKey": "gt70"},
+ 
+       {"name": "Tokyo", "total": 591, "aligned": 0, "latitude": 35.684219, "longitude": 139.755020, "radius": 30, "fillKey": "gt60"},
+       {"name": "Tokyo", "total": 591, "aligned": 0, "latitude": 35.684219, "longitude": 139.755020, "radius": 3, "fillKey": "gt70"},
+
+       {"name": "Seoul", "total": 20, "aligned": 2, "latitude": 37.553397, "longitude": 126.980624, "radius": 15, "fillKey": "gt60"},
+       {"name": "Seoul", "total": 20, "aligned": 2, "latitude": 37.553397, "longitude": 126.980624, "radius": 3, "fillKey": "gt70"},
+
+       {"name": "Heidelberg", "total": 718, "aligned": 34, "latitude": 49.403159, "longitude": 8.676061, "radius": 30, "fillKey": "gt60"},
+       {"name": "Heidelberg", "total": 718, "aligned": 34, "latitude": 49.403159, "longitude": 8.676061, "radius": 3, "fillKey": "gt70"},
+
+       {"name": "London", "total": 0, "aligned": 0, "latitude": 51.507919, "longitude": -0.123571, "radius": 15, "fillKey": "gt60"},
+       {"name": "London", "total": 0, "aligned": 0, "latitude": 51.507919, "longitude": -0.123571, "radius": 3, "fillKey": "gt70"},
+
+       {"name": "Santa Cruz", "total": 393, "aligned": 393, "latitude": 36.971944, "longitude": -122.026389, "radius": 20, "fillKey": "gt70"}
+]

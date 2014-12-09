@@ -1,0 +1,287 @@
+<html>
+	<head>
+		<title>Density Plot</title>
+		<script src="http://mbostock.github.com/d3/d3.v2.js"></script>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+		<style>
+			/* tell the SVG path to be a thin blue line without any area fill */
+			body {
+  font: 10px sans-serif;
+}
+			path {
+				stroke: steelblue;
+				stroke-width: 1;
+				fill: none;
+			}
+			
+			.axis {
+			  shape-rendering: crispEdges;
+			}
+ 
+			.x.axis line {
+			  stroke: lightgrey;
+			}
+ 
+			.x.axis .minor {
+			  stroke-opacity: .5;
+			}
+ 
+			.x.axis path {
+			  display: none;
+			}
+ 
+			.y.axis line, .y.axis path {
+			  fill: none;
+			  stroke: #000;
+			}
+			#svg1{
+			}
+
+			#contain{	
+			}
+			div.tooltip {   
+			  position: absolute;           
+			  text-align: center;           
+			  width: 60px;                  
+			  height: 28px;                 
+			  padding: 2px;             
+			  font: 12px sans-serif;        
+			  background: lightsteelblue;   
+			  border: 0px;      
+			  border-radius: 8px;           
+			  pointer-events: none;         
+			}
+		</style>
+	</head>
+	<body>
+	<div id="contain">
+	<button type="button" onclick="run2()">Graph</button>
+	<select id="x-axis2" onchange="run1()">
+        <option selected="selected" value="both">All Specimen Types</option>
+        <option value="Normal">Normal</option>
+        <option value="tumour">Tumour</option>
+        </select>
+	<select id="x-axis1" onchange="run1()">
+        <option selected="selected" value="All">All Projects</option>
+        <option value="CLLE-ES">CLLE-ES</option>
+        <option value="PBCA-DE">PBCA-DE</option>
+        <option value="LIRI-JP">LIRI-JP</option>
+        <option value="BOCA-UK">BOCA-UK</option>
+        <option value="BRCA-EU">BRCA-EU</option>
+        <option value="BRCA-UK">BRCA-UK</option>
+        <option value="BRCA-US">BRCA-US</option>
+        <option value="BTCA-SG">BTCA-SG</option>
+        <option value="CESC-US">CESC-US</option>
+        <option value="COAD-US">COAD-US</option>
+        <option value="EOPC-DE">EOPC-DE</option>
+        <option value="GBM-US">GBM-US</option>
+        <option value="HNSC-US">HNSC-US</option>
+        <option value="KICH-US">KICH-US</option>
+        <option value="KIRC-US">KIRC-US</option>
+        <option value="KIRP-US">KIRP-US</option>
+        <option value="LAML-KR">LAML-KR</option>
+        <option value="LAML-US">LAML-US</option>
+        <option value="LGG-US">LGG-US</option>
+        <option value="LUAD-US">LUAD-US</option>
+        <option value="MALY-DE">MALY-DE</option>
+        <option value="OV-US">OV-US</option>
+        <option value="PACA-CA">PACA-CA</option>
+        <option value="PRAD-US">PRAD-US</option>
+        <option value="READ-US">READ-US</option>
+        <option value="SARC-US">SARC-US</option>
+        <option value="SKCM-US">SKCM-US</option>
+        <option value="STAD-US">STAD-US</option>
+        <option value="UCEC-US">UCEC-US</option>
+        </select>
+        <select id="x-axis" onchange="run1()">
+        <option value="#_total_reads_r2"selected="selected"># Total Reads R2</option>
+        <option value="read_length_r1">Read Length R1</option>
+        <option value="#_gc_bases_r1"># GC Bases R1</option>
+        <option value="#_duplicate_reads"># Duplicate Reads</option>
+        <option value="#_mapped_bases"># Mapped Bases</option>
+        <option value="mean_insert_size">Mean Insert Size</option>
+        <option value="#_mapped_reads_r1"># Mapped Reads R1</option>
+        <option value="#_divergent_bases"># Divergent Bases</option>
+        <option value="#_mapped_reads_properly_paired"># Mapped Reads Properly Paired</option>
+        <option value="#_divergent_bases_r2"># Divergent Bases R2</option>
+        <option value="read_length_r2">Read Length R2</option>
+        <option value="#_mapped_bases_r1"># Mapped Bases R1</option>
+        <option value="#_divergent_bases_r1"># Divergent Bases R1</option>
+        <option value="#_mapped_bases_r2"># Mapped Bases R2</option>
+        <option value="#_total_reads"># Total Reads</option>
+        <option value="#_gc_bases_r2"># GC Bases R2</option>
+        <option value="median_insert_size">Median Insert Size</option>
+        <option value="insert_size_sd">Insert Size SD</option>
+        <option value="#_total_reads_r1"># Total Reads R1</option>
+        <option value="#_mapped_reads_r2"># Mapped Reads R2</option>
+        <option value="#_mapped_reads"># Mapped Reads</option>
+	<option value="#_total_bases"># Total Bases</option>
+        </select>
+	</select>
+<div id="graph">
+</div>
+</div>
+
+ 
+	<script>
+var values =[];
+var arry = [];
+var i;
+var newary = [];
+var data = [];
+var t;
+var all = [];
+var use = [];
+var max=0;
+var max2=0;
+
+function update(data1,city,type){
+values=[];
+arry=[];
+d3.csv("all_qc.csv", function(rows){
+values = rows;
+
+var filteredData = values.filter(function(d) 
+{ 
+
+        if( d["dcc_project_code"] == city)
+        { 
+            return d;
+        } 
+
+    });
+if (city == "All"){filteredData = values;};
+
+var filteredData2 = filteredData.filter(function(d) 
+{ 
+
+        if( d["dcc_specimen_type"].indexOf(type) != -1)
+        { 
+            return d;
+        } 
+
+    });
+
+if (type == "both"){filteredData2 = filteredData;};
+
+for (i = 0; i < filteredData2.length;i++){
+arry.push(parseInt(filteredData2[i][data1]));
+};
+
+max = Math.max.apply(Math,arry);
+
+// A formatter for counts.
+var formatCount = d3.format(",.0f");
+
+var margin = {top: 10, right: 30, bottom: 30, left: 30},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+var x1 = d3.scale.linear()
+    .domain([0, max])
+    .range([0, width]);
+
+// Generate a histogram using twenty uniformly-spaced bins.
+data1 = d3.layout.histogram()
+    .bins(x1.ticks(40))
+    (arry);
+
+all=[];
+newary=[];
+for (t = 0; t < data1.length;t++){
+newary.push(data1[t].length);
+all.push([]);
+};
+data = newary;
+max2 = Math.max.apply(Math,data);
+
+var len = data.length;
+var inc = (max/len);
+
+var d;
+for(d=0;d<data.length;d++){
+all[d].push(inc*d);
+all[d].push(data[d]);
+};
+use = all;
+});
+};
+
+function chart(input){
+var margin = {top: 20, right: 30, bottom: 30, left: 40},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+var x = d3.scale.linear()
+    .domain([0, max])
+    .range([0, width]);
+
+//var y = d3.scale.linear()
+//   .domain([0, max2])
+//    .range([height, 0]);
+
+var y = d3.scale.linear()
+    .domain([0, d3.max(input, function(d) { return (d[1]); })])
+    .range([height, 0]);
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
+
+var yAxis = d3.svg.axis().scale(y)
+    .orient("left").ticks(5);
+
+var line = d3.svg.line()
+    .interpolate("cardinal")
+//    .interpolate("basis-open")
+    .x(function(d) { return x(d[0]); })
+    .y(function(d) { return y(d[1]); });
+
+var svg = d3.select("#graph").append("svg")
+    .attr("id", "svg1")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis);
+
+svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+      .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end");
+
+  svg.append("path")
+      .datum(input)
+      .attr("class", "line")
+      .attr("d", line);
+};
+
+update("#_total_reads_r2","All","both");
+
+function run1(){
+        var e = document.getElementById("x-axis");
+        var strUser = e.options[e.selectedIndex].value;
+	var e1 = document.getElementById("x-axis1");
+        var strUser1 = e1.options[e1.selectedIndex].value;
+        var e2 = document.getElementById("x-axis2");
+        var strUser2 = e2.options[e2.selectedIndex].value;
+	update(strUser,strUser1,strUser2);
+	};
+
+function run2(){
+$('#graph').empty();
+chart(use);
+};
+
+	</script>
+	</body>
+</html>

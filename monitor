@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<title>ICGC PanCancer Status</title>
+	<link rel="shortcut icon" href="https://icgc.org/files/org_sys/pan.png">
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+	<meta name="generator" content="Geany 1.23.1" />
+	<meta charset="utf-8" http-equiv="refresh" content="600">
+	<script src="http://d3js.org/d3.v3.min.js"></script>
+	<script src="http://d3js.org/topojson.v1.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="style1.css">
+	<!-- I recommend you host this file on your own, since this will change without warning -->
+	<script src="http://datamaps.github.io/scripts/datamaps.world.min.js?v=1"></script>
+	<link rel="stylesheet" type="text/css" href="http://bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+</head>
+<style>
+	#headere{
+		background-color: #7FB5DA;
+	}
+	#inside{
+		line-height: 50px;
+		font-size:12px;
+	}
+</style>
+<body>
+	 <div id="headere">
+		 <h1 style="float:left;margin-left:10px;font-size:25px;">PANCANCER.INFO</h1>
+		 <div id="inside">
+	 <ul class="tab-links">
+			<li><a href="pancancer.info">Sites</a></li>
+			<li><a href="uploads.html">Uploaders</a></li>
+	 </ul>   
+	 </div>
+	 </div>
+<center>
+<h1>Performance Tracking</h1>
+<p style="width:900px;">This page shows the performance of the networks at each repo. It shows the amount of time taken to download a file from each GNOS repo. The graph shows the download speeds at each repo over time.</p>
+</center>
+
+</body>
+
+</html>
+

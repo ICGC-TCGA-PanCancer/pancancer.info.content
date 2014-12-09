@@ -1,0 +1,3 @@
+[
+        {"name": "Hinxton", "total": 78, "uploaded": 152, "latitude": 52.082869, "longitude": 0.18269 , "radius": 15, "fillKey": "orange","match": 76, "tumour": 0, "normal": , "project": "BOCA-UK"},
+        {"name": "Hinxton", "total": 78, "uploaded": 152, "latitude": 52.082869, "longitude": 0.18269 , "radius": 29.2307692307692, "fillKey": "green", "project": "BOCA-UK"}]
