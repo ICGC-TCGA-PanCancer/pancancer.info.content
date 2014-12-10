@@ -1,0 +1,8 @@
+# Metadata parser cron job
+1 3 * * * /home/ubuntu/gitroot/pancancer-sandbox/pcawg_metadata_parser/run_me.sh /var/www/gnos_metadata
+# gnostransfer monitor cron job
+6 * * * * /home/ubuntu/gitroot/pancancer-sandbox/gnos_transfer_monitor/generate_html_report.cron
+# Daily S3 Backup
+1 6 * * * /home/ubuntu/gitroot/pancancer.info.config/configuration/crons/s3backup.sh /path/to/data
+# decider cron job
+0 */4 * * * /home/ubuntu/crons/deciders.cron

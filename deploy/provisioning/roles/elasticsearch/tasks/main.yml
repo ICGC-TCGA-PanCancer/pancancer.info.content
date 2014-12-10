@@ -1,0 +1,105 @@
+---
+
+- name: Create Working Directory in Home Folder
+  sudo: "{{ user_name }}"
+  file: dest=~/tmp mode=755 owner={{ user_name }} group={{ user_name }} state=directory
+
+- name: Create Git Repo Root
+  sudo: "{{ user_name }}"
+  file: dest=~/gitroot mode=755 owner={{ user_name }} group={{ user_name }} state=directory
+
+- name: Create Deployment Root
+  sudo: "{{ user_name }}"
+  file: dest=~/deployment mode=755 owner={{ user_name }} group={{ user_name }} state=directory
+
+- name: Create MNT disk tools folder
+  sudo: True
+  file: dest=/mnt/tools mode=755 owner={{ user_name }} group={{ user_name }} state=directory
+
+- name: Install Support For Elasticsearch 
+  sudo: True
+  apt: name={{ item }} state=latest update_cache=yes
+  with_items:
+    - git 
+    - openjdk-7-jre
+    
+- name: Fetch Elasticsearch
+  sudo: "{{ user_name }}"
+  get_url: url="download.elasticsearch.org/elasticsearch/elasticsearch/{{ elasticsearch_download }}.tar.gz"
+
+- name: Unarchive Elasticsearch
+  sudo: "{{ user_name }}"
+  command: chdir=/mnt/tools tar xvzf {{ elasticsearch_download }}.tar.gz
+
+- name: Create Elasticsearch Symlink
+  sudo: "{{ user_name }}"
+  file: src="/mnt/tools/{{ elasticsearch_download }}" dest=/mnt/tools/elasticsearch state=link
+
+- name: Create Elasticsearch User
+  sudo: True
+  user: name=elasticsearch system=yes shell=/bin/false createhome=no
+  
+- name: Change Elasticsearch Permissions
+  sudo: True
+  file: path="/mnt/tools/{{ elasticsearch_download }}" owner=elasticsearch recurse=True
+
+- name: Configure Elasticsearch Service
+  sudo: True
+  copy: src=/home/{{ user_name }}/gitroot/pancancer.info.config/configuration/elasticsearch/elasticsearch.service dest=/etc/init.d/elasticsearch mode=751
+
+- name: Create Elasticsearch Service Symlinks
+  sudo: True
+  command: update-rc.d elasticsearch defaults
+
+- name: Fetch Kibana Archive from Web
+  sudo: "{{ user_name }}"
+  command: chdir=~/tmp wget https://download.elasticsearch.org/kibana/kibana/kibana-3.1.2.tar.gz
+
+- name: Untar Kibana Archive
+  sudo: "{{ user_name }}"  
+  command: chdir=~/tmp tar xvzf kibana-3.1.2.tar.gz
+  
+- name: Move the Kibana foler to the home folder
+  sudo: "{{ user_name }}"
+  command: mv ~/tmp/kibana-3.1.2 ~/deployment
+
+- name: Configure Kibana
+  sudo: "{{ user_name }}"
+  copy: src=~/gitroot/pancancer.info.config/configuration/kibana/config.js dest=~/deployment/kibana-3.1.2/config.js mode=755 owner={{ user_name }} group={{ user_name }} 
+
+- name: Symlink kibana into /var/www 
+  sudo: "{{ user_name }}"
+  file: src=~/deployment/kibana-3.1.2 dest=/var/www/search state=link
+
+- name: Start Elasticsearch Service
+  sudo: True
+  command: sudo /etc/init.d/elasticsearch start
+  
+- name: Configure Elasticsearch for Persistance
+  sudo: True
+  file: src=/etc/init.d/elasticsearch dest=/etc/rc2.d/S99elasticsearch state=link
+  
+- name: Activate Reverse Proxy for Apache2
+  sudo: True
+  file: src=/etc/apache2/mods-available/proxy_http.load dest=/etc/apache2/mods-enabled/proxy_http.load state=link
+
+- name: Restart Apache2 Service
+  sudo: True
+  service: name=apache2 state=restarted
+
+- name: Test Elasticsearch
+  sudo: "{{ user_name }}"
+  shell: chdir=~/tmp sleep 10 && curl http://127.0.0.1/elasticsearch/
+
+- name: Test Elasticsearch Proxy
+  sudo: "{{ user_name }}"
+  shell: chdir=~/tmp curl http://127.0.0.1/elasticsearch/
+  
+- name: Test Kibana
+  sudo: "{{ user_name }}"
+  shell: chdir=~/tmp curl http://127.0.0.1/search/
+
+- name: Clean Up
+  sudo: True
+  command: rm -rf /home/{{ user_name }}/tmp
+  

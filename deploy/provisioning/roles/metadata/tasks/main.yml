@@ -1,0 +1,109 @@
+---
+
+- name: Create Git Repo Root
+  sudo: "{{ user_name }}"
+  file: dest=~/gitroot mode=755 owner={{ user_name }} group={{ user_name }} state=directory
+
+- name: Create Data Root on /mnt
+  sudo: True
+  file: dest=/mnt/data mode=755 owner={{ user_name }} group={{ user_name }} state=directory
+
+- name: Install Required Packages
+  sudo: True
+  apt: name={{ item }} state=latest update_cache=yes
+  with_items:
+        - apache2
+        - git
+        - python-pip
+        - libtemplate-perl
+        - cpanminus
+        - libcurl4-openssl-dev
+        - libboost-all-dev
+        - libxerces-c3.1
+        - libxqilla6
+        - build-essential
+        - libxml2-dev
+        - libexpat1-dev
+        - libcrypt-ssleay-perl
+        - libssl-dev
+        
+- name: Install Perl Modules
+  sudo: True
+  cpanm: name={{ item }}
+  with_items:
+      - WWW::Curl::Easy
+      - Const::Fast
+      - Net::Google::Spreadsheets
+      - XML::DOM WWW::Mechanize
+      - Getopt::Long XML::Simple
+      - String::Util File::Slurp
+      - Carp::Always IPC::System::Simple
+      - Time::ParseDate Date::Calc
+      - XML::Simple
+
+- name: Install Python Modules
+  sudo: True
+  command: pip install {{ item }}
+  with_items:
+      - python-dateutil
+      - elasticsearch
+      - xmltodict
+
+- name: Read Ubuntu Version Information
+  sudo: True
+  shell: cat /etc/lsb-release | egrep -o "DISTRIB_RELEASE=.+" | egrep -o "[0-9]+\.[0-9]+"
+  register: RELEASE
+
+- name: Download cghub tools
+  sudo: True
+  get_url: dest=/mnt/tools url=https://cghub.ucsc.edu/software/downloads/GeneTorrent/3.8.6/genetorrent-common_3.8.6-ubuntu2.130-{{ RELEASE }}_amd64.deb
+  
+- name: Install cghub tools
+  sudo: True
+  shell: chdir=/mnt/tools dpkg -i genetorrent-common_3.8.6-ubuntu2.130-{{ RELEASE }}_amd64.deb
+
+- name: Install the Git Repo for pancancer.info
+  sudo: "{{ user_name }}"
+  command: chdir=~/gitroot git clone https://github.com/ICGC-TCGA-PanCancer/pancancer-info.git
+
+- name: Pull Down pancancer-info sandbox for home
+  sudo: "{{ user_name }}"
+  command: chdir=~/gitroot git clone -b {{ sandbox_branch }} https://github.com/ICGC-TCGA-PanCancer/pancancer-sandbox
+
+- name: Insert a copy of the sandbox into mnt for data collection
+  sudo: "{{ user_name }}"
+  command: chdir=/mnt/tools git clone -b {{ sandbox_branch }} https://github.com/ICGC-TCGA-PanCancer/pancancer-sandbox
+
+- name: Create gnosmetadata folder in /var/www
+  sudo: "{{ user_name }}"
+  file: dest=/var/www/gnos_metadata mode=755 owner={{ user_name }} group={{ user_name }} state=directory
+
+- name: Fetch s3cmd Repo GPG Key
+  sudo: True
+  shell: chdir=/tmp wget -O- -q http://s3tools.org/repo/deb-all/stable/s3tools.key | sudo apt-key add -
+
+- name: Add s3cmd Repo 
+  sudo: True 
+  shell: chdir=/tmp wget -O /etc/apt/sources.list.d/s3tools.list http://s3tools.org/repo/deb-all/stable/s3tools.list
+
+- name: Force apt-get update
+  sudo: True
+  command: apt-get update
+
+- name: Install s3cmd Package
+  sudo: True
+  apt: name=s3cmd state=latest update_cache=yes
+
+- name: Configure s3cmd Package
+  sudo: "{{ user_name }}"
+  command: # Placeholder
+
+- name: Install the Cron Job
+  sudo: "{{ user_name }}"
+  command: crontab ~/gitroot/pancancer.info.config/configuration/crons/crontab
+  
+- name: Kick off crons immediately
+  sudo: "{{ user_name }}"
+  command: echo "All Done here."
+  
+

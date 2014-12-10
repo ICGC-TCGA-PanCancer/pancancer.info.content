@@ -1,0 +1,9 @@
+---
+# setup pancancer.info
+- hosts: pancancer
+  roles: 
+    - { role: webserver }
+    - { role: content }
+    - { role: elasticsearch }
+    - { role: metadata }
+    
