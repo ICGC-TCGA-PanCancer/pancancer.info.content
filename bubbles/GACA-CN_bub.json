@@ -1,4 +1,0 @@
-[
-	  {"name": "Beijing", "latitude": 39.9139, "longitude": 116.3917, "radius": 15, "fillKey": "blue","project": "GACA-CN"},
-          {"name": "Beijing", "total": 120, "uploaded": 53, "latitude": 39.9139, "longitude": 116.3917, "radius": 15, "fillKey": "orange","match": 25, "project": "GACA-CN"},
-          {"name": "Beijing", "total": 120, "uploaded": 53, "latitude": 39.9139, "longitude": 116.3917, "radius": 6.625, "fillKey": "yellow", "project": "GACA-CN"}]

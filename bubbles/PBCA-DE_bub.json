@@ -1,3 +1,0 @@
-[
-        {"name": "Heidelberg", "total": 502, "uploaded": 504, "latitude": 49.403159, "longitude": 8.676061, "radius": 30, "fillKey": "orange","match": 252, "tumour": 190, "normal": 190, "project": "PBCA-DE"},
-        {"name": "Heidelberg", "total": 502, "uploaded": 504, "latitude": 49.403159, "longitude": 8.676061, "radius": 30.1195219123506, "fillKey": "green", "project": "PBCA-DE"}]

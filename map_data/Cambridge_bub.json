@@ -1,6 +1,0 @@
-[
-          {"name": "Cambridge", "total": 407, "uploaded": 178, "latitude": 52.202544, "longitude": 0.131237 , "radius": 20, "fillKey": "orange","match": 89,"tumour": 0, "normal": },
-          {"name": "Cambridge", "total": 407, "uploaded": 178, "latitude": 52.202544, "longitude": 0.131237 , "radius": 8.74692874692875, "fillKey": "yellow"}        {"name": "Cambridge", "total": 364, "uploaded": 20, "latitude": 52.202544, "longitude": 0.131237 , "radius": 20, "fillKey": "orange","match": 10,"tumour": 0, "normal": , "project": "ESAD-UK"},
-        {"name": "Cambridge", "total": 364, "uploaded": 20, "latitude": 52.202544, "longitude": 0.131237 , "radius": 3, "fillKey": "red", "project": "ESAD-UK"}        {"name": "Cambridge", "total": 43, "uploaded": 158, "latitude": 52.202544, "longitude": 0.131237 , "radius": 15, "fillKey": "orange","match": 79,"tumour": 0, "normal": , "project": "BRCA-EU"},
-        {"name": "Cambridge", "total": 43, "uploaded": 158, "latitude": 52.202544, "longitude": 0.131237 , "radius": 55.1162790697674, "fillKey": "green", "project": "BRCA-EU"},
-]

@@ -1,3 +1,0 @@
-[
-        {"name": "Toronto", "total": 123, "uploaded": 177, "latitude": 43.7000, "longitude": -79.4000, "radius": 20, "fillKey": "orange","match": 76, "tumour": 0, "normal": , "project": "PACA-CA"},
-        {"name": "Toronto", "total": 123, "uploaded": 177, "latitude": 43.7000, "longitude": -79.4000, "radius": 25.0406504065041, "fillKey": "green", "project": "PACA-CA"}]

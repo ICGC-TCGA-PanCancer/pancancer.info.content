@@ -1,3 +1,0 @@
-[
-        {"name": "Cambridge", "total": 380, "uploaded": 346, "latitude": 52.202544, "longitude": 0.131237 , "radius": 20, "fillKey": "orange","match": 86,"tumour": 0, "normal": 174, "project": "ESAD-UK"},
-        {"name": "Cambridge", "total": 380, "uploaded": 346, "latitude": 52.202544, "longitude": 0.131237 , "radius": 18.2105263157895, "fillKey": "green", "project": "ESAD-UK"}]

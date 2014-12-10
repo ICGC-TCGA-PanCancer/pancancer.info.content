@@ -1,4 +1,0 @@
-[
-          {"name": "Barcelona", "latitude": 41.378691, "longitude": 2.175547, "radius": 20, "fillKey": "blue", "project": "BSC"},
-          {"name": "Barcelona", "total": 200, "uploaded": 198, "latitude": 41.378691, "longitude": 2.175547, "radius": 20, "fillKey": "orange","match": 98, "tumour": 98, "normal": 99,"project": "CLLE-ES"},
-          {"name": "Barcelona", "total": 200, "uploaded": 198, "latitude": 41.378691, "longitude": 2.175547, "radius": 19.8, "fillKey": "green","project": "CLLE-ES"}]

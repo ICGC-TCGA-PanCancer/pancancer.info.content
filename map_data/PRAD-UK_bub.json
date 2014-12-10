@@ -1,3 +1,0 @@
-[
-        {"name": "Hinxton", "total": 709, "uploaded": 55, "latitude": 52.082869, "longitude": 0.18269 , "radius": 30, "fillKey": "orange","match": 23, "tumour": 0, "normal": , "project": "PRAD-UK"},
-        {"name": "Hinxton", "total": 709, "uploaded": 55, "latitude": 52.082869, "longitude": 0.18269 , "radius": 3, "fillKey": "red", "project": "PRAD-UK"}]

@@ -1,4 +1,0 @@
-[
-          {"name": "Singapore", "latitude": 1.2896700, "longitude": 103.8500700, "radius": 15, "fillKey": "blue", "project": "Singapore"},
-          {"name": "Singapore", "total": 24, "uploaded": 24, "latitude": 1.2896700, "longitude": 103.8500700, "radius": 15, "fillKey": "orange","match": 12, "tumour": 12, "normal": 12,"project": "BTCA-SG"},
-          {"name": "Singapore", "total": 24, "uploaded": 24, "latitude": 1.2896700, "longitude": 103.8500700, "radius": 15, "fillKey": "green","project": "BTCA-SG"}]

@@ -1,4 +1,0 @@
-[
-	  {"name": "Seoul", "latitude": 37.532600, "longitude": 127.024612, "radius": 20, "fillKey": "blue", "project": "ETRI"},
-          {"name": "Seoul", "total": 20, "uploaded": 20, "latitude": 37.532600, "longitude": 127.024612, "radius": 15, "fillKey": "orange","match": 10, "tumour": 10, "normal": 10,"project": "LAML-KR"},
-          {"name": "Seoul", "total": 20, "uploaded": 20, "latitude": 37.532600, "longitude": 127.024612, "radius": 15, "fillKey": "green","project": "LAML-KR"}]
