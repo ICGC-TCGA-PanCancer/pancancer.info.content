@@ -387,6 +387,7 @@ function run1(){
 
 </script>
 </div>
+<p>QC data is currently not being updated as we move to new underlying DB in early 2015. This data is current as of 11/2014</p>
 <p>May take a while to load...</p></center>
 </body>
 <center>
