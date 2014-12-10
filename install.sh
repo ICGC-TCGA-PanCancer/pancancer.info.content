@@ -1,2 +1,2 @@
 #!/bin/bash
-curl https://raw.githubusercontent.com/niall-byrne/pancancer.info.config/master/deploy/provisioning/provision.sh > provision.sh && bash provision.sh 
+curl https://raw.githubusercontent.com/ICGC-TCGA-PanCancer/pancancer.info.content/master/deploy/provisioning/provision.sh > provision.sh && bash provision.sh 
