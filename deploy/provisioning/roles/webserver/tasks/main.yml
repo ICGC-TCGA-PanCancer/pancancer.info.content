@@ -4,10 +4,6 @@
   sudo: "{{ user_name }}"
   file: dest=~/gitroot mode=755 owner={{ user_name }} group={{ user_name }} state=directory
 
-- name: Create Deployment Root
-  sudo: "{{ user_name }}"
-  file: dest=~/deployment mode=755 owner={{ user_name }} group={{ user_name }} state=directory
-
 - name: Install Required Packages
   sudo: True
   apt: name={{ item }} state=latest update_cache=yes
@@ -33,7 +29,7 @@
   
 - name: Configure Apache Sites Available
   sudo: True
-  copy: src=~/gitroot/pancancer.info.config/configuration/apache2/sites-available/default.conf dest=/etc/apache2/sites-available/default.conf owner=root group=root mode=755
+  copy: src=~/gitroot/pancancer.info.content/deployment/configuration/apache2/sites-available/default.conf dest=/etc/apache2/sites-available/default.conf owner=root group=root mode=755
 
 - name: Symlink Apache Sites Available to Sites Enabled
   sudo: True

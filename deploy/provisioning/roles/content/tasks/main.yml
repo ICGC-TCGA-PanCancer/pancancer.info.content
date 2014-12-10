@@ -4,18 +4,6 @@
   sudo: "{{ user_name }}"
   file: dest=~/gitroot mode=755 owner={{ user_name }} group={{ user_name }} state=directory
 
-- name: Create Deployment Root
-  sudo: "{{ user_name }}"
-  file: dest=~/deployment mode=755 owner={{ user_name }} group={{ user_name }} state=directory
-
-- name: Create new home folder based www folder
-  sudo: "{{ user_name }}"
-  file: dest=~/deployment mode=755 owner={{ user_name }} group={{ user_name }} state=directory
-
-- name: Install the Git Repo for pancancer.info.content
-  sudo: "{{ user_name }}"
-  command: chdir=~ git clone -b {{ content_branch }} https://github.com/ICGC-TCGA-PanCancer/pancancer-info.content.git ~/deployment
-
 - name: Check for /var/www
   stat: path=/var/www
   register: www
@@ -31,7 +19,7 @@
 
 - name: Create symlink to /var/www from the deployment www environment
   sudo: True
-  file: src=/home/{{ user_name }}/deployment/www dest=/var/www state=link
+  file: src=/home/{{ user_name }}/gitroot/pancancer.info.content/www dest=/var/www state=link
   
 
 
