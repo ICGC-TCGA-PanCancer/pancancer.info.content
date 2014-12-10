@@ -1,0 +1,3 @@
+[
+        {"name": "Hinxton", "total": 102, "uploaded": 101, "latitude": 52.082869, "longitude": 0.18269 , "radius": 15, "fillKey": "orange","match": 32, "tumour": 0, "normal": , "project": "CMDI-UK"},
+        {"name": "Hinxton", "total": 102, "uploaded": 101, "latitude": 52.082869, "longitude": 0.18269 , "radius": 14.8529411764706, "fillKey": "green", "project": "CMDI-UK"}]

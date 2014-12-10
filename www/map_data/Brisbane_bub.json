@@ -1,0 +1,8 @@
+[
+	  {"name": "Brisbane", "total": 558, "uploaded": 0, "latitude": -27.4679400, "longitude": 153.0280900, "radius": 30, "fillKey": "orange","match": 0},
+          {"name": "Brisbane", "total": 558, "uploaded": 0, "latitude": -27.4679400, "longitude": 153.0280900, "radius": 3, "fillKey": "red"}	{"name": "Brisbane", "total": 198, "uploaded": 0, "latitude": -27.4679400, "longitude": 153.0280900, "radius": 20, "fillKey": "orange", "match": 0, "project": "PACA-AU"},
+        {"name": "Brisbane", "total": 198, "uploaded": 0, "latitude": -27.4679400, "longitude": 153.0280900, "radius": 3, "fillKey": "red", "project": "PACA-AU"}        {"name": "Brisbane", "total": 212, "uploaded": 0, "latitude": -27.4679400, "longitude": 153.0280900, "radius": 20, "fillKey": "orange","match": 0, "project": "PAEN-AU"},
+        {"name": "Brisbane", "total": 212, "uploaded": 0, "latitude": -27.4679400, "longitude": 153.0280900, "radius": 3, "fillKey": "red", "project": "PAEN-AU"},
+        {"name": "Brisbane", "total": 148, "uploaded": 0, "latitude": -27.4679400, "longitude": 153.0280900, "radius": 20, "fillKey": "orange","match": 0, "project": "OV-AU"},
+        {"name": "Brisbane", "total": 148, "uploaded": 0, "latitude": -27.4679400, "longitude": 153.0280900, "radius": 3, "fillKey": "red", "project": "OV-AU"},
+]

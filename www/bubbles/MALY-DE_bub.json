@@ -1,0 +1,3 @@
+[
+        {"name": "Heidelberg", "total": 195, "uploaded": 194, "latitude": 49.403159, "longitude": 8.676061, "radius": 20, "fillKey": "orange","match": 97, "tumour": 44, "normal": 44, "project": "MALY-DE"},
+        {"name": "Heidelberg", "total": 195, "uploaded": 194, "latitude": 49.403159, "longitude": 8.676061, "radius": 19.8974358974359, "fillKey": "green", "project": "MALY-DE"}]

@@ -1,0 +1,196 @@
+perl workflow_decider.pl --gnos-url https://gtrepo-bsc.annailabs.com --report gtrepo-bsc.log --ignore-lane-count --upload-results --test --working-dir gtrepo-bsc --skip-cached
+============================================================================
+    Script Version                   : 2.1.8
+    CGHub Server                     : https://gtrepo-bsc.annailabs.com
+    WebServices Interface Version    : 3.6
+    REST Resource                    : /cghub/metadata/analysisDetail
+    QueryString                      : study=*&state=live
+    Output File                      : gtrepo-bsc/xml/data.xml
+----------------------------------------------------------------------------
+    Matching Objects                 : 2407
+============================================================================
+
+    Summary of Matching Objects
+        downloadable_file_count      : 2431
+        downloadable_file_size (TB)  : 22.03
+        state_count
+            live                     : 2407
+
+----------------------------------------------------------------------------
+    All matching objects are in a downloadable state.
+----------------------------------------------------------------------------
+gtrepo-bsc ALIGNED 47 UNALIGNED: 205
+perl workflow_decider.pl --gnos-url https://gtrepo-dkfz.annailabs.com --report gtrepo-dkfz.log --ignore-lane-count --upload-results --test --working-dir gtrepo-dkfz --skip-cached
+============================================================================
+    Script Version                   : 2.1.8
+    CGHub Server                     : https://gtrepo-dkfz.annailabs.com
+    WebServices Interface Version    : 3.6
+    REST Resource                    : /cghub/metadata/analysisDetail
+    QueryString                      : study=*&state=live
+    Output File                      : gtrepo-dkfz/xml/data.xml
+----------------------------------------------------------------------------
+    Matching Objects                 : 3439
+============================================================================
+
+    Summary of Matching Objects
+        downloadable_file_count      : 3720
+        downloadable_file_size (TB)  : 76.58
+        state_count
+            live                     : 3439
+
+----------------------------------------------------------------------------
+    All matching objects are in a downloadable state.
+----------------------------------------------------------------------------
+gtrepo-dkfz ALIGNED 7 UNALIGNED: 342
+perl workflow_decider.pl --gnos-url https://gtrepo-osdc-icgc.annailabs.com --report gtrepo-osdc-icgc.log --ignore-lane-count --upload-results --test --working-dir gtrepo-osdc-icgc --skip-cached
+============================================================================
+    Script Version                   : 2.1.8
+    CGHub Server                     : https://gtrepo-osdc-icgc.annailabs.com
+    WebServices Interface Version    : 3.6
+    REST Resource                    : /cghub/metadata/analysisDetail
+    QueryString                      : study=*&state=live
+    Output File                      : gtrepo-osdc-icgc/xml/data.xml
+----------------------------------------------------------------------------
+    Matching Objects                 : 503
+============================================================================
+
+    Summary of Matching Objects
+        downloadable_file_count      : 1006
+        downloadable_file_size (TB)  : 13.69
+        state_count
+            live                     : 503
+
+----------------------------------------------------------------------------
+    All matching objects are in a downloadable state.
+----------------------------------------------------------------------------
+gtrepo-osdc-icgc ALIGNED 1 UNALIGNED: 138
+perl workflow_decider.pl --gnos-url https://gtrepo-osdc-tcga.annailabs.com --report gtrepo-osdc-tcga.log --ignore-lane-count --upload-results --test --working-dir gtrepo-osdc-tcga --skip-cached
+## Error: Failed to query server version (<urlopen error [Errno 110]
+          Connection timed out>)
+
+Could not download data via cgquery!
+ERROR: can't communicate with GNOSperl workflow_decider.pl --gnos-url https://gtrepo-etri.annailabs.com --report gtrepo-etri.log --ignore-lane-count --upload-results --test --working-dir gtrepo-etri --skip-cached
+============================================================================
+    Script Version                   : 2.1.8
+    CGHub Server                     : https://gtrepo-etri.annailabs.com
+    WebServices Interface Version    : 3.6
+    REST Resource                    : /cghub/metadata/analysisDetail
+    QueryString                      : study=*&state=live
+    Output File                      : gtrepo-etri/xml/data.xml
+----------------------------------------------------------------------------
+    Matching Objects                 : 105
+============================================================================
+
+    Summary of Matching Objects
+        downloadable_file_count      : 128
+        downloadable_file_size (TB)  : 3.61
+        state_count
+            live                     : 105
+
+----------------------------------------------------------------------------
+    All matching objects are in a downloadable state.
+----------------------------------------------------------------------------
+gtrepo-etri ALIGNED 23 UNALIGNED: 24
+perl workflow_decider.pl --gnos-url https://gtrepo-ebi.annailabs.com --report gtrepo-ebi.log --ignore-lane-count --upload-results --test --working-dir gtrepo-ebi --skip-cached
+============================================================================
+    Script Version                   : 2.1.8
+    CGHub Server                     : https://gtrepo-ebi.annailabs.com
+    WebServices Interface Version    : 3.6
+    REST Resource                    : /cghub/metadata/analysisDetail
+    QueryString                      : study=*&state=live
+    Output File                      : gtrepo-ebi/xml/data.xml
+----------------------------------------------------------------------------
+    Matching Objects                 : 8767
+============================================================================
+
+    Summary of Matching Objects
+        downloadable_file_count      : 9831
+        downloadable_file_size (TB)  : 122.83
+        state_count
+            live                     : 8767
+
+----------------------------------------------------------------------------
+    All matching objects are in a downloadable state.
+----------------------------------------------------------------------------
+ERROR: can't communicate with GNOSperl workflow_decider.pl --gnos-url https://gtrepo-riken.annailabs.com --report gtrepo-riken.log --ignore-lane-count --upload-results --test --working-dir gtrepo-riken --skip-cached
+============================================================================
+    Script Version                   : 2.1.8
+    CGHub Server                     : https://gtrepo-riken.annailabs.com
+    WebServices Interface Version    : 3.6
+    REST Resource                    : /cghub/metadata/analysisDetail
+    QueryString                      : study=*&state=live
+    Output File                      : gtrepo-riken/xml/data.xml
+----------------------------------------------------------------------------
+    Matching Objects                 : 3197
+============================================================================
+
+    Summary of Matching Objects
+        downloadable_file_count      : 3568
+        downloadable_file_size (TB)  : 68.82
+        state_count
+            live                     : 3197
+
+----------------------------------------------------------------------------
+    All matching objects are in a downloadable state.
+----------------------------------------------------------------------------
+gtrepo-riken ALIGNED 54 UNALIGNED: 605
+perl workflow_decider.pl --gnos-url https://cghub.ucsc.edu --report gtrepo-cghub2.log --ignore-lane-count --upload-results --test --working-dir gtrepo-cghub2 --skip-cached
+============================================================================
+    Script Version                   : 2.1.8
+    CGHub Server                     : https://cghub.ucsc.edu
+    WebServices Interface Version    : 3.6
+    REST Resource                    : /cghub/metadata/analysisDetail
+    QueryString                      : study=PCAWG*2.0&state=live
+    Output File                      : gtrepo-cghub2/xml/data.xml
+----------------------------------------------------------------------------
+    Matching Objects                 : 185
+============================================================================
+
+    Summary of Matching Objects
+        downloadable_file_count      : 370
+        downloadable_file_size (TB)  : 20.98
+        state_count
+            live                     : 185
+
+----------------------------------------------------------------------------
+    All matching objects are in a downloadable state.
+----------------------------------------------------------------------------
+
+unclosed token at line 96, column 10, byte 8108 at /usr/lib/perl5/XML/Parser/Expat.pm line 479
+	XML::Parser::Expat::parse('XML::Parser::Expat=HASH(0xac77c40)', '*XML::Parser::FILE') called at /usr/lib/perl5/XML/Parser.pm line 187
+	eval {...} called at /usr/lib/perl5/XML/Parser.pm line 186
+	XML::Parser::parse('XML::DOM::Parser=HASH(0x160c1a0)', '*XML::Parser::FILE') called at /usr/share/perl5/XML/DOM.pm line 4230
+	eval {...} called at /usr/share/perl5/XML/DOM.pm line 4229
+	XML::DOM::Parser::parse('XML::DOM::Parser=HASH(0x160c1a0)', '*XML::Parser::FILE') called at /usr/lib/perl5/XML/Parser.pm line 233
+	eval {...} called at /usr/lib/perl5/XML/Parser.pm line 232
+	XML::Parser::parsefile('XML::DOM::Parser=HASH(0x160c1a0)', 'gtrepo-cghub2/xml/data_42649da3-0a01-4ffe-b27c-a368b55cc0f2.xml') called at /usr/share/perl5/XML/DOM.pm line 4300
+	XML::DOM::Parser::parsefile('XML::DOM::Parser=HASH(0x160c1a0)', 'gtrepo-cghub2/xml/data_42649da3-0a01-4ffe-b27c-a368b55cc0f2.xml') called at workflow_decider.pl line 386
+	main::read_sample_info() called at /usr/lib/perl5/XML/Parser/Expat.pm line 479
+	XML::Parser::Expat::parse('XML::Parser::Expat=HASH(0xac77c40)', '*XML::Parser::FILE') called at /usr/lib/perl5/XML/Parser.pm line 187
+	eval {...} called at /usr/lib/perl5/XML/Parser.pm line 186
+	XML::Parser::parse('XML::DOM::Parser=HASH(0x160c1a0)', '*XML::Parser::FILE') called at /usr/share/perl5/XML/DOM.pm line 4230
+	eval {...} called at /usr/share/perl5/XML/DOM.pm line 4229
+	XML::DOM::Parser::parse('XML::DOM::Parser=HASH(0x160c1a0)', '*XML::Parser::FILE') called at /usr/lib/perl5/XML/Parser.pm line 233
+	eval {...} called at /usr/lib/perl5/XML/Parser.pm line 232
+	XML::Parser::parsefile('XML::DOM::Parser=HASH(0x160c1a0)', 'gtrepo-cghub2/xml/data_42649da3-0a01-4ffe-b27c-a368b55cc0f2.xml') called at /usr/share/perl5/XML/DOM.pm line 4300
+	XML::DOM::Parser::parsefile('XML::DOM::Parser=HASH(0x160c1a0)', 'gtrepo-cghub2/xml/data_42649da3-0a01-4ffe-b27c-a368b55cc0f2.xml') called at workflow_decider.pl line 386
+	main::read_sample_info() called at /usr/lib/perl5/XML/Parser.pm line 192
+	XML::Parser::parse('XML::DOM::Parser=HASH(0x160c1a0)', '*XML::Parser::FILE') called at /usr/share/perl5/XML/DOM.pm line 4230
+	eval {...} called at /usr/share/perl5/XML/DOM.pm line 4229
+	XML::DOM::Parser::parse('XML::DOM::Parser=HASH(0x160c1a0)', '*XML::Parser::FILE') called at /usr/lib/perl5/XML/Parser.pm line 233
+	eval {...} called at /usr/lib/perl5/XML/Parser.pm line 232
+	XML::Parser::parsefile('XML::DOM::Parser=HASH(0x160c1a0)', 'gtrepo-cghub2/xml/data_42649da3-0a01-4ffe-b27c-a368b55cc0f2.xml') called at /usr/share/perl5/XML/DOM.pm line 4300
+	XML::DOM::Parser::parsefile('XML::DOM::Parser=HASH(0x160c1a0)', 'gtrepo-cghub2/xml/data_42649da3-0a01-4ffe-b27c-a368b55cc0f2.xml') called at workflow_decider.pl line 386
+	main::read_sample_info() called at /usr/share/perl5/XML/DOM.pm line 4241
+	XML::DOM::Parser::parse('XML::DOM::Parser=HASH(0x160c1a0)', '*XML::Parser::FILE') called at /usr/lib/perl5/XML/Parser.pm line 233
+	eval {...} called at /usr/lib/perl5/XML/Parser.pm line 232
+	XML::Parser::parsefile('XML::DOM::Parser=HASH(0x160c1a0)', 'gtrepo-cghub2/xml/data_42649da3-0a01-4ffe-b27c-a368b55cc0f2.xml') called at /usr/share/perl5/XML/DOM.pm line 4300
+	XML::DOM::Parser::parsefile('XML::DOM::Parser=HASH(0x160c1a0)', 'gtrepo-cghub2/xml/data_42649da3-0a01-4ffe-b27c-a368b55cc0f2.xml') called at workflow_decider.pl line 386
+	main::read_sample_info() called at /usr/lib/perl5/XML/Parser.pm line 238
+	XML::Parser::parsefile('XML::DOM::Parser=HASH(0x160c1a0)', 'gtrepo-cghub2/xml/data_42649da3-0a01-4ffe-b27c-a368b55cc0f2.xml') called at /usr/share/perl5/XML/DOM.pm line 4300
+	XML::DOM::Parser::parsefile('XML::DOM::Parser=HASH(0x160c1a0)', 'gtrepo-cghub2/xml/data_42649da3-0a01-4ffe-b27c-a368b55cc0f2.xml') called at workflow_decider.pl line 386
+	main::read_sample_info() called at workflow_decider.pl line 102
+ERROR: can't communicate with GNOSCan't locate String/Util.pm in @INC (@INC contains: /etc/perl /usr/local/lib/perl/5.14.2 /usr/local/share/perl/5.14.2 /usr/lib/perl5 /usr/share/perl5 /usr/lib/perl/5.14 /usr/share/perl/5.14 /usr/local/lib/site_perl .) at align_count.pl line 9.
+BEGIN failed--compilation aborted at align_count.pl line 9.
+Can't locate String/Util.pm in @INC (@INC contains: /etc/perl /usr/local/lib/perl/5.14.2 /usr/local/share/perl/5.14.2 /usr/lib/perl5 /usr/share/perl5 /usr/lib/perl/5.14 /usr/share/perl/5.14 /usr/local/lib/site_perl .) at align_count.pl line 9.
+BEGIN failed--compilation aborted at align_count.pl line 9.

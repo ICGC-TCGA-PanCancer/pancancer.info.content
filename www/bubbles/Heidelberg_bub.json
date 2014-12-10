@@ -1,0 +1,9 @@
+[
+          {"name": "Heidelberg","latitude": 49.403159, "longitude": 8.676061, "radius": 30, "fillKey": "blue", "project": "DKFZ"},
+          {"total_icgc": 3678, "name": "Heidelberg", "total": 812, "uploaded": 811, "latitude": 49.403159, "longitude": 8.676061, "radius": 30, "fillKey": "orange","match_total": 2298, "match": 392, "tumour": 305, "normal": 278},
+          {"name": "Heidelberg", "total": 812, "uploaded": 811, "latitude": 49.403159, "longitude": 8.676061, "radius": 29.9630541871921, "fillKey": "green"},              {"name": "Heidelberg", "total": 502, "uploaded": 504, "latitude": 49.403159, "longitude": 8.676061, "radius": 30, "fillKey": "orange","match": 252, "tumour": 190, "normal": 190, "project": "PBCA-DE"},
+        {"name": "Heidelberg", "total": 502, "uploaded": 504, "latitude": 49.403159, "longitude": 8.676061, "radius": 30.1195219123506, "fillKey": "green", "project": "PBCA-DE"}        {"name": "Heidelberg", "total": 195, "uploaded": 194, "latitude": 49.403159, "longitude": 8.676061, "radius": 20, "fillKey": "orange","match": 97, "tumour": 44, "normal": 44, "project": "MALY-DE"},
+        {"name": "Heidelberg", "total": 195, "uploaded": 194, "latitude": 49.403159, "longitude": 8.676061, "radius": 19.8974358974359, "fillKey": "green", "project": "MALY-DE"},
+        {"name": "Heidelberg", "total": 115, "uploaded": 115, "latitude": 49.403159, "longitude": 8.676061, "radius": 15, "fillKey": "orange","match": 44, "tumour": 71, "normal": 44, "project": "EOPC-DE"},
+        {"name": "Heidelberg", "total": 115, "uploaded": 115, "latitude": 49.403159, "longitude": 8.676061, "radius": 15, "fillKey": "green", "project": "EOPC-DE"},
+]

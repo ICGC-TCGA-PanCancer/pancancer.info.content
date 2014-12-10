@@ -1,0 +1,3 @@
+[
+        {"name": "Cambridge", "total": 43, "uploaded": 158, "latitude": 52.202544, "longitude": 0.131237 , "radius": 15, "fillKey": "orange","match": 79,"tumour": 0, "normal": , "project": "BRCA-EU"},
+        {"name": "Cambridge", "total": 43, "uploaded": 158, "latitude": 52.202544, "longitude": 0.131237 , "radius": 55.1162790697674, "fillKey": "green", "project": "BRCA-EU"}]
