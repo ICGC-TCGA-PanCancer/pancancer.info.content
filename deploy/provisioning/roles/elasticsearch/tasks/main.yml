@@ -21,7 +21,7 @@
     
 - name: Fetch Elasticsearch
   sudo: "{{ user_name }}"
-  get_url: dest=/mnt/tools url="download.elasticsearch.org/elasticsearch/elasticsearch/{{ elasticsearch_download }}.tar.gz"
+  get_url: dest=/mnt/tools url="http://download.elasticsearch.org/elasticsearch/elasticsearch/{{ elasticsearch_download }}.tar.gz"
 
 - name: Unarchive Elasticsearch
   sudo: "{{ user_name }}"
