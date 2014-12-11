@@ -72,7 +72,7 @@
 
 - name: Read Ubuntu Version Information
   sudo: True
-  shell: echo "egrep -o DISTRIB_RELEASE=[0-9]+.[0-9]+ /etc/lsb-release | egrep -o [0-9]+.[0-9]+" | bash
+  shell: chdir=~/gitroot/pancancer.info.content/deploy/configuration/ubuntu bash fetch_version.sh
   register: RELEASE
 
 - name: Download cghub tools
