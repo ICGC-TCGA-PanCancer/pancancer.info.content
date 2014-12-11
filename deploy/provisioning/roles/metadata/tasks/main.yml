@@ -38,7 +38,7 @@
   cpanm: name={{ item }}
   with_items:
       - XML::DOM
-      - Posix::
+      - POSIX
       - Data::Dumper
       - Getopt::Long
       - JSON
