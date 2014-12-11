@@ -29,7 +29,7 @@
   
 - name: Configure Apache Sites Available
   sudo: True
-  copy: src=/home/{{ user_name }}/gitroot/pancancer.info.content/deployment/configuration/apache2/sites-available/default.conf dest=/etc/apache2/sites-available/default.conf owner=root group=root mode=755
+  copy: src=/home/{{ user_name }}/gitroot/pancancer.info.content/deploy/configuration/apache2/sites-available/default.conf dest=/etc/apache2/sites-available/default.conf owner=root group=root mode=755
 
 - name: Symlink Apache Sites Available to Sites Enabled
   sudo: True
