@@ -24,7 +24,7 @@
 - name: Make sure /var/www does not exist
   sudo: True
   command: rm -rf /var/www
-  when WWW.stat.exists
+  when: WWW.stat.exists
 
 - name: Create symlink to /var/www from the deployment www environment
   sudo: True
