@@ -51,7 +51,6 @@
 #  with_items:
 #      - Const::Fast
 #      - XML::Simple
-#      - XML::DOM
 #      - WWW::Mechanize
 #      - Getopt::Long
 #      - String::Util
