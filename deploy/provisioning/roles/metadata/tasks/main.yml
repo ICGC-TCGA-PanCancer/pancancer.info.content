@@ -12,7 +12,6 @@
   sudo: True
   apt: name={{ item }} state=latest update_cache=yes
   with_items:
-        - apache2
         - git
         - python-pip
         - libtemplate-perl
@@ -27,25 +26,41 @@
         - libcrypt-ssleay-perl
         - libssl-dev
         
-- name: Install Perl Modules
+- name: Install Perl Modules for Transfer Scripts
   sudo: True
   cpanm: name={{ item }}
   with_items:
-      - LWP
       - WWW::Curl::Easy
       - Const::Fast
-      - XML::Simple
+
+- name: Install Perl Modules for Decider Scripts
+  sudo: True
+  cpanm: name={{ item }}
+  with_items:
       - XML::DOM
-      - WWW::Mechanize
+      - Posix::
+      - Data::Dumper
       - Getopt::Long
-      - XML::Simple
-      - String::Util
-      - File::Slurp
-      - Carp::Always
-      - IPC::System::Simple
-      - Time::ParseDate
-      - Date::Calc
-      - Net::Google::Spreadsheets
+      - JSON
+      - XML::LibXML
+      - Cwd
+
+#- name: Install Perl Modules for pancancer.info Scripts
+#  sudo: True
+#  cpanm: name={{ item }}
+#  with_items:
+#      - Const::Fast
+#      - XML::Simple
+#      - XML::DOM
+#      - WWW::Mechanize
+#      - Getopt::Long
+#      - String::Util
+#      - File::Slurp
+#      - Carp::Always
+#      - IPC::System::Simple
+#      - Time::ParseDate
+#      - Date::Calc
+#      - Net::Google::Spreadsheets
 
 - name: Install Python Modules
   sudo: True
