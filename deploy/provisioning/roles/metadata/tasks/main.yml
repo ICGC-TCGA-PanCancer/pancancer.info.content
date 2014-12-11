@@ -71,13 +71,19 @@
       - xmltodict
 
 - name: Read Ubuntu Version Information
-  sudo: True
-  shell: chdir=~/gitroot/pancancer.info.content/deploy/configuration/ubuntu bash fetch_version.sh
+  sudo: "{{ user_name }}"
+  shell: chdir=~/home/{{ user_name }}/gitroot/pancancer.info.content/deploy/configuration/ubuntu bash fetch_version.sh
   register: RELEASE
 
+- name: Check for cghub tools
+  sudo: "{{ user_name }}"
+  stat: path=/mnt/tools/genetorrent-common_3.8.6-ubuntu2.130-{{ RELEASE }}_amd64.deb
+  register: GTORRENT
+
 - name: Download cghub tools
-  sudo: True
+  sudo: "{{ user_name }}"
   get_url: dest=/mnt/tools url=https://cghub.ucsc.edu/software/downloads/GeneTorrent/3.8.6/genetorrent-common_3.8.6-ubuntu2.130-{{ RELEASE }}_amd64.deb
+  when: GTORRENT.stat.exists == False
   
 - name: Install cghub tools
   sudo: True
