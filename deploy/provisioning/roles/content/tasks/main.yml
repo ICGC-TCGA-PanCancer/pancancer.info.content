@@ -7,11 +7,24 @@
 - name: Check for /var/www
   stat: path=/var/www
   register: WWW
+  
+- name: Check for /var/www.old
+  stat: path=/var/www.old
+  register: WWWOLD
 
 - name: Deactivate existing /var/www
   sudo: True
   command: mv /var/www /var/www.old
-  when: WWW.stat.exists
+  when: WWW.stat.exists and WWWOLD.stat.exists == false
+
+- name: Check again for /var/www
+  stat: path=/var/www
+  register: WWW
+  
+- name: Make sure /var/www does not exist
+  sudo: True
+  command: rm -rf /var/www
+  when WWW.stat.exists
 
 - name: Create symlink to /var/www from the deployment www environment
   sudo: True
