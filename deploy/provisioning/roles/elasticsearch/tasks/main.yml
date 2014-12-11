@@ -49,11 +49,15 @@
 
 - name: Fetch Kibana Archive from Web
   sudo: "{{ user_name }}"
-  command: chdir=~/tmp wget https://download.elasticsearch.org/kibana/kibana/kibana-3.1.2.tar.gz
+  command: chdir=~/mnt/tools wget https://download.elasticsearch.org/kibana/kibana/kibana-3.1.2.tar.gz
 
 - name: Untar Kibana Archive
   sudo: "{{ user_name }}"  
-  command: chdir=~/tmp tar xvzf kibana-3.1.2.tar.gz
+  command: chdir=~/mnt/tools tar xvzf kibana-3.1.2.tar.gz
+
+- name: Create Elasticsearch Symlink
+  sudo: "{{ user_name }}"
+  file: src="/mnt/tools/kibana-3.1.2" dest=/mnt/tools/kibana state=link
   
 - name: Move the Kibana foler to the home folder
   sudo: "{{ user_name }}"
@@ -61,16 +65,15 @@
 
 - name: Configure Kibana
   sudo: "{{ user_name }}"
-  copy: src=~/gitroot/pancancer.info.content/deploy/configuration/kibana/config.js dest=~/deployment/kibana-3.1.2/config.js mode=755 owner={{ user_name }} group={{ user_name }} 
+  copy: src=~/gitroot/pancancer.info.content/deploy/configuration/kibana/config.js dest=/mnt/tools/kibana/config.js mode=755 owner={{ user_name }} group={{ user_name }} 
 
 - name: Symlink kibana into /var/www 
   sudo: "{{ user_name }}"
-  file: src=~/deployment/kibana-3.1.2 dest=/var/www/search state=link
+  file: src=/mnt/tools/kibana dest=/var/www/search state=link
 
 - name: Start Elasticsearch Service
   sudo: True
   command: sudo /etc/init.d/elasticsearch start
-
   
 - name: Activate Reverse Proxy for Apache2
   sudo: True
