@@ -93,10 +93,6 @@
   sudo: "{{ user_name }}"
   command: chdir=~/gitroot git clone https://github.com/ICGC-TCGA-PanCancer/pancancer-info.git
 
-#- name: Pull Down pancancer-info sandbox for home
-#  sudo: "{{ user_name }}"
-#  command: chdir=~/gitroot git clone -b {{ sandbox_branch }} https://github.com/ICGC-TCGA-PanCancer/pancancer-sandbox
-
 - name: Insert a copy of the sandbox into mnt for data collection
   sudo: "{{ user_name }}"
   command: chdir=/mnt/tools git clone -b {{ sandbox_branch }} https://github.com/ICGC-TCGA-PanCancer/pancancer-sandbox
