@@ -127,7 +127,7 @@
 
 - name: Install the Cron Job
   sudo: "{{ user_name }}"
-  command: crontab ~/gitroot/pancancer.info.config/configuration/crons/crontab
+  command: crontab ~/gitroot/pancancer.info.content/deploy/configuration/crons/crontab
   
 - name: Kick off crons immediately
   sudo: "{{ user_name }}"
