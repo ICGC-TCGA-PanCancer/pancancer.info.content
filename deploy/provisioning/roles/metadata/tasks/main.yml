@@ -31,15 +31,21 @@
   sudo: True
   cpanm: name={{ item }}
   with_items:
+      - LWP
       - WWW::Curl::Easy
       - Const::Fast
-      - Net::Google::Spreadsheets
-      - XML::DOM WWW::Mechanize
-      - Getopt::Long XML::Simple
-      - String::Util File::Slurp
-      - Carp::Always IPC::System::Simple
-      - Time::ParseDate Date::Calc
       - XML::Simple
+      - XML::DOM
+      - WWW::Mechanize
+      - Getopt::Long
+      - XML::Simple
+      - String::Util
+      - File::Slurp
+      - Carp::Always
+      - IPC::System::Simple
+      - Time::ParseDate
+      - Date::Calc
+      - Net::Google::Spreadsheets
 
 - name: Install Python Modules
   sudo: True
