@@ -132,6 +132,18 @@
   sudo: "{{ user_name }}"
   command: crontab ~/gitroot/pancancer.info.content/deploy/configuration/crons/crontab
 
+- name: Set execute bit on: generate_html_report.cron
+  sudo: "{{ user_name }}"
+  file: src=~/gitroot/pancancer.info.content/deploy/configuration/crons/generate_html_report.cron mode=771
+
+- name: Set execute bit on: run_me.sh
+  sudo: "{{ user_name }}"
+  file: src=~/gitroot/pancancer-sandbox/pcawg_metadata_parser/run_me.sh mode=771
+
+- name: Set execute bit on: deciders.cron
+  sudo: "{{ user_name }}"
+  file: src=~/gitroot/pancancer.info.content/deploy/configuration/crons/deciders.cron mode=771
+
 - name: Create Log Folder for Cron
   sudo: "{{ user_name }}"
   file: dest=~/logs mode=755 owner={{ user_name }} group={{ user_name }} state=directory
