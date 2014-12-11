@@ -123,7 +123,7 @@
 
 - name: Configure s3cmd Package
   sudo: "{{ user_name }}"
-  command: # Placeholder
+  command: echo "This is just a placeholder."
 
 - name: Install the Cron Job
   sudo: "{{ user_name }}"
