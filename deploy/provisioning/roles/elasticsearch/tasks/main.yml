@@ -18,10 +18,16 @@
   with_items:
     - git 
     - openjdk-7-jre
+
+- name: Check for Elasticsearch
+  sudo: "{{ user_name }}"
+  stat: path=/mnt/tools/{{ elasticsearch_download }}.tar.gz
+  register: ELASTIC
     
 - name: Fetch Elasticsearch
   sudo: "{{ user_name }}"
   get_url: dest=/mnt/tools url="http://download.elasticsearch.org/elasticsearch/elasticsearch/{{ elasticsearch_download }}.tar.gz"
+  when: ELASTIC.stat.exists == False
 
 - name: Unarchive Elasticsearch
   sudo: "{{ user_name }}"
@@ -47,9 +53,15 @@
   sudo: True
   command: update-rc.d elasticsearch defaults
 
+- name: Check for Kibana
+  sudo: "{{ user_name }}"
+  stat: path=/mnt/tools/kibana-3.1.2.tar.gz
+  register: KIBANA
+
 - name: Fetch Kibana Archive from Web
   sudo: "{{ user_name }}"
   command: chdir=/mnt/tools wget https://download.elasticsearch.org/kibana/kibana/kibana-3.1.2.tar.gz
+  when: KIBANA.stat.exists == False
 
 - name: Untar Kibana Archive
   sudo: "{{ user_name }}"  
