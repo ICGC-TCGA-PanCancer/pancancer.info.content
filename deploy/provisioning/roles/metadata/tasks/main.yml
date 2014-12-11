@@ -100,6 +100,10 @@
   sudo: "{{ user_name }}"
   command: chdir=~/gitroot git clone -b {{ sandbox_branch }} https://github.com/ICGC-TCGA-PanCancer/pancancer-sandbox
 
+- name: Insert a copy of the public-workflows into home for decider crons
+  sudo: "{{ user_name }}"
+  command: chdir=~/gitroot git clone -b {{ decider_branch }} https://github.com/SeqWare/public-workflows
+
 - name: Create gnosmetadata folder in /var/www
   sudo: "{{ user_name }}"
   file: dest=/var/www/gnos_metadata mode=755 owner={{ user_name }} group={{ user_name }} state=directory

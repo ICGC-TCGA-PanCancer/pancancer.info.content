@@ -1,3 +1,4 @@
 ---
  user_name: "ubuntu"
  sandbox_branch: "develop"
+ decider_branch: "develop"
