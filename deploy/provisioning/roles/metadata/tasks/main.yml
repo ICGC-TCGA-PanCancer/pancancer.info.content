@@ -77,17 +77,17 @@
 
 - name: Check for cghub tools
   sudo: "{{ user_name }}"
-  stat: path=/mnt/tools/genetorrent-common_3.8.6-ubuntu2.130-{{ RELEASE }}_amd64.deb
+  stat: path=/mnt/tools/genetorrent-common_3.8.6-ubuntu2.130-{{ RELEASE.stdout }}_amd64.deb
   register: GTORRENT
 
 - name: Download cghub tools
   sudo: "{{ user_name }}"
-  get_url: dest=/mnt/tools url=https://cghub.ucsc.edu/software/downloads/GeneTorrent/3.8.6/genetorrent-common_3.8.6-ubuntu2.130-{{ RELEASE }}_amd64.deb
+  get_url: dest=/mnt/tools url=https://cghub.ucsc.edu/software/downloads/GeneTorrent/3.8.6/genetorrent-common_3.8.6-ubuntu2.130-{{ RELEASE.stdout }}_amd64.deb
   when: GTORRENT.stat.exists == False
   
 - name: Install cghub tools
   sudo: True
-  shell: chdir=/mnt/tools dpkg -i genetorrent-common_3.8.6-ubuntu2.130-{{ RELEASE }}_amd64.deb
+  shell: chdir=/mnt/tools dpkg -i genetorrent-common_3.8.6-ubuntu2.130-{{ RELEASE.stdout }}_amd64.deb
 
 - name: Install the Git Repo for pancancer.info
   sudo: "{{ user_name }}"
