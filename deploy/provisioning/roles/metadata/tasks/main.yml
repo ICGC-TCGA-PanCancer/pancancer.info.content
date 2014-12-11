@@ -101,6 +101,10 @@
   sudo: "{{ user_name }}"
   command: chdir=/mnt/tools git clone -b {{ sandbox_branch }} https://github.com/ICGC-TCGA-PanCancer/pancancer-sandbox
 
+- name: Insert a copy of the sandbox into home for gnos transfer tool
+  sudo: "{{ user_name }}"
+  command: chdir=~/gitroot git clone -b {{ sandbox_branch }} https://github.com/ICGC-TCGA-PanCancer/pancancer-sandbox
+
 - name: Create gnosmetadata folder in /var/www
   sudo: "{{ user_name }}"
   file: dest=/var/www/gnos_metadata mode=755 owner={{ user_name }} group={{ user_name }} state=directory
