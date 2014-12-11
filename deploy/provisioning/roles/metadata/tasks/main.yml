@@ -72,7 +72,7 @@
 
 - name: Read Ubuntu Version Information
   sudo: "{{ user_name }}"
-  shell: chdir=~/gitroot/pancancer.info.content/deploy/configuration/ubuntu sh fetch_version.sh
+  shell: bash ~/gitroot/pancancer.info.content/deploy/configuration/ubuntu/fetch_version.sh
   register: RELEASE
 
 - name: Check for cghub tools
