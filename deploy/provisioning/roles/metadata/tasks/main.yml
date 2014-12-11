@@ -72,7 +72,7 @@
 
 - name: Read Ubuntu Version Information
   sudo: True
-  shell: 'cat /etc/lsb-release | egrep -o DISTRIB_RELEASE=.+ | egrep -o [0-9]+\.[0-9]+'
+  shell: "egrep -o DISTRIB_RELEASE=\([0-9]+\.[0-9]+\) /etc/lsb-release | egrep -o [0-9]+\.[0-9]+"
   register: RELEASE
 
 - name: Download cghub tools
