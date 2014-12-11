@@ -3,7 +3,7 @@ pancancer.info.content
 
 Content for the pancancer.info website, organized for deployment.
 
-To deploy the website in a new Ubuntu environment:
+To deploy the website in a new Ubuntu environment (14.04 recommended):
 ```
 curl https://raw.githubusercontent.com/ICGC-TCGA-PanCancer/pancancer.info.content/master/install.sh | sh
 ```
