@@ -6,4 +6,3 @@
     - { role: content }
     - { role: elasticsearch }
     - { role: metadata }
-    
