@@ -6,16 +6,16 @@
 
 - name: Check for /var/www
   stat: path=/var/www
-  register: www
+  register: WWW
 
 - name: Deactivate existing /var/www
   sudo: True
   command: mv /var/www /var/www.old
-  when: www.stat.exists
+  when: WWW.stat.exists
 
 - name: Assure /var/www exists
   sudo: True
-  file: path=/var/www state=directory owner={{ user_name }} group={{ user_name }} state=directory
+  file: path=/var/www owner={{ user_name }} group={{ user_name }} state=directory
 
 - name: Create symlink to /var/www from the deployment www environment
   sudo: True
