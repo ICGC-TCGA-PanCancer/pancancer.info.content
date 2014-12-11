@@ -49,19 +49,15 @@
 
 - name: Fetch Kibana Archive from Web
   sudo: "{{ user_name }}"
-  command: chdir=~/mnt/tools wget https://download.elasticsearch.org/kibana/kibana/kibana-3.1.2.tar.gz
+  command: chdir=/mnt/tools wget https://download.elasticsearch.org/kibana/kibana/kibana-3.1.2.tar.gz
 
 - name: Untar Kibana Archive
   sudo: "{{ user_name }}"  
-  command: chdir=~/mnt/tools tar xvzf kibana-3.1.2.tar.gz
+  command: chdir=/mnt/tools tar xvzf kibana-3.1.2.tar.gz
 
 - name: Create Elasticsearch Symlink
   sudo: "{{ user_name }}"
   file: src="/mnt/tools/kibana-3.1.2" dest=/mnt/tools/kibana state=link
-  
-- name: Move the Kibana foler to the home folder
-  sudo: "{{ user_name }}"
-  command: mv ~/tmp/kibana-3.1.2 ~/deployment
 
 - name: Configure Kibana
   sudo: "{{ user_name }}"
