@@ -13,15 +13,10 @@
   command: mv /var/www /var/www.old
   when: WWW.stat.exists
 
-- name: Assure /var/www exists
-  sudo: True
-  file: path=/var/www owner={{ user_name }} group={{ user_name }} state=directory
-
 - name: Create symlink to /var/www from the deployment www environment
   sudo: True
   file: src=/home/{{ user_name }}/gitroot/pancancer.info.content/www dest=/var/www state=link
   
-
 
 
 
