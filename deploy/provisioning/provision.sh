@@ -2,6 +2,11 @@
 
 GITROOT=`echo ~/gitroot`
 
+# Get password for encrypted files
+echo "Enter the encryption password:"
+read cached_creds
+export cached_creds
+
 # Create local gitroot folder
 mkdir $GITROOT
 
@@ -20,3 +25,4 @@ git clone https://github.com/ICGC-TCGA-PanCancer/pancancer.info.content.git
 cd $GITROOT/pancancer.info.content/deploy/provisioning
 ansible-playbook -i inventory site.yml
 
+unset cached_creds

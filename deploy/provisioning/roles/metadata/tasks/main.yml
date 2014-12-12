@@ -127,7 +127,11 @@
 
 - name: Configure s3cmd Package
   sudo: "{{ user_name }}"
-  copy: src=~/gitroot/pancancer.info.content/deploy/configuration/bucket/.s3cfg dest=~/.s3cfg owner={{ user_name }} group={{ user_name }} mode=0600
+  copy: src=~/gitroot/pancancer.info.content/deploy/configuration/bucket/.s3cfg.256 dest=~/.s3cfg.256 owner={{ user_name }} group={{ user_name }} mode=0600
+
+- name: Decrypt s3cmd configuration
+  sudo: "{{ user_name }}"
+  shell: chdir=~ openssl aes-256-cbc -d -in .s3cfg.256 -out .s3cfg -pass env:cached_creds
 
 - name: Install the Cron Job
   sudo: "{{ user_name }}"
