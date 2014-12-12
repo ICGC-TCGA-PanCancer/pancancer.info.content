@@ -37,6 +37,7 @@
   sudo: True
   cpanm: name={{ item }}
   with_items:
+      - Data::UUID
       - XML::DOM
       - POSIX
       - Data::Dumper
@@ -126,7 +127,7 @@
 
 - name: Configure s3cmd Package
   sudo: "{{ user_name }}"
-  command: echo "This is just a placeholder."
+  copy: src=~/gitroot/pancancer.info.content/deploy/configuration/bucket/.s3cfg dest=~/.s3cfg owner={{ user_name }} group={{ user_name }} mode=0600
 
 - name: Install the Cron Job
   sudo: "{{ user_name }}"
