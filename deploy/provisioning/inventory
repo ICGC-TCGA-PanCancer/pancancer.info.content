@@ -1,0 +1,2 @@
+[pancancer]
+localhost              ansible_connection=local

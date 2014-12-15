@@ -1,0 +1,5 @@
+#!/bin/bash
+
+set -e
+
+/home/ubuntu/gitroot/public-workflows/decider-bwa-pancancer/decider.cron > /home/ubuntu/gitroot/public-workflows/decider-bwa-pancancer/decider.cron.log 2>&1

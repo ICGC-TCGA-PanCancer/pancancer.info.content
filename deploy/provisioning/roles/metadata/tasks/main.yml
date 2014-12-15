@@ -1,0 +1,160 @@
+---
+
+- name: Create Git Repo Root
+  sudo: "{{ user_name }}"
+  file: dest=~/gitroot mode=755 owner={{ user_name }} group={{ user_name }} state=directory
+
+- name: Create Data Root on /mnt
+  sudo: True
+  file: dest=/mnt/data mode=755 owner={{ user_name }} group={{ user_name }} state=directory
+
+- name: Install Required Packages
+  sudo: True
+  apt: name={{ item }} state=latest update_cache=yes
+  with_items:
+        - git
+        - python-pip
+        - libtemplate-perl
+        - cpanminus
+        - libcurl4-openssl-dev
+        - libboost-all-dev
+        - libxerces-c3.1
+        - libxqilla6
+        - build-essential
+        - libxml2-dev
+        - libexpat1-dev
+        - libcrypt-ssleay-perl
+        - libssl-dev
+        
+- name: Install Perl Modules for Transfer Scripts
+  sudo: True
+  cpanm: name={{ item }}
+  with_items:
+      - WWW::Curl::Easy
+      - Const::Fast
+
+- name: Install Perl Modules for Decider Scripts
+  sudo: True
+  cpanm: name={{ item }}
+  with_items:
+      - Data::UUID
+      - XML::DOM
+      - POSIX
+      - Data::Dumper
+      - Getopt::Long
+      - JSON
+      - XML::LibXML
+      - Cwd
+
+#- name: Install Perl Modules for pancancer.info Scripts
+#  sudo: True
+#  cpanm: name={{ item }}
+#  with_items:
+#      - Const::Fast
+#      - XML::Simple
+#      - WWW::Mechanize
+#      - Getopt::Long
+#      - String::Util
+#      - File::Slurp
+#      - Carp::Always
+#      - IPC::System::Simple
+#      - Time::ParseDate
+#      - Date::Calc
+#      - Net::Google::Spreadsheets
+
+- name: Install Python Modules
+  sudo: True
+  command: pip install {{ item }}
+  with_items:
+      - python-dateutil
+      - elasticsearch
+      - xmltodict
+
+- name: Read Ubuntu Version Information
+  sudo: "{{ user_name }}"
+  shell: bash ~/gitroot/pancancer.info.content/deploy/configuration/ubuntu/fetch_version.sh
+  register: RELEASE
+
+- name: Check for cghub tools
+  sudo: "{{ user_name }}"
+  stat: path=/mnt/tools/genetorrent-common_3.8.6-ubuntu2.130-{{ RELEASE.stdout }}_amd64.deb
+  register: GTORRENT
+
+- name: Download cghub tools
+  sudo: "{{ user_name }}"
+  get_url: dest=/mnt/tools url=https://cghub.ucsc.edu/software/downloads/GeneTorrent/3.8.6/genetorrent-common_3.8.6-ubuntu2.130-{{ RELEASE.stdout }}_amd64.deb
+  when: GTORRENT.stat.exists == False
+  
+- name: Install cghub tools
+  sudo: True
+  shell: chdir=/mnt/tools dpkg -i genetorrent-common_3.8.6-ubuntu2.130-{{ RELEASE.stdout }}_amd64.deb
+
+- name: Install the Git Repo for pancancer.info
+  sudo: "{{ user_name }}"
+  command: chdir=~/gitroot git clone https://github.com/ICGC-TCGA-PanCancer/pancancer-info.git
+
+- name: Insert a copy of the sandbox into mnt for data collection
+  sudo: "{{ user_name }}"
+  command: chdir=/mnt/tools git clone -b {{ sandbox_branch }} https://github.com/ICGC-TCGA-PanCancer/pancancer-sandbox
+
+- name: Insert a copy of the sandbox into home for gnos transfer tool
+  sudo: "{{ user_name }}"
+  command: chdir=~/gitroot git clone -b {{ sandbox_branch }} https://github.com/ICGC-TCGA-PanCancer/pancancer-sandbox
+
+- name: Insert a copy of the public-workflows into home for decider crons
+  sudo: "{{ user_name }}"
+  command: chdir=~/gitroot git clone -b {{ decider_branch }} https://github.com/SeqWare/public-workflows
+
+- name: Create gnosmetadata folder in /var/www
+  sudo: "{{ user_name }}"
+  file: dest=/var/www/gnos_metadata mode=755 owner={{ user_name }} group={{ user_name }} state=directory
+
+- name: Fetch s3cmd Repo GPG Key
+  sudo: True
+  shell: chdir=/tmp wget -O- -q http://s3tools.org/repo/deb-all/stable/s3tools.key | sudo apt-key add -
+
+- name: Add s3cmd Repo 
+  sudo: True 
+  shell: chdir=/tmp wget -O /etc/apt/sources.list.d/s3tools.list http://s3tools.org/repo/deb-all/stable/s3tools.list
+
+- name: Force apt-get update
+  sudo: True
+  command: apt-get update
+
+- name: Install s3cmd Package
+  sudo: True
+  apt: name=s3cmd state=latest update_cache=yes
+
+- name: Configure s3cmd Package
+  sudo: "{{ user_name }}"
+  copy: src=~/gitroot/pancancer.info.content/deploy/configuration/bucket/.s3cfg.256 dest=~/.s3cfg.256 owner={{ user_name }} group={{ user_name }} mode=0600
+
+- name: Decrypt s3cmd configuration
+  sudo: "{{ user_name }}"
+  shell: chdir=~ openssl aes-256-cbc -d -in .s3cfg.256 -out .s3cfg -pass env:cached_creds
+
+- name: Install the Cron Job
+  sudo: "{{ user_name }}"
+  command: crontab ~/gitroot/pancancer.info.content/deploy/configuration/crons/crontab
+
+- name: Set execute bit on generate_html_report.cron
+  sudo: "{{ user_name }}"
+  file: path=~/gitroot/pancancer.info.content/deploy/configuration/crons/generate_html_report.cron mode=771
+
+- name: Set execute bit on run_me.sh
+  sudo: "{{ user_name }}"
+  file: path=~/gitroot/pancancer-sandbox/pcawg_metadata_parser/run_me.sh mode=771
+
+- name: Set execute bit on deciders.cron
+  sudo: "{{ user_name }}"
+  file: path=~/gitroot/pancancer.info.content/deploy/configuration/crons/deciders.cron mode=771
+
+- name: Create Log Folder for Cron
+  sudo: "{{ user_name }}"
+  file: dest=~/logs mode=755 owner={{ user_name }} group={{ user_name }} state=directory
+
+- name: Kick off crons immediately
+  sudo: "{{ user_name }}"
+  command: echo "All Done here."
+  
+

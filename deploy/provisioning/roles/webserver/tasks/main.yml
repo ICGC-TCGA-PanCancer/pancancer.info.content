@@ -1,0 +1,48 @@
+---
+
+- name: Create Git Repo Root
+  sudo: "{{ user_name }}"
+  file: dest=~/gitroot mode=755 owner={{ user_name }} group={{ user_name }} state=directory
+
+- name: Install Required Packages
+  sudo: True
+  apt: name={{ item }} state=latest update_cache=yes
+  with_items:
+        - apache2
+        - git
+
+- name: Remove Apache Default Sites Enabled
+  sudo: True
+  command: chdir=/etc/apache2 rm -rf sites-enabled
+  
+- name: Remove Apache Default Sites Available
+  sudo: True
+  command: chdir=/etc/apache2 rm -rf sites-available
+
+- name: Prepare Apache Sites Available
+  sudo: True
+  file: dest=/etc/apache2/sites-available mode=755 owner=root group=root state=directory
+
+- name: Prepare Apache Sites Enabled
+  sudo: True
+  file: dest=/etc/apache2/sites-enabled mode=755 owner=root group=root state=directory
+  
+- name: Configure Apache Sites Available
+  sudo: True
+  copy: src=/home/{{ user_name }}/gitroot/pancancer.info.content/deploy/configuration/apache2/sites-available/default.conf dest=/etc/apache2/sites-available/default.conf owner=root group=root mode=755
+
+- name: Symlink Apache Sites Available to Sites Enabled
+  sudo: True
+  file: src=/etc/apache2/sites-available/default.conf dest=/etc/apache2/sites-enabled/000-default.conf state=link
+
+- name: Enable Apache Proxy
+  sudo: True
+  command: a2enmod proxy
+ 
+- name: Restart Apache2 Service
+  sudo: True
+  service: name=apache2 state=restarted
+
+
+  
+
