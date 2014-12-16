@@ -118,7 +118,7 @@ Details about this index can be found <a href="https://github.com/ICGC-TCGA-PanC
 
 <script type="text/javascript">
 $(document).ready(function () {
-    report_data_url = "gnos_metadata/latest/reports/donors_alignment_summary/"; 
+    var report_data_url = "gnos_metadata/latest/reports/donors_alignment_summary/"; 
     $.getJSON(report_data_url + "donor.json",
     function (json) {
         var t_both_aligned = 0;
@@ -168,7 +168,7 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-    report_data_url = "gnos_metadata/latest/reports/gnos_repo_summary/"; 
+    var report_data_url = "gnos_metadata/latest/reports/gnos_repo_summary/"; 
     $.getJSON(report_data_url + "live_alignment_completed_donors.repos.json",
     function (json) {
         var Barcelona = 0;
