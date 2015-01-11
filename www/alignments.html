@@ -115,7 +115,7 @@ $(document).ready(function () {
         tr = $('<tr/>');
         tr.append("<td><font color=\"red\">[Total]</font></td>");
         for (var i = 0; i < total.length; i++) {
-            tr.append("<td>" + (i == 0 ? "<a target='abc' href='search/#/dashboard/elasticsearch/PCAWG%20Donors'>" : "") + total[i] + (i == 0 ? "</a>" : "") + "</td>");
+            tr.append("<td>" + total[i] + "</td>");
         }
         $("table[name='x9']").append(tr);
 
