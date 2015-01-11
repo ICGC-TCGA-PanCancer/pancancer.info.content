@@ -62,7 +62,7 @@
 
 <h2>Upload & Alignment</h2>    
 <center>
-<p>For access to the hourly-created JSON files used for this table and our ElasticSearch index please click <a href="http://pancancer.info/gnos_metadata/">here</a>.<br>
+<p>For access to the daily-created JSON files used for this table and our ElasticSearch index please click <a href="http://pancancer.info/gnos_metadata/">here</a>.<br>
 Details about this index can be found <a href="https://github.com/ICGC-TCGA-PanCancer/pancancer-sandbox/tree/develop/pcawg_metadata_parser">here</a>.</p>
 </center>
 
@@ -139,6 +139,22 @@ Details about this index can be found <a href="https://github.com/ICGC-TCGA-PanC
 </div>
 
 <script type="text/javascript">
+// some shared variables
+var repo_name = {
+    'bsc': 'Barcelona',
+    'osdc-icgc': 'Chicago',
+    'dkfz': 'Heidelberg',
+    'ebi': 'London',
+    'cghub': 'Santa Cruz',
+    'etri': 'Seoul',
+    'riken': 'Tokyo'
+}
+var repos = ['bsc', 'osdc-icgc', 'dkfz',
+              'ebi', 'cghub', 'etri', 'riken'
+            ];
+
+
+// Total Donor Info table
 $(document).ready(function () {
     var report_data_url = "gnos_metadata/latest/reports/donors_alignment_summary/"; 
     $.getJSON(report_data_url + "donor.json",
@@ -189,21 +205,15 @@ $(document).ready(function () {
     });
 });
 
-var repo_name = {
-    'bsc': 'Barcelona',
-    'osdc-icgc': 'Chicago',
-    'dkfz': 'Heidelberg',
-    'ebi': 'London',
-    'cghub': 'Santa Cruz',
-    'etri': 'Seoul',
-    'riken': 'Tokyo'
-}
-var repos = ['bsc', 'osdc-icgc', 'dkfz',
-              'ebi', 'cghub', 'etri', 'riken'
-            ];
 
+// GNOS summary donor table, for aligned BAM synchronization and variant calling status
 $(document).ready(function () {
-    var report_data_url = "gnos_metadata/latest/reports/gnos_repo_summary/"; 
+    var report_data_url = "gnos_metadata/latest/reports/gnos_repo_summary/";
+    var sanger_variant_data = {}
+    $.getJSON(report_data_url + "live_sanger_variant_called_donors.repos.json", function(data){
+        sanger_variant_data = data
+    });
+
     $.getJSON(report_data_url + "live_alignment_completed_donors.repos.json",
     function (json) {
         var total = [0, 0, 0, 0, 0, 0, 0, 0];
@@ -212,14 +222,36 @@ $(document).ready(function () {
         for (var i = 0; i < Object.keys(json).length; i++) {
             tr = $('<tr/>');
             tr.append("<td>" + repo_name[repos[i]] + "</td>");
-            tr.append("<td>" + json[repos[i]]['_ori_count'][0] + "</td>");
+            tr.append("<td>" 
+                + json[repos[i]]['_ori_count'][0]
+                + " ["
+                + (sanger_variant_data[repos[i]]['_ori_count'][0] == undefined
+                   ? 0 : sanger_variant_data[repos[i]]['_ori_count'][0])
+                + "]"
+                + "</td>");
             total[0] += json[repos[i]]['_ori_count'][0];
             
             for (var j = 0; j < repos.length; j++) {
-                var cell_value = json[repos[i]][repos[j]] == undefined ? 0 : json[repos[i]][repos[j]][0];
-                var url = report_data_url + "live_alignment_completed_donors." + repos[i] + "." + repos[j] + ".txt";
-                tr.append("<td>" + "<a href='" + url + "'>"  + cell_value + "</a>" + "</td>");
-                total[j+1] += cell_value;
+                var aligned_donors = json[repos[i]][repos[j]] == undefined ? 0 : json[repos[i]][repos[j]][0];
+                var sanger_called_donors = sanger_variant_data[repos[i]] == undefined ?
+                    0 : (sanger_variant_data[repos[i]][repos[j]] == undefined ?
+                            0 : sanger_variant_data[repos[i]][repos[j]]);
+                var aligned_donors_url = report_data_url
+                                         + "live_alignment_completed_donors."
+                                         + repos[i] + "." + repos[j] + ".txt";
+                var sanger_called_donors_url = report_data_url
+                                         + "live_sanger_variant_called_donors."
+                                         + repos[i] + "." + repos[j] + ".txt";
+                tr.append("<td>" + (aligned_donors == 0 ? "" : "<a href='" + aligned_donors_url + "'>")
+                                 + aligned_donors
+                                 + (aligned_donors == 0 ? "" : "</a>")
+                                 + " ["
+                                 + (sanger_called_donors == 0 ? "" : "<a href='" + sanger_called_donors_url + "'>")
+                                 + sanger_called_donors
+                                 + (sanger_called_donors == 0 ? "" : "</a>")
+                                 + "]"
+                                 + "</td>");
+                total[j+1] += aligned_donors;
             }
             $("table[name='x10']").append(tr);
         }
@@ -242,6 +274,8 @@ $(document).ready(function () {
     });
 });
 
+
+// GNOS summary specimen table, for aligned BAM synchronization
 $(document).ready(function () {
     var report_data_url = "gnos_metadata/latest/reports/gnos_repo_summary/"; 
     $.getJSON(report_data_url + "live_alignment_completed_donors.repos.json",
