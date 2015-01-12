@@ -132,12 +132,12 @@ height:570px;
 <script type="text/javascript" src="http://bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 
 <div id="header1">
-                <h1 style="float:left;margin-left:10px;font-size:25px;">PANCANCER.INFO</h1>
+                <h1 style="float:left;margin-left:10px;font-size:25px;"><a href="/">PANCANCER.INFO</a></h1>
                 <center><div id="inside">
                  <ul class="tab-links">
                                 <!-- <li><a href="data_freeze">Data Freeze</a></li> -->
                                 <li><a href="uploads.html">Uploads</a></li>
-                                <li><a href="index.html">Alignments</a></li>
+                                <li><a href="alignments.html">Alignments</a></li>
 				<li><a href="qc">QC Metrics</a></li> 
 				<!-- <li><a href="trajectory">Trajectory</a></li> -->
 				<li><a href="transfers.html">Transfers</a></li>
