@@ -69,8 +69,7 @@ Details about this index can be found <a href="https://github.com/ICGC-TCGA-PanC
 <table name ="x10" id="rounded-corner" summary="">
 <thead>
 <tr>
-    <th nowrap>GNOS Repo</th>
-    <th>Donors aligned at</th>
+    <th nowrap>Donors aligned at<br/>(donor count)</th>
     <th>Available at Barcelona</th>
     <th>Available at Chicago</th>
     <th>Available at Heidelberg</th>
@@ -217,10 +216,14 @@ $(document).ready(function () {
 
         for (var i = 0; i < Object.keys(json).length; i++) {
             tr = $('<tr/>');
-            tr.append("<td>" + repo_name[repos[i]] + "</td>");
-            tr.append("<td>" 
-                + json[repos[i]]['_ori_count'][0]
-                + "</td>");
+            tr.append("<td>" + repo_name[repos[i]] 
+                             + " ("
+                             + json[repos[i]]['_ori_count'][0]
+                             + ")"
+                             + "</td>");
+            //tr.append("<td>" 
+            //    + json[repos[i]]['_ori_count'][0]
+            //    + "</td>");
             total[0] += json[repos[i]]['_ori_count'][0];
             
             for (var j = 0; j < repos.length; j++) {
@@ -243,8 +246,8 @@ $(document).ready(function () {
             }
         }
         tr = $('<tr/>');
-        tr.append("<td><font color=\"red\">[Total]</font></td>");
-        for (var i = 0; i < total.length; i++) {
+        tr.append("<td><font color=\"red\">[Total ("+total[0]+")]</font></td>");
+        for (var i = 1; i < total.length; i++) {
             tr.append("<td>" + total[i] + "</td>");
         }
         $("table[name='x10']").append(tr);
