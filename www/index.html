@@ -7,8 +7,6 @@
         <meta http-equiv="content-type" content="text/html;charset=utf-8" />
         <meta name="generator" content="Geany 1.23.1" />
         <meta charset="utf-8" http-equiv="refresh" content="600">
-        <script src="http://d3js.org/d3.v3.min.js"></script>
-        <script src="http://d3js.org/topojson.v1.min.js"></script>
         <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <link rel="stylesheet" type="text/css" href="style1.css">
         <!-- I recommend you host this file on your own, since this will change without warning -->
@@ -46,8 +44,8 @@
                          <div id="inside">
                  <ul class="tab-links">
 				<!-- <li><a href="data_freeze">Data Freeze</a></li> -->
-                                <li><a href="uploads.html">Uploads</a></li>
-                                <li><a href="index.html">Alignments</a></li>
+                <li><a href="uploads.html">Uploads</a></li>
+                <li><a href="alignments.html">Alignments</a></li>
 				<li><a href="qc">QC Metrics</a></li> 
 				<!-- <li><a href="trajectory">Trajectory</a></li> -->
 				<li><a href="transfers.html">Transfers</a></li>
@@ -56,19 +54,64 @@
                  </div>
   <h2>ICGC/TCGA PanCancer Status</h2>
 
-  <p style="width:900px;">The map below shows the number of specimens whose unaligned, lane-level WGS reads have been uploaded to a GNOS repository at one of the PanCancer clouds. Typically there are two specimens per donor, a tumor and a normal, and we expect approximately 3,000 specimens from ICGC and 2,000 from TCGA. It also
-    shows the count of those specimens aligned using the project's BWA-Mem workflow.  For more information see our
+  <p style="width:900px;">For more information see our
     <a href="https://wiki.oicr.on.ca/display/PANCANCER/PCAWG+Home">Wiki Space</a>.</p>
 
-<h2>Upload & Alignment</h2>    
 <center>
-<p>For access to the hourly-created JSON files used for this table and our ElasticSearch index please click <a href="http://pancancer.info/gnos_metadata/">here</a>.<br>
+<p>For access to the daily-created JSON files used for the following tables and our ElasticSearch index please click <a href="gnos_metadata/">here</a>.<br>
 Details about this index can be found <a href="https://github.com/ICGC-TCGA-PanCancer/pancancer-sandbox/tree/develop/pcawg_metadata_parser">here</a>.</p>
 </center>
-<div id="#datatotal" style="width:911px;">
-<h2 style="float:left;">Total Donor Info</h2>
-<p style="float:left;">A comparison of donor alignment status across projects. This removes test data and factors in duplication of specimens across multiple GNOS repositories, producing the most accurate count of available donors we have available.</p>
 
+<div id="#datatotal" style="width:911px;">
+<h2 style="float:left;">Aligned Donor Sets Available at GNOS Repositories (Live)</h2>
+<p style="float:left;">This table tracks the number of completed donor sets that have been synchronized from the repo that did the alignment to other repos.</p>
+<p>
+<table name ="x10" id="rounded-corner" summary="">
+<thead>
+<tr>
+    <th nowrap>Donors aligned at<br/>(donor count)</th>
+    <th>Available at Barcelona</th>
+    <th>Available at Chicago</th>
+    <th>Available at Heidelberg</th>
+    <th>Available at London</th>
+    <th>Available at Santa Cruz</th>
+    <th>Available at Seoul</th>
+    <th>Available at Tokyo</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+</p>
+</div>
+
+<div id="#datatotal" style="width:911px;">
+<h2 style="float:left;">Aligned Specimens Available at GNOS Repositories (Live)</h2>
+<p style="float:left;">This table tracks the number of specimens that have been synchronized from the repo that did the alignment to other repos.</p>
+<p>
+<table name ="x11" id="rounded-corner" summary="">
+<thead>
+<tr>
+    <th nowrap>GNOS Repo</th>
+    <th>Specimens aligned at</th>
+    <th>Available at Barcelona</th>
+    <th>Available at Chicago</th>
+    <th>Available at Heidelberg</th>
+    <th>Available at London</th>
+    <th>Available at Santa Cruz</th>
+    <th>Available at Seoul</th>
+    <th>Available at Tokyo</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+</p>
+</div>
+
+<div id="#datatotal" style="width:911px;">
+<h2 style="float:left;">Total Donor Info (Live)</h2>
+<p style="float:left;">A comparison of donor alignment status across projects. This removes test data and factors in duplication of specimens across multiple GNOS repositories, producing the most accurate count of available donors we have available.</p>
 <p>
 <table name ="x9" id="rounded-corner" summary="">
 <thead>
@@ -91,8 +134,24 @@ Details about this index can be found <a href="https://github.com/ICGC-TCGA-PanC
 </div>
 
 <script type="text/javascript">
+// some shared variables
+var repo_name = {
+    'bsc': 'Barcelona',
+    'osdc-icgc': 'Chicago',
+    'dkfz': 'Heidelberg',
+    'ebi': 'London',
+    'cghub': 'Santa Cruz',
+    'etri': 'Seoul',
+    'riken': 'Tokyo'
+}
+var repos = ['bsc', 'osdc-icgc', 'dkfz',
+              'ebi', 'cghub', 'etri', 'riken'
+            ];
+
+
+// Total Donor Info table
 $(document).ready(function () {
-    report_data_url = "gnos_metadata/latest/reports/donors_alignment_summary/"; 
+    var report_data_url = "gnos_metadata/latest/reports/donors_alignment_summary/"; 
     $.getJSON(report_data_url + "donor.json",
     function (json) {
         var t_both_aligned = 0;
@@ -117,7 +176,7 @@ $(document).ready(function () {
         tr = $('<tr/>');
         tr.append("<td><font color=\"red\">[Total]</font></td>");
         for (var i = 0; i < total.length; i++) {
-            tr.append("<td>" + (i == 0 ? "<a target='abc' href='search/#/dashboard/elasticsearch/PCAWG%20Donors'>" : "") + total[i] + (i == 0 ? "</a>" : "") + "</td>");
+            tr.append("<td>" + total[i] + "</td>");
         }
         $("table[name='x9']").append(tr);
 
@@ -140,211 +199,108 @@ $(document).ready(function () {
         $("table[name='x9']").append(tfoot);
     });
 });
+
+
+// GNOS summary donor table, for aligned BAM synchronization and variant calling status
+$(document).ready(function () {
+    var report_data_url = "gnos_metadata/latest/reports/gnos_repo_summary/";
+    var sanger_variant_data = {}
+    $.getJSON(report_data_url + "live_sanger_variant_called_donors.repos.json", function(data){
+        sanger_variant_data = data
+    });
+
+    $.getJSON(report_data_url + "live_alignment_completed_donors.repos.json",
+    function (json) {
+        var total = [0, 0, 0, 0, 0, 0, 0, 0];
+        var tr;
+
+        for (var i = 0; i < Object.keys(json).length; i++) {
+            tr = $('<tr/>');
+            tr.append("<td>" + repo_name[repos[i]] 
+                             + " ("
+                             + json[repos[i]]['_ori_count'][0]
+                             + ")"
+                             + "</td>");
+            //tr.append("<td>" 
+            //    + json[repos[i]]['_ori_count'][0]
+            //    + "</td>");
+            total[0] += json[repos[i]]['_ori_count'][0];
+            
+            for (var j = 0; j < repos.length; j++) {
+                var aligned_donors = json[repos[i]][repos[j]] == undefined ? 0 : json[repos[i]][repos[j]][0];
+                var aligned_donors_url = report_data_url
+                                         + "live_alignment_completed_donors."
+                                         + repos[i] + "." + repos[j] + ".txt";
+                tr.append("<td>" + (aligned_donors == 0 ? "" : "<a href='" + aligned_donors_url + "'>")
+                                 + aligned_donors
+                                 + (aligned_donors == 0 ? "" : "</a>")
+                                 + "</td>");
+                total[j+1] += aligned_donors;
+            }
+            $("table[name='x10']").append(tr);
+        }
+
+        for (var i = 0; i < json.length; i++) {
+            for (var j = 0; j < ctypes.length; j++) {
+                total[j] += json[i][ctypes[j]][0];
+            }
+        }
+        tr = $('<tr/>');
+        tr.append("<td><font color=\"red\">[Total ("+total[0]+")]</font></td>");
+        for (var i = 1; i < total.length; i++) {
+            tr.append("<td>" + total[i] + "</td>");
+        }
+        $("table[name='x10']").append(tr);
+
+        tfoot = $('<tfoot/>');
+        //tfoot.append('<tr><td colspan="50">*Report processed: ' + json[0]['timestamp'] + '</td></tr>');
+        $("table[name='x10']").append(tfoot);
+    });
+});
+
+
+// GNOS summary specimen table, for aligned BAM synchronization
+$(document).ready(function () {
+    var report_data_url = "gnos_metadata/latest/reports/gnos_repo_summary/"; 
+    $.getJSON(report_data_url + "live_alignment_completed_donors.repos.json",
+    function (json) {
+        var total = [0, 0, 0, 0, 0, 0, 0, 0];
+        var tr;
+
+        for (var i = 0; i < Object.keys(json).length; i++) {
+            tr = $('<tr/>');
+            tr.append("<td>" + repo_name[repos[i]] + "</td>");
+            tr.append("<td>" + (json[repos[i]]['_ori_count'][1] + json[repos[i]]['_ori_count'][2])+ "</td>");
+            total[0] += json[repos[i]]['_ori_count'][1] + json[repos[i]]['_ori_count'][2];
+            
+            for (var j = 0; j < repos.length; j++) {
+                var cell_value = json[repos[i]][repos[j]] == undefined ? 0 : (json[repos[i]][repos[j]][1] + json[repos[i]][repos[j]][2]);
+                tr.append("<td>" + cell_value + "</td>");
+                total[j+1] += cell_value;
+            }
+            $("table[name='x11']").append(tr);
+        }
+
+        for (var i = 0; i < json.length; i++) {
+            for (var j = 0; j < ctypes.length; j++) {
+                total[j] += json[i][ctypes[j]][1] + json[i][ctypes[j]][2];
+            }
+        }
+        tr = $('<tr/>');
+        tr.append("<td><font color=\"red\">[Total]</font></td>");
+        for (var i = 0; i < total.length; i++) {
+            tr.append("<td>" + total[i] + "</td>");
+        }
+        $("table[name='x11']").append(tr);
+
+        tfoot = $('<tfoot/>');
+        //tfoot.append('<tr><td colspan="50">*Report processed: ' + json[0]['timestamp'] + '</td></tr>');
+        $("table[name='x11']").append(tfoot);
+    });
+});
+
 </script>
 
-
-<!--
-<div id="#data2" style="width:911px;">
-<h2 style="float:left;">Data Train 2.0</h2>
-<p style="float:left;">This table only displays the specimens that are part of data train 2.0. Only specimens from <a target="_blank" href="https://docs.google.com/spreadsheets/d/1X3ZO3SIRm7emv3F5jCU116EprDWJnRGNqCB8x5HqOws/edit#gid=1481057674">Data Freeze Train 2.0 Report</a> are included.</p>
-<p>
-<table name ="x1" id="rounded-corner" summary="">
-<thead>
-<tr><th></th><th><a target="_blank" href="log_train/1gtrepo-bsc.log">Barcelona</a></th><th><a target="_blank" href="log_train/1gtrepo-osdc-icgc.log">Chicago(ICGC)</a></th><th><a target="_blank" href="log_train/1gtrepo-osdc-tcga.log">Chicago(TCGA)</a></th><th><a target="_blank" href="log_train/1gtrepo-dkfz.log">Heidelberg</a></th><th><a target="_blank" href="log_train/1gtrepo-ebi.log">London</a></th><th><a target="_blank" href="log_train/1gtrepo-etri.log">Seoul</a></th><th><a target="_blank" href="log_train/1gtrepo-riken.log">Tokyo</a></th><th><a target="_blank" href="log_train/1gtrepo-cghub.log">Santa Cruz</a></th><th>Total</th><th>% of 4150</th></tr>
-</thead>
-<tbody>
-<tr><td><b>Aligned Specimens</b></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
-
-<tr><td><b>Remaining Specimens to Align</b></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
-
-<tr><td><b>Total Specimens</b></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
-</tbody>
-<tfoot>
-                                        <tr>
-                                                <td colspan="19">*Click for  <a target="_blank" href="https://docs.google.com/spreadsheets/d/1X3ZO3SIRm7emv3F5jCU116EprDWJnRGNqCB8x5HqOws/edit#gid=1481057674">Data Freeze Train 2.0 Report</a></td>
-                                        </tr>
-                                </tfoot>
-
-</table>
-</p>
-</div>
--->
-
-<script type="text/javascript">
-//updates the table
-        var table = document.getElementsByName("x");
-        var table2 = document.getElementsByName("x9");
-	var table3 = document.getElementsByName("x3");
-	var json_data;
-        var json_data2;
-	var json_data3;
-	var cell_1 = [];
-        var cell_2 = [];
-        var cell_3 = [];
-        var cell_4 = [];
-	var cell_5 = [];
-        var cell_6 = [];
-        var val_1 = [];
-        var val_2 = [];
-        var val_3 = [];
-        var val_4 = [];
-	var val_5 = [];
-        var val_6 = [];
-        var total_1 = 0;
-        var total_2 = 0;
-        var total_3 = 0;
-        var total_4 = 0;
-	var total_5 = 0;
-        var total_6 = 0;
-	var total_7 = 0;
-        var total_8 = 0;
-        var total_9 = 0;
-
-	d3.json("train1.json", function(error, json) {
-                json_data = json;
-		var arr =[];
-                //for (var i = 1,j = 0; i < json_data.length/2 + 2, j < json_data.length; i++, j+=2){
-		for (var i = 0; i < json_data.length; i++){
-                
-                cell_1[i] = table[0].rows[1].cells[i+1];
-                val_1[i] = cell_1[i].firstChild.data;
-                cell_1[i].firstChild.data = ''+json_data[i].train_1_align;
-                total_1 += json_data[i].train_1_align;
-                
-                cell_2[i] = table[0].rows[2].cells[i+1];
-                val_2[i] = cell_2[i].firstChild.data;
-                cell_2[i].firstChild.data = ''+json_data[i].remaining;
-                total_2 += json_data[i].remaining;
-                
-                cell_3[i] = table[0].rows[3].cells[i+1];
-                val_3[i] = cell_3[i].firstChild.data;
-                cell_3[i].firstChild.data = ''+json_data[i].total_unalign;
-                total_3 += json_data[i].total_unalign;
-                }
-
-	cell_1[8] = table[0].rows[1].cells[8];
-	cell_2[8] = table[0].rows[2].cells[8];
-	cell_3[8] = table[0].rows[3].cells[8];
-
-	cell_1[8].firstChild.data = '' + total_1;
-	cell_2[8].firstChild.data = '' + total_2;
-	cell_3[8].firstChild.data = '' + total_3;
-
-	cell_1[9] = table[0].rows[1].cells[9];
-
-	var ave = (total_1/823)*100;
-	var num = ave.toFixed(2);
-
-	cell_1[9].firstChild.data = '' + num;
-	
-	});
-</script>
-<!--
-<h2>Map for Train 2.0</h2>
-<div id="container1" style="position:relative; width:800px; height:500px"></div></center>
-
-     <script>
-      var colors = d3.scale.category10();
-       //basic map config with custom fills, mercator projection
-      var map = new Datamap({
-        scope: 'world',
-        element: document.getElementById('container1'),
-        geographyConfig: {
-          popupOnHover: false,
-          highlightOnHover: false,
-          highlightFillColor: '#ABDDA4',
-        },
-        projection: 'mercator',
-        fills: {defaultFill: "#ABDDA4",
-                gt50: colors(Math.random() * 20),
-                gt60: "#63AFD0",
-                gt70: "#0772A1",}
-      })
-	
-	var json_data;
-                  
-                  d3.json("bubbles/traindata2.json", function(error, json) {
-                          json_data = json;
-                          map.bubbles(json_data, {
-                                 popupTemplate: function(geo, data) {
-                                          return "<div class='hoverinfo'>"+data.name+"<br/>Aligned: " + data.aligned + " Total: " +data.total+ "</div>";   
-				}
-                          });
-                  });
-     </script>
--->
-<center><div id="#data1" style="width:764px;">
-<h2 style="float:left">Data Train 1.0</h2>
-<p style = "float:left">This table only displays specimens from data train 1.0. Only specimens from <a target="_blank" href="https://docs.google.com/spreadsheets/d/14NItsHKJUevHZIuFkFTwNF-C12WbXTrFe0oM0Xq6b4M/edit#gid=111470950">Data Freeze Train 1.0 Report</a> are included.</p>
-<p>
-<table name ="x" id="rounded-corner" summary="">
-<thead>
-<tr><th></th><th><a target="_blank" href="log_train/1gtrepo-bsc.log">Barcelona</a></th><th><a target="_blank" href="log_train/1gtrepo-osdc.log">Chicago</a></th><th><a target="_blank" href="log_train/1gtrepo-dkfz.log">Heidelberg</a></th><th><a target="_blank" href="log_train/1gtrepo-ebi.log">London</a></th><th><a target="_blank" href="log_train/1gtrepo-etri.log">Seoul</a></th><th><a target="_blank" href="log_train/1gtrepo-riken.log">Tokyo</a></th><th><a target="_blank" href="log_train/1gtrepo-cghub_data1.log">Santa Cruz</a></th><th>Total</th><th>% of 823</th></tr>
-</thead>
-<tbody>
-<tr><td><b>Aligned Specimens</b></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
-
-<tr><td><b>Remaining Specimens to Align</b></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
-
-<tr><td><b>Total Specimens</b></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
-</tbody>
-<tfoot>
-                                        <tr>
-                                                <td colspan="19">*Click for  <a target="_blank" href="https://docs.google.com/spreadsheets/d/14NItsHKJUevHZIuFkFTwNF-C12WbXTrFe0oM0Xq6b4M/edit#gid=111470950">Data Freeze Train 1.0 Report</a></td>
-                                        </tr>
-                                </tfoot>
-</table>
-</p>
-</div>
-<h2>Map for Train 1.0</h2>
-<div id="container2" style="position:relative; width:800px; height:500px"></div>
-     <script>
-      var colors = d3.scale.category10();
-       //basic map config with custom fills, mercator projection
-      var map2 = new Datamap({
-        scope: 'world',
-        element: document.getElementById('container2'),
-        geographyConfig: {
-          popupOnHover: false,
-          highlightOnHover: false,
-          highlightFillColor: '#ABDDA4',
-        },
-        projection: 'mercator',
-        fills: {defaultFill: "#ABDDA4",
-                gt50: colors(Math.random() * 20),
-                gt60: "#63AFD0",
-                gt70: "#0772A1",}
-      })
-  	      
-	     //bubbles, custom popup on hover template
-     map2.bubbles([
-       {name: "Chicago", total: '0', aligned: '0', latitude: 41.891519, longitude: -87.629159, radius: 6, fillKey: 'gt60'},
-       {name: "Chicago", total: '0', aligned: '0', latitude: 41.891519, longitude: -87.629159, radius: 6, fillKey: 'gt70'},
-        
-       {name: "Barcelona", total: '2', aligned: '2', latitude: 41.378691, longitude: 2.175547, radius: 15, fillKey: 'gt60'},
-       {name: "Barcelona", total: '2', aligned: '2', latitude: 41.378691, longitude: 2.175547, radius: 15, fillKey: 'gt70'},
- 
-       {name: "Tokyo", total: '0', aligned: '0', latitude: 35.684219, longitude: 139.755020, radius: 6, fillKey: 'gt60'},
-       {name: "Tokyo", total: '0', aligned: '0', latitude: 35.684219, longitude: 139.755020, radius: 6, fillKey: 'gt70'},
-
-       {name: "Seoul", total: '0', aligned: '0', latitude: 37.553397, longitude: 126.980624, radius: 6, fillKey: 'gt60'},
-       {name: "Seoul", total: '0', aligned: '0', latitude: 37.553397, longitude: 126.980624, radius: 6, fillKey: 'gt70'},
-
-       {name: "Heidelberg", total: '0', aligned: '0', latitude: 49.403159, longitude: 8.676061, radius: 6, fillKey: 'gt60'},
-       {name: "Heidelberg", total: '0', aligned: '0', latitude: 49.403159, longitude: 8.676061, radius: 6, fillKey: 'gt70'},
-
-       {name: "London", total: '144', aligned: '144', latitude: 51.507919, longitude: -0.123571, radius: 20, fillKey: 'gt60'},
-       {name: "London", total: '144', aligned: '144', latitude: 51.507919, longitude: -0.123571, radius: 20, fillKey: 'gt70'},
-
-       {name: "Santa Cruz", total: '670', aligned: '670', latitude: 36.971944, longitude: -122.026389, radius: 30, fillKey: 'gt70'},
-
-     ]
-, {
-       popupTemplate: function(geo, data) {
-         return "<div class='hoverinfo'>"+data.name+"<br/>Aligned: " + data.aligned + " Total: " +data.total+ "</div>";
-       }
-     });
-</script>
 </center>
 </body>
 </html>
