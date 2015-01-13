@@ -40,7 +40,7 @@
 <center>
 
                  <div id="headere">
-                         <h1 style="float:left;margin-left:10px;font-size:25px;"><a href="/">PANCANCER.INFO</a></h1>
+                         <h1 style="float:left;margin-left:10px;font-size:25px;">PANCANCER.INFO</h1>
                          <div id="inside">
                  <ul class="tab-links">
 				<!-- <li><a href="data_freeze">Data Freeze</a></li> -->
@@ -64,13 +64,11 @@ Details about this index can be found <a href="https://github.com/ICGC-TCGA-PanC
 
 <div id="#datatotal" style="width:911px;">
 <h2 style="float:left;">Aligned Donor Sets Available at GNOS Repositories (Live)</h2>
-<p style="float:left;">This table tracks the number of completed donor sets that have been synchronized from the repo that did the alignment to other repos.</p>
 <p>
 <table name ="x10" id="rounded-corner" summary="">
 <thead>
 <tr>
-    <th nowrap>GNOS Repo</th>
-    <th>Donors aligned at</th>
+    <th nowrap>Donors aligned at<br/>(donor count)</th>
     <th>Available at Barcelona</th>
     <th>Available at Chicago(ICGC)</th>
     <th>Available at Chicago(TCGA)</th>
@@ -88,14 +86,12 @@ Details about this index can be found <a href="https://github.com/ICGC-TCGA-PanC
 </div>
 
 <div id="#datatotal" style="width:911px;">
-<h2 style="float:left;">Aligned Specimens Available at GNOS Repositories (Live)</h2>
-<p style="float:left;">This table tracks the number of specimens that have been synchronized from the repo that did the alignment to other repos.</p>
+<h2 style="float:left;">Donors with Sanger Variant Calls Available at GNOS Repositories (Live)</h2>
 <p>
 <table name ="x11" id="rounded-corner" summary="">
 <thead>
 <tr>
-    <th nowrap>GNOS Repo</th>
-    <th>Specimens aligned at</th>
+    <th nowrap>Donors aligned at<br/>(donor count)</th>
     <th>Available at Barcelona</th>
     <th>Available at Chicago(ICGC)</th>
     <th>Available at Chicago(TCGA)</th>
@@ -204,55 +200,42 @@ $(document).ready(function () {
     });
 });
 
+var json_files = [
+                     'live_alignment_completed_donors.',
+                     'live_sanger_variant_called_donors.',
+                 ];
 
-// GNOS summary donor table, for aligned BAM synchronization and variant calling status
 $(document).ready(function () {
     var report_data_url = "gnos_metadata/latest/reports/gnos_repo_summary/";
-    var sanger_variant_data = {}
-    $.getJSON(report_data_url + "live_sanger_variant_called_donors.repos.json", function(data){
-        sanger_variant_data = data
-    });
 
-    $.getJSON(report_data_url + "live_alignment_completed_donors.repos.json",
+    $.getJSON(report_data_url + json_files[0] + 'repos.json',
     function (json) {
         var total = [0, 0, 0, 0, 0, 0, 0, 0, 0];
         var tr;
 
         for (var i = 0; i < repos.length; i++) {
-            if (json[repos[i]] == undefined || 
-                    json[repos[i]]['_ori_count'] == undefined) {
+            if (json[repos[i]] == undefined) {
                 continue;
             }
             tr = $('<tr/>');
-            tr.append("<td>" + repo_name[repos[i]] + "</td>");
-            tr.append("<td>" 
-                + json[repos[i]]['_ori_count'][0]
-                + " ["
-                + (sanger_variant_data[repos[i]]['_ori_count'][0] == undefined
-                   ? 0 : sanger_variant_data[repos[i]]['_ori_count'][0])
-                + "]"
-                + "</td>");
+            tr.append("<td>" + repo_name[repos[i]] 
+                             + " ("
+                             + json[repos[i]]['_ori_count'][0]
+                             + ")"
+                             + "</td>");
+            //tr.append("<td>" 
+            //    + json[repos[i]]['_ori_count'][0]
+            //    + "</td>");
             total[0] += json[repos[i]]['_ori_count'][0];
             
             for (var j = 0; j < repos.length; j++) {
                 var aligned_donors = json[repos[i]][repos[j]] == undefined ? 0 : json[repos[i]][repos[j]][0];
-                var sanger_called_donors = sanger_variant_data[repos[i]] == undefined ?
-                    0 : (sanger_variant_data[repos[i]][repos[j]] == undefined ?
-                            0 : sanger_variant_data[repos[i]][repos[j]]);
                 var aligned_donors_url = report_data_url
-                                         + "live_alignment_completed_donors."
-                                         + repos[i] + "." + repos[j] + ".txt";
-                var sanger_called_donors_url = report_data_url
-                                         + "live_sanger_variant_called_donors."
+                                         + json_files[0]
                                          + repos[i] + "." + repos[j] + ".txt";
                 tr.append("<td>" + (aligned_donors == 0 ? "" : "<a href='" + aligned_donors_url + "'>")
                                  + aligned_donors
                                  + (aligned_donors == 0 ? "" : "</a>")
-                                 + " ["
-                                 + (sanger_called_donors == 0 ? "" : "<a href='" + sanger_called_donors_url + "'>")
-                                 + sanger_called_donors
-                                 + (sanger_called_donors == 0 ? "" : "</a>")
-                                 + "]"
                                  + "</td>");
                 total[j+1] += aligned_donors;
             }
@@ -265,8 +248,8 @@ $(document).ready(function () {
             }
         }
         tr = $('<tr/>');
-        tr.append("<td><font color=\"red\">[Total]</font></td>");
-        for (var i = 0; i < total.length; i++) {
+        tr.append("<td><font color=\"red\">[Total ("+total[0]+")]</font></td>");
+        for (var i = 1; i < total.length; i++) {
             tr.append("<td>" + total[i] + "</td>");
         }
         $("table[name='x10']").append(tr);
@@ -277,41 +260,51 @@ $(document).ready(function () {
     });
 });
 
-
-// GNOS summary specimen table, for aligned BAM synchronization
 $(document).ready(function () {
-    var report_data_url = "gnos_metadata/latest/reports/gnos_repo_summary/"; 
-    $.getJSON(report_data_url + "live_alignment_completed_donors.repos.json",
+    var report_data_url = "gnos_metadata/latest/reports/gnos_repo_summary/";
+
+    $.getJSON(report_data_url + json_files[1] + 'repos.json',
     function (json) {
         var total = [0, 0, 0, 0, 0, 0, 0, 0, 0];
         var tr;
 
         for (var i = 0; i < repos.length; i++) {
-            if (json[repos[i]] == undefined || 
-                    json[repos[i]]['_ori_count'] == undefined) {
+            if (json[repos[i]] == undefined) {
                 continue;
             }
             tr = $('<tr/>');
-            tr.append("<td>" + repo_name[repos[i]] + "</td>");
-            tr.append("<td>" + (json[repos[i]]['_ori_count'][1] + json[repos[i]]['_ori_count'][2])+ "</td>");
-            total[0] += json[repos[i]]['_ori_count'][1] + json[repos[i]]['_ori_count'][2];
+            tr.append("<td>" + repo_name[repos[i]] 
+                             + " ("
+                             + (json[repos[i]]['_ori_count'].length == 0 ? 0 : json[repos[i]]['_ori_count'][0])
+                             + ")"
+                             + "</td>");
+            //tr.append("<td>" 
+            //    + json[repos[i]]['_ori_count'][0]
+            //    + "</td>");
+            total[0] += (json[repos[i]]['_ori_count'].length == 0 ? 0 : json[repos[i]]['_ori_count'][0]);
             
             for (var j = 0; j < repos.length; j++) {
-                var cell_value = json[repos[i]][repos[j]] == undefined ? 0 : (json[repos[i]][repos[j]][1] + json[repos[i]][repos[j]][2]);
-                tr.append("<td>" + cell_value + "</td>");
-                total[j+1] += cell_value;
+                var aligned_donors = json[repos[i]][repos[j]] == undefined ? 0 : json[repos[i]][repos[j]][0];
+                var aligned_donors_url = report_data_url
+                                         + json_files[1]
+                                         + repos[i] + "." + repos[j] + ".txt";
+                tr.append("<td>" + (aligned_donors == 0 ? "" : "<a href='" + aligned_donors_url + "'>")
+                                 + aligned_donors
+                                 + (aligned_donors == 0 ? "" : "</a>")
+                                 + "</td>");
+                total[j+1] += aligned_donors;
             }
             $("table[name='x11']").append(tr);
         }
 
         for (var i = 0; i < json.length; i++) {
             for (var j = 0; j < ctypes.length; j++) {
-                total[j] += json[i][ctypes[j]][1] + json[i][ctypes[j]][2];
+                total[j] += json[i][ctypes[j]][0];
             }
         }
         tr = $('<tr/>');
-        tr.append("<td><font color=\"red\">[Total]</font></td>");
-        for (var i = 0; i < total.length; i++) {
+        tr.append("<td><font color=\"red\">[Total ("+total[0]+")]</font></td>");
+        for (var i = 1; i < total.length; i++) {
             tr.append("<td>" + total[i] + "</td>");
         }
         $("table[name='x11']").append(tr);
