@@ -72,7 +72,8 @@ Details about this index can be found <a href="https://github.com/ICGC-TCGA-PanC
     <th nowrap>GNOS Repo</th>
     <th>Donors aligned at</th>
     <th>Available at Barcelona</th>
-    <th>Available at Chicago</th>
+    <th>Available at Chicago(ICGC)</th>
+    <th>Available at Chicago(TCGA)</th>
     <th>Available at Heidelberg</th>
     <th>Available at London</th>
     <th>Available at Santa Cruz</th>
@@ -96,7 +97,8 @@ Details about this index can be found <a href="https://github.com/ICGC-TCGA-PanC
     <th nowrap>GNOS Repo</th>
     <th>Specimens aligned at</th>
     <th>Available at Barcelona</th>
-    <th>Available at Chicago</th>
+    <th>Available at Chicago(ICGC)</th>
+    <th>Available at Chicago(TCGA)</th>
     <th>Available at Heidelberg</th>
     <th>Available at London</th>
     <th>Available at Santa Cruz</th>
@@ -138,14 +140,15 @@ Details about this index can be found <a href="https://github.com/ICGC-TCGA-PanC
 // some shared variables
 var repo_name = {
     'bsc': 'Barcelona',
-    'osdc-icgc': 'Chicago',
+    'osdc-icgc': 'Chicago(ICGC)',
+    'osdc-tcga': 'Chicago(TCGA)',
     'dkfz': 'Heidelberg',
     'ebi': 'London',
     'cghub': 'Santa Cruz',
     'etri': 'Seoul',
     'riken': 'Tokyo'
 }
-var repos = ['bsc', 'osdc-icgc', 'dkfz',
+var repos = ['bsc', 'osdc-icgc', 'osdc-tcga', 'dkfz',
               'ebi', 'cghub', 'etri', 'riken'
             ];
 
@@ -212,10 +215,14 @@ $(document).ready(function () {
 
     $.getJSON(report_data_url + "live_alignment_completed_donors.repos.json",
     function (json) {
-        var total = [0, 0, 0, 0, 0, 0, 0, 0];
+        var total = [0, 0, 0, 0, 0, 0, 0, 0, 0];
         var tr;
 
-        for (var i = 0; i < Object.keys(json).length; i++) {
+        for (var i = 0; i < repos.length; i++) {
+            if (json[repos[i]] == undefined || 
+                    json[repos[i]]['_ori_count'] == undefined) {
+                continue;
+            }
             tr = $('<tr/>');
             tr.append("<td>" + repo_name[repos[i]] + "</td>");
             tr.append("<td>" 
@@ -276,10 +283,14 @@ $(document).ready(function () {
     var report_data_url = "gnos_metadata/latest/reports/gnos_repo_summary/"; 
     $.getJSON(report_data_url + "live_alignment_completed_donors.repos.json",
     function (json) {
-        var total = [0, 0, 0, 0, 0, 0, 0, 0];
+        var total = [0, 0, 0, 0, 0, 0, 0, 0, 0];
         var tr;
 
-        for (var i = 0; i < Object.keys(json).length; i++) {
+        for (var i = 0; i < repos.length; i++) {
+            if (json[repos[i]] == undefined || 
+                    json[repos[i]]['_ori_count'] == undefined) {
+                continue;
+            }
             tr = $('<tr/>');
             tr.append("<td>" + repo_name[repos[i]] + "</td>");
             tr.append("<td>" + (json[repos[i]]['_ori_count'][1] + json[repos[i]]['_ori_count'][2])+ "</td>");
