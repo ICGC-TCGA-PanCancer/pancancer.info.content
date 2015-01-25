@@ -205,7 +205,7 @@ Details about this index can be found <a href="https://github.com/ICGC-TCGA-PanC
       var last_date_utc_time = new Date(data[data.length - 1][0] + 'T03:00:00');
       var last_date = new Date(utc_time.valueOf() + utc_time.getTimezoneOffset() * 60000);
 
-      var days_to_go = parseInt(count_to_be_called_as_of_last_day / ((count_called_as_of_last_day - count_called_as_of_last_week) / 7));
+      var days_to_go = Math.round(count_to_be_called_as_of_last_day / ((count_called_as_of_last_day - count_called_as_of_last_week) / 7));
 
       last_date.setDate(last_date.getDate() + days_to_go);
 
