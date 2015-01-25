@@ -8,6 +8,7 @@
         <meta name="generator" content="Geany 1.23.1" />
         <meta charset="utf-8" http-equiv="refresh" content="600">
         <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         <link rel="stylesheet" type="text/css" href="style1.css">
         <!-- I recommend you host this file on your own, since this will change without warning -->
         <script src="http://datamaps.github.io/scripts/datamaps.world.min.js?v=1"></script>
@@ -86,6 +87,13 @@ Details about this index can be found <a href="https://github.com/ICGC-TCGA-PanC
 </p>
 </div>
 
+<div id="#datatotal" style="width:1100px;">
+<h2 style="float:left;">Sanger Variant Calling History</h2>
+<p>
+<div id="chart_div"></div>
+</p>
+</div>
+
 <div id="#datatotal" style="width:911px;">
 <h2 style="float:left;">Aligned Donor Sets (Live)</h2>
 <p style="float:left;">This table tracks the number of completed donor sets that have been synchronized from the repo that did the alignment to other repos.</p>
@@ -155,6 +163,70 @@ Details about this index can be found <a href="https://github.com/ICGC-TCGA-PanC
 </table>
 </p>
 </div>
+
+<script type="text/javascript">
+    // Load the Visualization API and the piechart package.
+    google.load('visualization', '1', {'packages':['corechart']});
+      
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.setOnLoadCallback(drawChart);
+      
+    function drawChart() {
+      var jsonData = $.ajax({
+          url: "gnos_metadata/latest/reports/summary_counts/summary_counts.json",
+          dataType:"text",
+          async: false
+          }).responseText;
+
+      data = $.parseJSON(jsonData)
+      
+      // Create our data table out of JSON data loaded from server.
+      var chart_data = new google.visualization.DataTable();
+      chart_data.addColumn('date', 'Date');
+      chart_data.addColumn('number', '# donor to be called');
+      chart_data.addColumn('number', 'Trajectory');
+      chart_data.addColumn('number', '# donor called');
+      var count_called_as_of_last_week = 0;
+      for ($i = 1; $i < data.length; $i++) {
+        var utc_time = new Date(data[$i][0] + 'T03:01:01')
+        var local_time = new Date(utc_time.valueOf() + utc_time.getTimezoneOffset() * 60000)
+        if ($i < data.length - 1) {
+          chart_data.addRow([local_time, data[$i][1], null, data[$i][2]]);
+        } else {
+          chart_data.addRow([local_time, data[$i][1], data[$i][2], data[$i][2]]);
+        }
+        if ($i == data.length - 8) { // count 7 days ago
+            count_called_as_of_last_week = data[$i][2];
+        }
+      }
+      var count_to_be_called_as_of_last_day = data[data.length - 1][1];
+      var count_called_as_of_last_day = data[data.length - 1][2];
+
+      var last_date_utc_time = new Date(data[data.length - 1][0] + 'T03:01:01');
+      var last_date = new Date(utc_time.valueOf() + utc_time.getTimezoneOffset() * 60000);
+
+      var days_to_go = Math.round(count_to_be_called_as_of_last_day / ((count_called_as_of_last_day - count_called_as_of_last_week) / 7));
+
+      last_date.setDate(last_date.getDate() + days_to_go);
+
+
+      chart_data.addRow([last_date, null, count_to_be_called_as_of_last_day + count_called_as_of_last_day, null]);
+
+      var options = {
+          title: 'Sanger workflow variant calling progress (trajectory based on last 7 days\' overall velocity)',
+          curveType: 'function',
+          legend: { position: 'bottom' },
+          width: '100%',
+          height: 300,
+          pointSize: 6,
+      };
+
+      // Instantiate and draw our chart, passing in some options.
+      var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+      chart.draw(chart_data, options);
+    }
+</script>
+
 
 <script type="text/javascript">
 // some shared variables
@@ -385,6 +457,8 @@ $(document).ready(function () {
         $("table[name='x11']").append(tfoot);
     });
 });
+
+
 
 </script>
 
