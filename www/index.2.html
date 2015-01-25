@@ -188,10 +188,12 @@ Details about this index can be found <a href="https://github.com/ICGC-TCGA-PanC
       chart_data.addColumn('number', '# donor called');
       var count_called_as_of_last_week = 0;
       for ($i = 1; $i < data.length; $i++) {
+        var utc_time = new Date(data[$i][0] + 'T03:00:00')
+        var local_time = new Date(utc_time.valueOf() + utc_time.getTimezoneOffset() * 60000)
         if ($i < data.length - 1) {
-          chart_data.addRow([new Date(data[$i][0]), data[$i][1], null, data[$i][2]]);
+          chart_data.addRow([local_time, data[$i][1], null, data[$i][2]]);
         } else {
-          chart_data.addRow([new Date(data[$i][0]), data[$i][1], data[$i][2], data[$i][2]]);
+          chart_data.addRow([local_time, data[$i][1], data[$i][2], data[$i][2]]);
         }
         if ($i == data.length - 8) { // count 7 days ago
             count_called_as_of_last_week = data[$i][2];
@@ -199,12 +201,14 @@ Details about this index can be found <a href="https://github.com/ICGC-TCGA-PanC
       }
       var count_to_be_called_as_of_last_day = data[data.length - 1][1];
       var count_called_as_of_last_day = data[data.length - 1][2];
-      var last_date = new Date(data[data.length - 1][0]);
+
+      var last_date_utc_time = new Date(data[data.length - 1][0] + 'T03:00:00');
+      var last_date = new Date(utc_time.valueOf() + utc_time.getTimezoneOffset() * 60000);
 
       var days_to_go = parseInt(count_to_be_called_as_of_last_day / ((count_called_as_of_last_day - count_called_as_of_last_week) / 7));
-      console.log(last_date);
-      last_date.setDate(last_date.getDate() + days_to_go)
-      console.log(last_date);
+
+      last_date.setDate(last_date.getDate() + days_to_go);
+
 
       chart_data.addRow([last_date, null, count_to_be_called_as_of_last_day + count_called_as_of_last_day, null]);
 
