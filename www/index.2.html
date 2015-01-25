@@ -183,9 +183,9 @@ Details about this index can be found <a href="https://github.com/ICGC-TCGA-PanC
       // Create our data table out of JSON data loaded from server.
       var chart_data = new google.visualization.DataTable();
       chart_data.addColumn('date', 'Date');
-      chart_data.addColumn('number', 'To be called');
+      chart_data.addColumn('number', '# donor to be called');
       chart_data.addColumn('number', 'Trajectory');
-      chart_data.addColumn('number', 'Called');
+      chart_data.addColumn('number', '# donor called');
       var count_called_as_of_last_week = 0;
       for ($i = 1; $i < data.length; $i++) {
         if ($i < data.length - 1) {
