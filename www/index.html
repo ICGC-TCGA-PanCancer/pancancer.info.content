@@ -199,7 +199,9 @@ Details about this index can be found <a href="https://github.com/ICGC-TCGA-PanC
             count_called_as_of_last_week = data[$i][2];
         }
       }
-      var count_to_be_called_as_of_last_day = data[data.length - 1][1];
+      //var count_to_be_called_as_of_last_day = data[data.length - 1][1];
+      // upon request from Brian on Feb 13, hard-code the total number of donors to be finished at the end to 2171 (count of train 2 donors)
+      var count_to_be_called_as_of_last_day = 2171 - data[data.length - 1][2];
       var count_called_as_of_last_day = data[data.length - 1][2];
 
       var last_date_utc_time = new Date(data[data.length - 1][0] + 'T03:01:01');
@@ -213,7 +215,7 @@ Details about this index can be found <a href="https://github.com/ICGC-TCGA-PanC
       chart_data.addRow([last_date, null, count_to_be_called_as_of_last_day + count_called_as_of_last_day, null]);
 
       var options = {
-          title: 'Sanger workflow variant calling progress (trajectory based on last 7 days\' overall velocity)',
+          title: 'Sanger workflow variant calling progress (trajectory based on last 7 days\' overall throughput)',
           curveType: 'function',
           legend: { position: 'bottom' },
           width: '100%',
