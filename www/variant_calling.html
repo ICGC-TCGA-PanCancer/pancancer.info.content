@@ -102,7 +102,9 @@ Details about this index can be found <a href="https://github.com/ICGC-TCGA-PanC
 <table name ="x1" id="rounded-corner" summary="">
 <thead>
 <tr>
-    <th nowrap>Date <br/>(up to recent 7 days)</th>
+    <th nowrap>Date <br/>(recent 7 days)</th>
+    <th>AWS Ireland</th>
+    <th>AWS Oregon</th>
     <th>Barcelona</th>
     <th>Chicago(PDC1.1)</th>
     <th>Chicago(PDC2.0)</th>
@@ -267,6 +269,8 @@ $(document).ready(function () {
 <script type="text/javascript">
 // some shared variables
 var repo_name = {
+    'aws_ireland': 'AWS Ireland',
+    'aws_oregon': 'AWS Oregon',
     'bsc': 'Barcelona',
     'pdc1_1': 'Chicago(PDC1.1)',
     'pdc2_0': 'Chicago(PDC2.0)',
@@ -281,7 +285,7 @@ var repo_name = {
     'riken': 'Tokyo',
     'oicr': 'Toronto'
 }
-var repos = [ "bsc", "pdc1_1", "pdc2_0", 
+var repos = [ "aws_ireland", "aws_oregon", "bsc", "pdc1_1", "pdc2_0", 
               "dkfz", "ebi", "ucsc", "etri", "tokyo", "oicr" ]
 
 
