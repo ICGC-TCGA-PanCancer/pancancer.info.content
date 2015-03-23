@@ -102,7 +102,7 @@ Details about this index can be found <a href="https://github.com/ICGC-TCGA-PanC
 <table name ="x1" id="rounded-corner" summary="">
 <thead>
 <tr>
-    <th nowrap>Date <br/>(recent 7 days)</th>
+    <th nowrap>Date <br/>(recent 8 days)</th>
     <th>AWS Ireland</th>
     <th>AWS Oregon</th>
     <th>Barcelona</th>
@@ -114,6 +114,7 @@ Details about this index can be found <a href="https://github.com/ICGC-TCGA-PanC
     <th>Seoul</th>
     <th>Tokyo</th>
     <th>Toronto</th>
+    <th><font color="red">[Total]</font></th>
 </tr>
 </thead>
 <tbody>
@@ -309,8 +310,9 @@ $(document).ready(function () {
                 tr.append("<td>" + count + "</td>");
                 total += count;
             }
+            tr.append("<td><font color='red'>" + total + "</font></td>");
             $("table[name='x1']").append(tr);
-            if (i >= 6) break;
+            if (i >= 7) break;
         }
 
         tfoot = $('<tfoot/>');
