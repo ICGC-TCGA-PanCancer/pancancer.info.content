@@ -41,19 +41,11 @@
 </script>
 <center>
 
-                 <div id="headere">
-                         <h1 style="float:left;margin-left:10px;font-size:25px;"><a href="/">PANCANCER.INFO</a></h1>
-                         <div id="inside">
-                 <ul class="tab-links">
-				<!-- <li><a href="data_freeze">Data Freeze</a></li> -->
-        <li><a href="uploads.html">Uploads</a></li>
-        <li><a href="alignments.html">Alignments</a></li>
-				<li><a href="qc">QC Metrics</a></li> 
-				<!-- <li><a href="trajectory">Trajectory</a></li> -->
-				<li><a href="transfers.html">Transfers</a></li>
-                 </ul>
-                 </div>
-                 </div>
+  <div id="pancancer-header"></div>
+  <script type="text/javascript">
+    $("#pancancer-header").load("header.html");
+  </script>
+
   <h2>Alignment Status</h2>
 
   <p style="width:900px;">The tables and maps below show the number of specimens whose unaligned, lane-level WGS reads have been uploaded to a GNOS repository at one of the PanCancer clouds. Typically there are two specimens per donor, a tumor and a normal, and we expect approximately 3,000 specimens from ICGC and 2,000 from TCGA. It also

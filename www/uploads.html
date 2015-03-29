@@ -25,7 +25,7 @@
 </script>
 </head>
 <style>
-	#header1{
+	#headere{
 	background-color: #7FB5DA;		
 	}
 	#inside{
@@ -40,298 +40,290 @@
         }
 </style>
 <body>
-	 <div id="header1">
-                <h1 style="float:left;margin-left:10px;font-size:25px;"><a href="/">PANCANCER.INFO</a></h1>
-                <center><div id="inside">
-                 <ul class="tab-links">
-                                <!-- <li><a href="data_freeze">Data Freeze</a></li> -->
-                                <li><a href="uploads.html">Uploads</a></li>
-                                <li><a href="alignments.html">Alignments</a></li>
-				<li><a href="qc">QC Metrics</a></li> 
-				<!-- <li><a href="trajectory">Trajectory</a></li> -->
-				<li><a href="transfers.html">Transfers</a></li>
-                 </ul>
-                 </div></center>
-                 </div>
-                 <center><h2>Upload/ Download Progress via GNOS</h2>
-		<p style="font-size:12px;width:900px;">Projects that are in the <b><i>Pending</i></b> column are LICA-FR and BRCA-KR. These projects are in this column because nothing has been uploaded and there is insufficient data on the spreadsheets that the data is based on.</p>
-		<p style="font-size:12px;"><i>*Upload is complete for the time being and these numbers, which are current as of 12/2014, are not currently being updated.</i></p>
-                </center>
-<div id="fullcontain">
-        <div id="center1">
-                <div id="tablediv">
-                        <div id="table">
-                        <table name="x" id="rounded-corner" summary="">
-                                <thead>
-                                        <tr>
-                                        <th scope="col"></th>
-                                        <th scope="col"><a target="_blank" href="defiles.txt" title="PBCA-DE, MALY-DE, EOPC-DE">Heidelberg</a></th>
-                                        <th scope="col"><a target="_blank" href="camfiles.txt" title="ESAD-UK, BRCA-EU">Cambridge</a></th>
-                                        <th scope="col"><a target="_blank" href="hinfiles.txt" title="BRCA-UK, CMDI-UK, BOCA-UK, PRAD-UK">Hinxton</a></th>
-                                        <th scope="col"><a target="_blank" href="cafiles.txt" title="PACA-CA, PRAD-CA">Toronto</a></th>
-                                        <th scope="col"><a target="_blank" href="esfiles.txt" title="CLLE-ES">Barcelona</a></th>
-                                        <th scope="col"><a target="_blank" href="sgfiles.txt" title="BTCA-SG">Singapore</a></th>
-                                        <th scope="col"><a target="_blank" href="krfiles.txt" title="LAML-KR">Seoul</a></th>
-					<th scope="col"><a target="_blank" href="orcainfiles.txt" title="ORCA-IN">Kalyani</a></th>
-					<th scope="col"><a target="_blank" href="aufiles.txt" title="PACA-AU, PAEN-AU, OV-AU">Brisbane</a></th>
-					<th scope="col"><a target="_blank" href="gacacnfiles.txt" title="GACA-CN">Beijing</a></th>
-                                        <th scope="col"><a target="_blank" href="jpfiles.txt" title="LIRI-JP, LINC-JP">Tokyo</a></th>
-                                        <th scope="col"><a title="This column is for the following projects (LICA-FR, BRCA-KR) which have not yet submitted sample level data."</a>Pending</th>
-					<th scope="col"><a target="_blank" href="all_files.txt" title="This column shows the totals of all the ICGC projects.">ICGC Total</a></th>
-                                        <th scope="col">ICGC Percentage</a></th>
-					<th scope="col"><a title="This column shows the totals of all the TCGA projects.">TCGA Total</a></th>
-					<th scope="col">TCGA Percentage</th>
-					<th scope="col"><a title="This column shows the totals of both the ICGC and TCGA projects.">Cumluative Total</a></th>				
-					<th scope="col">Cumulative Percentage</th>
-                                        </tr>
-					</thead>
-				<tbody>
-					<tr>
-						<td><b>Total Number of Specimens</b></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td></td><td>0</td><td></td><td>0</td><td></td>
-					</tr>
-					<tr>
-						<td><b>Specimens Uploaded</b></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-					</tr>
-					<tr>
-						<td><b>Specimens Left</b></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-					</tr>
-					<tr>
-						<td><b>Matched Tumour/Normal Pairs</b></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-					</tr>
-				</tbody>
-				<tfoot>
-					<tr>
-                                                <td colspan="19">*Updates every day at 13:00 GMT, hover over the column headers to see more information.</td>
-                                        </tr>
-                                </tfoot>
-				</table>
-			</div><!--table-->
-		</div><!--tablediv-->
-		<div id="chartdiv">
-				<div id="charttop">
-                                        <h3 style="margin-left: 100px;">Percentage of Specimens Uploaded</h3>
-                                        <div id="radio" style="margin-right:200px;">
-                                                <div id="city" style="float:left;">
-                                                <b><p style="margin-left:5px;font-size:12px;width:130px;">Project Cities</p></b>
-                                                <input style="margin-left:5px;" type="radio" name="time" id="hr1" onchange="checkr1()">Daily
-                                                <input style="margin-left:5px;" type="radio" name="time" id="day1" onchange="checkr1()">Weekly
-                                                </div><!--city-->
-                                                <div id="gnos" style="float:left;">
-                                                <b><p style="margin-left:5px;font-size:12px;">GNOS Repos</p></b>
-                                                <input style="margin-left:5px;" type="radio" name="time" id="dkfz1" onchange="checkr1()">DKFZ
-                                                <input style="margin-left:5px;" type="radio" name="time" id="ebi1" onchange="checkr1()">EBI
-                                                <input style="margin-left:5px;" type="radio" name="time" id="bsc1" onchange="checkr1()">BSC
-                                                <input style="margin-left:5px;" type="radio" name="time" id="etri1" onchange="checkr1()">ETRI
-                                                <input style="margin-left:5px;" type="radio" name="time" id="osdc1" onchange="checkr1()">OSDC
-                                                <input style="margin-left:5px;" type="radio" name="time" id="riken1" onchange="checkr1()">RIKEN
-                                                </div><!--gnos-->
-					</div><!--radio-->
-                                </div><!--charttop-->
-                                <div id ="chartbottom">
-                                        <h3 style="margin-left: 100px;">Number of Specimens Uploaded</h3>
-                                        <div id="radio" style="margin-right:200px;">
-                                        <div id="city" style="float:left;">
-                                                <b><p style="margin-left:5px;font-size:12px;width:130px;">Project Cities</p></b>
-                                                <input style="margin-left:5px;" type="radio" name="time" id="hr2" onchange="checkr2()">Daily
-                                                <input style="margin-left:5px;" type="radio" name="time" id="day2" onchange="checkr2()">Weekly
-                                                </div><!--city-->
-                                                <div id="gnos" style="float:left;">
-                                                <b><p style="margin-left:5px;font-size:12px;">GNOS Repos</p></b>
-                                                <input style="margin-left:5px;" type="radio" name="time" id="dkfz2" onchange="checkr2()">DKFZ
-                                                <input style="margin-left:5px;" type="radio" name="time" id="ebi2" onchange="checkr2()">EBI
-                                                <input style="margin-left:5px;" type="radio" name="time" id="bsc2" onchange="checkr2()">BSC
-                                                <input style="margin-left:5px;" type="radio" name="time" id="etri2" onchange="checkr2()">ETRI
-                                                <input style="margin-left:5px;" type="radio" name="time" id="osdc2" onchange="checkr2()">OSDC
-                                                <input style="margin-left:5px;" type="radio" name="time" id="riken2" onchange="checkr2()">RIKEN
-                                                </div><!--gnos-->
-					</div><!--radio-->
-                                </div><!--chartbottom-->
-		</div><!--chartdiv-->
-		<script type="text/javascript">
-			function charts(data,label,popup,spot,maxnum,num){
-			//creates the line chart
-			  var margin = {top: 20, right: 55, bottom: 115, left: 40},
-				  width  = 800,
-				  height = 250;
+  <div id="pancancer-header"></div>
+  <script type="text/javascript">
+    $("#pancancer-header").load("header.html");
+  </script>
 
-			  var x = d3.scale.ordinal()
-				  .rangeRoundBands([0, width], .1);
-
-			  var y = d3.scale.linear()
-				  .rangeRound([height, 0]);
-
-			  var xAxis = d3.svg.axis()
-				  .scale(x)
-				  .orient("bottom");
-
-			  var yAxis = d3.svg.axis()
-				  .scale(y)
-				  .orient("left");
-
-			  var line = d3.svg.line()
-				  .interpolate("cardinal")
-				  .x(function (d) { return x(d.label) + x.rangeBand() / 2; })
-				  .y(function (d) { return y(d.value); });
-
-			  var color = d3.scale.ordinal()
-				  .range(["#001c9c","#7F5217","#475003","#9c8305","#d3c47c","#800000","#6C007D","#63AFD0","#FF0000","#FF00F7","#FAF569","#00FF66","#009891"]);
-
-			  var svg = d3.select("#chart"+spot).append("svg")
-				  .attr("id","svg"+num)
-				  .attr("width",  width  + margin.left + margin.right)
-				  .attr("height", height + margin.top  + margin.bottom)
-				  .append("g")
-				  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-			  //reading in the data
-			  d3.csv(""+data, function (error, data) {
-
-				var labelVar = 'quarter';
-				var varNames = d3.keys(data[0]).filter(function (key) { return key !== labelVar;});
-				color.domain(varNames);
-
-				var seriesData = varNames.map(function (name) {
-				  return {
-					name: name,
-					values: data.map(function (d) {
-					  return {name: name, label: d[labelVar], value: +d[name]};
-					})
-				  };
-				});
-
-				x.domain(data.map(function (d) { return d.quarter; }));
-				
-				//if (maxnum == 1){
-				//	y.domain([0,100]);
-				//	}
-				//else {
-				//y.domain([0,d3.max(seriesData, function (c) { 
-				//	return d3.max(c.values, function (d) { return d.value; });
-				//	})
-				//  ]);
-				//}
-				y.domain([0,
-				   
-				    d3.max(seriesData, function (c) { 
-				      return d3.max(c.values, function (d) { return d.value; });
-				    })
-  ]);
-
-				svg.append("g")
-					.attr("class", "x axis")
-					.attr("transform", "translate(0," + height + ")")
-					.call(xAxis)
-					.selectAll("text")  
-				//.call(wrap, x.rangeBand())
-					.style("text-anchor", "end")
-					.attr("dx", "-.8em")
-					.attr("dy", ".15em")
-					.attr("transform", function(d) {
-						return "rotate(-70)" 
-						});
-
-				svg.append("g")
-					.attr("class", "y axis")
-					.call(yAxis)
-					.append("text")
-					.attr("transform", "rotate(-90)")
-					.attr("y", 6)
-					.attr("dy", ".71em")
-					.style("text-anchor", "end")
-					.text(""+label);
-
-				var series = svg.selectAll(".series")
-					.data(seriesData)
-					.enter().append("g")
-					.attr("class", "series");
-
-				series.append("path")
-				  .attr("class", "line")
-				  .attr("d", function (d) { return line(d.values); })
-				  .style("stroke", function (d) { return color(d.name); })
-				  .style("stroke-width", "4px")
-				  .style("fill", "none")
-
-				series.selectAll(".point")
-				  .data(function (d) { return d.values; })
-				  .enter().append("circle")
-				   .attr("class", "point")
-				   .attr("cx", function (d) { return x(d.label) + x.rangeBand()/2; })
-				   .attr("cy", function (d) { return y(d.value); })
-				   .attr("r", "5px")
-				   .style("fill", function (d) { return color(d.name); })
-				   .style("stroke", "grey")
-				   .style("stroke-width", "2px")
-				   .on("mouseover", function (d) { showPopover.call(this, d); })
-				   .on("mouseout",  function (d) { removePopovers(); })
-
-				var legend = svg.selectAll(".legend")
-					.data(varNames.slice().reverse())
-				  .enter().append("g")
-					.attr("class", "legend")
-					.attr("transform", function (d, i) { return "translate(55," + i * 20 + ")"; });
-
-				legend.append("rect")
-					.attr("x", width - 10)
-					.attr("width", 10)
-					.attr("height", 10)
-					.style("fill", color)
-					.style("stroke", "grey");
-
-				legend.append("text")
-					.attr("x", width - 12)
-					.attr("y", 6)
-					.attr("dy", ".35em")
-					.style("text-anchor", "end")
-					.text(function (d) { return d; });
-
-				//handles the hover aspect
-				function removePopovers () {
-				  $('.popover').each(function() {
-					$(this).remove();
-				  }); 
-				}
-
-				function showPopover (d) {
-				  $(this).popover({
-					title: d.name,
-					placement: 'auto top',
-					container: 'body',
-					trigger: 'manual',
-					html : true,
-					content: function() { 
-					  return "Date: " + d.label + 
-							 "<br/>"+popup+ ": " + d3.format(",")(d.value ? d.value: d.y1 - d.y0); }
-				  });
-				  $(this).popover('show')
-				}
-				
-				//rotates the x-axis label
-				function wrap(text, width) {
-				  text.each(function() {
-					var text = d3.select(this),
-						words = text.text().split(/\s+/).reverse(),
-						word,
-						line = [],
-						lineNumber = 0,
-						lineHeight = 1.1, // ems
-						y = text.attr("y"),
-						dy = parseFloat(text.attr("dy")),
-						tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
-					while (word = words.pop()) {
-					  line.push(word);
-					  tspan.text(line.join(" "));
-					  if (tspan.node().getComputedTextLength() > width) {
-						line.pop();
-						tspan.text(line.join(" "));
-						line = [word];
-						tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
-				  }
-				 }
-				});
-			   }
-			  });
-		  }
+  <center><h2>Upload/ Download Progress via GNOS</h2>
+    <p style="font-size:12px;width:900px;">Projects that are in the <b><i>Pending</i></b> column are LICA-FR and BRCA-KR. These projects are in this column because nothing has been uploaded and there is insufficient data on the spreadsheets that the data is based on.</p>
+    <p style="font-size:12px;"><i>*Upload is complete for the time being and these numbers, which are current as of 12/2014, are not currently being updated.</i></p>
+  </center>
+  <div id="fullcontain">
+    <div id="center1">
+      <div id="tablediv">
+        <div id="table">
+          <table name="x" id="rounded-corner" summary="">
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col"><a target="_blank" href="defiles.txt" title="PBCA-DE, MALY-DE, EOPC-DE">Heidelberg</a></th>
+                <th scope="col"><a target="_blank" href="camfiles.txt" title="ESAD-UK, BRCA-EU">Cambridge</a></th>
+                <th scope="col"><a target="_blank" href="hinfiles.txt" title="BRCA-UK, CMDI-UK, BOCA-UK, PRAD-UK">Hinxton</a></th>
+                <th scope="col"><a target="_blank" href="cafiles.txt" title="PACA-CA, PRAD-CA">Toronto</a></th>
+                <th scope="col"><a target="_blank" href="esfiles.txt" title="CLLE-ES">Barcelona</a></th>
+                <th scope="col"><a target="_blank" href="sgfiles.txt" title="BTCA-SG">Singapore</a></th>
+                <th scope="col"><a target="_blank" href="krfiles.txt" title="LAML-KR">Seoul</a></th>
+		<th scope="col"><a target="_blank" href="orcainfiles.txt" title="ORCA-IN">Kalyani</a></th>
+		<th scope="col"><a target="_blank" href="aufiles.txt" title="PACA-AU, PAEN-AU, OV-AU">Brisbane</a></th>
+		<th scope="col"><a target="_blank" href="gacacnfiles.txt" title="GACA-CN">Beijing</a></th>
+                <th scope="col"><a target="_blank" href="jpfiles.txt" title="LIRI-JP, LINC-JP">Tokyo</a></th>
+                <th scope="col"><a title="This column is for the following projects (LICA-FR, BRCA-KR) which have not yet submitted sample level data.">Pending</a></th>
+		<th scope="col"><a target="_blank" href="all_files.txt" title="This column shows the totals of all the ICGC projects.">ICGC Total</a></th>
+		<th scope="col">ICGC Percentage</th>
+		<th scope="col"><a title="This column shows the totals of all the TCGA projects.">TCGA Total</a></th>
+		<th scope="col">TCGA Percentage</th>
+		<th scope="col"><a title="This column shows the totals of both the ICGC and TCGA projects.">Cumluative Total</a></th>				
+		<th scope="col">Cumulative Percentage</th>
+	      </tr>
+	    </thead>
+	    <tbody>
+	      <tr>
+		<td><b>Total Number of Specimens</b></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td></td><td>0</td><td></td><td>0</td><td></td>
+	      </tr>
+	      <tr>
+		<td><b>Specimens Uploaded</b></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+	      </tr>
+	      <tr>
+		<td><b>Specimens Left</b></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+	      </tr>
+	      <tr>
+		<td><b>Matched Tumour/Normal Pairs</b></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+	      </tr>
+	    </tbody>
+	    <tfoot>
+	      <tr>
+                <td colspan="19">*Updates every day at 13:00 GMT, hover over the column headers to see more information.</td>
+              </tr>
+            </tfoot>
+	  </table>
+	</div><!--table-->
+      </div><!--tablediv-->
+      <div id="chartdiv">
+	<div id="charttop">
+          <h3 style="margin-left: 100px;">Percentage of Specimens Uploaded</h3>
+          <div id="radio" style="margin-right:200px;">
+            <div id="city" style="float:left;">
+              <b><p style="margin-left:5px;font-size:12px;width:130px;">Project Cities</p></b>
+              <input style="margin-left:5px;" type="radio" name="time" id="hr1" onchange="checkr1()">Daily
+              <input style="margin-left:5px;" type="radio" name="time" id="day1" onchange="checkr1()">Weekly
+            </div><!--city-->
+            <div id="gnos" style="float:left;">
+              <b><p style="margin-left:5px;font-size:12px;">GNOS Repos</p></b>
+              <input style="margin-left:5px;" type="radio" name="time" id="dkfz1" onchange="checkr1()">DKFZ
+              <input style="margin-left:5px;" type="radio" name="time" id="ebi1" onchange="checkr1()">EBI
+              <input style="margin-left:5px;" type="radio" name="time" id="bsc1" onchange="checkr1()">BSC
+              <input style="margin-left:5px;" type="radio" name="time" id="etri1" onchange="checkr1()">ETRI
+              <input style="margin-left:5px;" type="radio" name="time" id="osdc1" onchange="checkr1()">OSDC
+              <input style="margin-left:5px;" type="radio" name="time" id="riken1" onchange="checkr1()">RIKEN
+            </div><!--gnos-->
+	  </div><!--radio-->
+        </div><!--charttop-->
+        <div id ="chartbottom">
+          <h3 style="margin-left: 100px;">Number of Specimens Uploaded</h3>
+          <div id="radio" style="margin-right:200px;">
+            <div id="city" style="float:left;">
+              <b><p style="margin-left:5px;font-size:12px;width:130px;">Project Cities</p></b>
+              <input style="margin-left:5px;" type="radio" name="time" id="hr2" onchange="checkr2()">Daily
+              <input style="margin-left:5px;" type="radio" name="time" id="day2" onchange="checkr2()">Weekly
+            </div><!--city-->
+            <div id="gnos" style="float:left;">
+              <b><p style="margin-left:5px;font-size:12px;">GNOS Repos</p></b>
+              <input style="margin-left:5px;" type="radio" name="time" id="dkfz2" onchange="checkr2()">DKFZ
+              <input style="margin-left:5px;" type="radio" name="time" id="ebi2" onchange="checkr2()">EBI
+              <input style="margin-left:5px;" type="radio" name="time" id="bsc2" onchange="checkr2()">BSC
+              <input style="margin-left:5px;" type="radio" name="time" id="etri2" onchange="checkr2()">ETRI
+              <input style="margin-left:5px;" type="radio" name="time" id="osdc2" onchange="checkr2()">OSDC
+              <input style="margin-left:5px;" type="radio" name="time" id="riken2" onchange="checkr2()">RIKEN
+            </div><!--gnos-->
+	  </div><!--radio-->
+        </div><!--chartbottom-->
+      </div><!--chartdiv-->
+      <script type="text/javascript">
+	function charts(data,label,popup,spot,maxnum,num){
+	//creates the line chart
+	var margin = {top: 20, right: 55, bottom: 115, left: 40},
+	width  = 800,
+	height = 250;
+	
+	var x = d3.scale.ordinal()
+	.rangeRoundBands([0, width], .1);
+	
+	var y = d3.scale.linear()
+	.rangeRound([height, 0]);
+	
+	var xAxis = d3.svg.axis()
+	.scale(x)
+	.orient("bottom");
+	
+	var yAxis = d3.svg.axis()
+	.scale(y)
+	.orient("left");
+	
+	var line = d3.svg.line()
+	.interpolate("cardinal")
+	.x(function (d) { return x(d.label) + x.rangeBand() / 2; })
+	.y(function (d) { return y(d.value); });
+	
+	var color = d3.scale.ordinal()
+	.range(["#001c9c","#7F5217","#475003","#9c8305","#d3c47c","#800000","#6C007D","#63AFD0","#FF0000","#FF00F7","#FAF569","#00FF66","#009891"]);
+	
+	var svg = d3.select("#chart"+spot).append("svg")
+	.attr("id","svg"+num)
+	.attr("width",  width  + margin.left + margin.right)
+	.attr("height", height + margin.top  + margin.bottom)
+	.append("g")
+	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+	
+	//reading in the data
+	d3.csv(""+data, function (error, data) {
+	
+	var labelVar = 'quarter';
+	var varNames = d3.keys(data[0]).filter(function (key) { return key !== labelVar;});
+	color.domain(varNames);
+	
+	var seriesData = varNames.map(function (name) {
+	return {
+	name: name,
+	values: data.map(function (d) {
+	return {name: name, label: d[labelVar], value: +d[name]};
+	})
+	};
+	});
+	
+	x.domain(data.map(function (d) { return d.quarter; }));
+	
+	//if (maxnum == 1){
+	//	y.domain([0,100]);
+	//	}
+	//else {
+	//y.domain([0,d3.max(seriesData, function (c) { 
+	//	return d3.max(c.values, function (d) { return d.value; });
+	//	})
+	//  ]);
+	//}
+	y.domain([0,
+	
+	d3.max(seriesData, function (c) { 
+	return d3.max(c.values, function (d) { return d.value; });
+	})
+	]);
+	
+	svg.append("g")
+	.attr("class", "x axis")
+	.attr("transform", "translate(0," + height + ")")
+	.call(xAxis)
+	.selectAll("text")  
+	//.call(wrap, x.rangeBand())
+	.style("text-anchor", "end")
+	.attr("dx", "-.8em")
+	.attr("dy", ".15em")
+	.attr("transform", function(d) {
+	return "rotate(-70)" 
+	});
+	
+	svg.append("g")
+	.attr("class", "y axis")
+	.call(yAxis)
+	.append("text")
+	.attr("transform", "rotate(-90)")
+	.attr("y", 6)
+	.attr("dy", ".71em")
+	.style("text-anchor", "end")
+	.text(""+label);
+	
+	var series = svg.selectAll(".series")
+	.data(seriesData)
+	.enter().append("g")
+	.attr("class", "series");
+	
+	series.append("path")
+	.attr("class", "line")
+	.attr("d", function (d) { return line(d.values); })
+	.style("stroke", function (d) { return color(d.name); })
+	.style("stroke-width", "4px")
+	.style("fill", "none")
+	
+	series.selectAll(".point")
+	.data(function (d) { return d.values; })
+	.enter().append("circle")
+	.attr("class", "point")
+	.attr("cx", function (d) { return x(d.label) + x.rangeBand()/2; })
+	.attr("cy", function (d) { return y(d.value); })
+	.attr("r", "5px")
+	.style("fill", function (d) { return color(d.name); })
+	.style("stroke", "grey")
+	.style("stroke-width", "2px")
+	.on("mouseover", function (d) { showPopover.call(this, d); })
+	.on("mouseout",  function (d) { removePopovers(); })
+	
+	var legend = svg.selectAll(".legend")
+	.data(varNames.slice().reverse())
+	.enter().append("g")
+	.attr("class", "legend")
+	.attr("transform", function (d, i) { return "translate(55," + i * 20 + ")"; });
+	
+	legend.append("rect")
+	.attr("x", width - 10)
+	.attr("width", 10)
+	.attr("height", 10)
+	.style("fill", color)
+	.style("stroke", "grey");
+	
+	legend.append("text")
+	.attr("x", width - 12)
+	.attr("y", 6)
+	.attr("dy", ".35em")
+	.style("text-anchor", "end")
+	.text(function (d) { return d; });
+	
+	//handles the hover aspect
+	function removePopovers () {
+	$('.popover').each(function() {
+	$(this).remove();
+	}); 
+	}
+	
+	function showPopover (d) {
+	$(this).popover({
+	title: d.name,
+	placement: 'auto top',
+	container: 'body',
+	trigger: 'manual',
+	html : true,
+	content: function() { 
+	return "Date: " + d.label + 
+	"<br/>"+popup+ ": " + d3.format(",")(d.value ? d.value: d.y1 - d.y0); }
+	});
+	$(this).popover('show')
+	}
+	
+	//rotates the x-axis label
+	function wrap(text, width) {
+	text.each(function() {
+	var text = d3.select(this),
+	words = text.text().split(/\s+/).reverse(),
+	word,
+	line = [],
+	lineNumber = 0,
+	lineHeight = 1.1, // ems
+	y = text.attr("y"),
+	dy = parseFloat(text.attr("dy")),
+	tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+	while (word = words.pop()) {
+	line.push(word);
+	tspan.text(line.join(" "));
+	if (tspan.node().getComputedTextLength() > width) {
+	line.pop();
+	tspan.text(line.join(" "));
+	line = [word];
+	tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+	}
+	}
+	});
+	}
+	});
+	}
 		 
 	// checks which data to graph for the proportion chart
         function checkr1(){
