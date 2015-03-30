@@ -15,6 +15,111 @@
         <script src="http://datamaps.github.io/scripts/datamaps.world.min.js?v=1"></script>
         <link rel="stylesheet" type="text/css" href="http://bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
         <meta charset="utf-8" http-equiv="refresh" content="600">
+
+<script type="text/javascript">
+updateTable = function(ele,jsonFile) {
+        var table = document.getElementsByName(ele);
+        var json_data;
+        var cell_1 = [];
+        var cell_2 = [];
+        var cell_3 = [];
+        var val_1 = [];
+        var val_2 = [];
+        var val_3 = [];
+        var total_1 = 0;
+        var total_2 = 0;
+        var total_3 = 0;
+
+
+        d3.json(jsonFile, function(error, json) {
+                json_data = json;
+
+                var arr =[];
+
+                 for (var i = 0; i < json_data.length; i++){
+
+
+                cell_1[i] = table[0].rows[1].cells[i+1];
+                val_1[i] = cell_1[i].firstChild.data;
+                cell_1[i].firstChild.data = ''+json_data[i].align;
+                total_1 += json_data[i].align;
+
+                cell_2[i] = table[0].rows[2].cells[i+1];
+                val_2[i] = cell_2[i].firstChild.data;
+                cell_2[i].firstChild.data = ''+json_data[i].remaining;
+                total_2 += json_data[i].remaining;
+
+                cell_3[i] = table[0].rows[3].cells[i+1];
+                val_3[i] = cell_3[i].firstChild.data;
+                cell_3[i].firstChild.data = ''+json_data[i].total_unalign;
+                total_3 += json_data[i].total_unalign;
+
+                }
+
+        cell_1[9] = table[0].rows[1].cells[9];
+        cell_2[9] = table[0].rows[2].cells[9];
+        cell_3[9] = table[0].rows[3].cells[9];
+
+
+        cell_1[9].firstChild.data = '' + total_1;
+        cell_2[9].firstChild.data = '' + total_2;
+        cell_3[9].firstChild.data = '' + total_3;
+
+        cell_1[10] = table[0].rows[1].cells[9];
+        cell_2[10] = table[0].rows[2].cells[9];
+        cell_1[11] = table[0].rows[1].cells[10];
+        cell_2[11] = table[0].rows[2].cells[10];
+
+        var ave_1 = (total_1/total_3)*100;
+        var num_1 = ave_1.toFixed(2);
+        var ave_2 = (total_2/total_3)*100;
+        var num_2 = ave_2.toFixed(2);
+
+        cell_1[11].firstChild.data = '' + num_1;
+        cell_2[11].firstChild.data = '' + num_2;
+
+        });
+    }
+
+    var makeMap = function(mapContainer,mapData) {
+      var colors = d3.scale.category10();
+
+      var mC = document.getElementById(mapContainer);
+      if (!mC) {
+        alert('element '+mapContainer+' not found!');
+        return '<pre>Error: map container '+mapContainer+' not found</pre>';
+      }
+
+
+     //basic map config with custom fills, mercator projection
+      var map = new Datamap({
+        scope: 'world',
+        element: mC,
+        geographyConfig: {
+          popupOnHover: false,
+          highlightOnHover: false,
+          highlightFillColor: '#ABDDA4',
+        },
+        projection: 'mercator',
+        fills: {defaultFill: "#ABDDA4",
+                gt50: colors(Math.random() * 20),
+                gt60: "#63AFD0",
+                gt70: "#0772A1",}
+      })
+
+     var json_data;
+
+       d3.json(mapData, function(error, json) {
+         json_data = json;
+         map.bubbles(json_data, {
+           popupTemplate: function(geo, data) {
+           return "<div class='hoverinfo'>"+data.name+"<br/>Aligned: " + data.aligned + " Total: " +data.total+ "</div>";
+        }
+      });
+    });
+  }
+ </script>
+
 </head>
 <style>
         #headere{
@@ -25,6 +130,7 @@
                 line-height: 50px;
                 font-size:12px;
         }
+
 </style>
 <body>
 <script>
@@ -134,34 +240,6 @@ $(document).ready(function () {
 </script>
 
 
-
-<div id="#data2" style="width:911px;">
-<h2 style="float:left;">Data Train 2.0</h2>
-<p style="float:left;">This table only displays the specimens that are part of data train 2.0. Only specimens from <a target="_blank" href="https://docs.google.com/spreadsheets/d/1X3ZO3SIRm7emv3F5jCU116EprDWJnRGNqCB8x5HqOws/edit#gid=1481057674">Data Freeze Train 2.0 Report</a> are included.</p>
-<p>
-<br>
-<table name ="x1" id="rounded-corner" summary="">
-<thead>
-<tr><th></th><th><a target="_blank" href="log_train/1gtrepo-bsc.log">Barcelona</a></th><th><a target="_blank" href="log_train/1gtrepo-osdc-icgc.log">Chicago(ICGC)</a></th><th><a target="_blank" href="log_train/1gtrepo-osdc-tcga.log">Chicago(TCGA)</a></th><th><a target="_blank" href="log_train/1gtrepo-dkfz.log">Heidelberg</a></th><th><a target="_blank" href="log_train/1gtrepo-ebi.log">London</a></th><th><a target="_blank" href="log_train/1gtrepo-etri.log">Seoul</a></th><th><a target="_blank" href="log_train/1gtrepo-riken.log">Tokyo</a></th><th><a target="_blank" href="log_train/1gtrepo-cghub.log">Santa Cruz</a></th><th>Total</th><th>% of 4150</th></tr>
-</thead>
-<tbody>
-<tr><td><b>Aligned Specimens</b></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
-
-<tr><td><b>Remaining Specimens to Align</b></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
-
-<tr><td><b>Total Specimens</b></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
-</tbody>
-<tfoot>
-                                        <tr>
-                                                <td colspan="19">*Click for  <a target="_blank" href="https://docs.google.com/spreadsheets/d/1X3ZO3SIRm7emv3F5jCU116EprDWJnRGNqCB8x5HqOws/edit#gid=1481057674">Data Freeze Train 2.0 Report</a></td>
-                                        </tr>
-                                </tfoot>
-
-</table>
-</p>
-</div>
-
-
 <script type="text/javascript">
 //updates the table
         var table = document.getElementsByName("x");
@@ -224,55 +302,25 @@ $(document).ready(function () {
 
 	cell_1[9] = table[0].rows[1].cells[9];
 
-	var ave = (total_1/823)*100;
+	var ave = (total_1/total_3)*100;
 	var num = ave.toFixed(2);
 
 	cell_1[9].firstChild.data = '' + num;
 	
 	});
 </script>
-<!--
-<h2>Map for Train 2.0</h2>
-<div id="container1" style="position:relative; width:800px; height:500px"></div></center>
 
-     <script>
-      var colors = d3.scale.category10();
-       //basic map config with custom fills, mercator projection
-      var map = new Datamap({
-        scope: 'world',
-        element: document.getElementById('container1'),
-        geographyConfig: {
-          popupOnHover: false,
-          highlightOnHover: false,
-          highlightFillColor: '#ABDDA4',
-        },
-        projection: 'mercator',
-        fills: {defaultFill: "#ABDDA4",
-                gt50: colors(Math.random() * 20),
-                gt60: "#63AFD0",
-                gt70: "#0772A1",}
-      })
-	
-	var json_data;
-                  
-                  d3.json("bubbles/traindata2.json", function(error, json) {
-                          json_data = json;
-                          map.bubbles(json_data, {
-                                 popupTemplate: function(geo, data) {
-                                          return "<div class='hoverinfo'>"+data.name+"<br/>Aligned: " + data.aligned + " Total: " +data.total+ "</div>";   
-				}
-                          });
-                  });
-     </script>
--->
-<center><div id="#data1" style="width:764px;">
+
+<center><div id="#data1" style="width:911px;">
 <h2 style="float:left">Data Train 1.0</h2>
 <p style = "float:left">This table only displays specimens from data train 1.0. Only specimens from <a target="_blank" href="https://docs.google.com/spreadsheets/d/14NItsHKJUevHZIuFkFTwNF-C12WbXTrFe0oM0Xq6b4M/edit#gid=111470950">Data Freeze Train 1.0 Report</a> are included.</p>
 <p>
 <br>
-<table name ="x" id="rounded-corner" summary="">
+<table name ="x" id="rounded-corner" summary="" style="width:911px">
 <thead>
-<tr><th></th><th><a target="_blank" href="log_train/1gtrepo-bsc.log">Barcelona</a></th><th><a target="_blank" href="log_train/1gtrepo-osdc.log">Chicago</a></th><th><a target="_blank" href="log_train/1gtrepo-dkfz.log">Heidelberg</a></th><th><a target="_blank" href="log_train/1gtrepo-ebi.log">London</a></th><th><a target="_blank" href="log_train/1gtrepo-etri.log">Seoul</a></th><th><a target="_blank" href="log_train/1gtrepo-riken.log">Tokyo</a></th><th><a target="_blank" href="log_train/1gtrepo-cghub_data1.log">Santa Cruz</a></th><th>Total</th><th>% of 823</th></tr>
+<tr><th></th><th><a target="_blank" href="log_train/1gtrepo-bsc.log">Barcelona</a></th><th><a target="_blank" href="log_train/1gtrepo-osdc.log">Chicago</a></th><th><a target="_blank" href="log_train/1gtrepo-dkfz.log">Heidelberg</a></th>
+<th><a target="_blank" href="log_train/1gtrepo-ebi.log">London</a></th><th><a target="_blank" href="log_train/1gtrepo-etri.log">Seoul</a></th>
+<th><a target="_blank" href="log_train/1gtrepo-riken.log">Tokyo</a></th><th><a target="_blank" href="log_train/1gtrepo-cghub_data1.log">Santa Cruz</a></th><th>Total</th><th>%</th></tr>
 </thead>
 <tbody>
 <tr><td><b>Aligned Specimens</b></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
@@ -290,7 +338,7 @@ $(document).ready(function () {
 </p>
 </div>
 <h2>Map for Train 1.0</h2>
-<div id="container2" style="position:relative; width:800px; height:500px"></div>
+<div id="container2" style="position:relative; width:911px; height:500px"></div>
      <script>
       var colors = d3.scale.category10();
        //basic map config with custom fills, mercator projection
@@ -338,6 +386,83 @@ $(document).ready(function () {
        }
      });
 </script>
+
+<div id="#data2" style="width:911px;">
+<h2 style="float:left;">Data Train 2.0</h2>
+<p style="float:left;">This table only displays the specimens that are part of data train 2.0. Only specimens from <a target="_blank" href="https://docs.google.com/spreadsheets/d/1X3ZO3SIRm7emv3F5jCU116EprDWJnRGNqCB8x5HqOws/edit#gid=1481057674">Data Freeze Train 2.0 Report</a> are included.</p>
+<p>
+<br>
+<table name ="train2" id="rounded-corner" summary="" style="width:911px">
+<thead>
+<tr><th></th><th><a target="_blank" href="log_train/1gtrepo-bsc.log">Barcelona</a></th><th><a target="_blank" href="log_train/1gtrepo-osdc-icgc.log">Chicago(ICGC)</a></th><th><a target="_blank" href="log_train/1gtrepo-osdc-tcga.log">Chicago(TCGA)</a>
+</th><th><a target="_blank" href="log_train/1gtrepo-dkfz.log">Heidelberg</a></th><th><a target="_blank" href="log_train/1gtrepo-ebi.log">London</a></th>
+<th><a target="_blank" href="log_train/1gtrepo-etri.log">Seoul</a></th><th><a target="_blank" href="log_train/1gtrepo-riken.log">Tokyo</a></th><th><a target="_blank" href="log_train/1gtrepo-cghub.log">Santa Cruz</a></th><th>Total</th><th>%</th></tr>
+</thead>
+<tbody>
+<tr><td><b>Aligned Specimens</b></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+
+<tr><td><b>Remaining Specimens to Align</b></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+
+<tr><td><b>Total Specimens</b></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>-</td></tr>
+</tbody>
+<tfoot>
+                                        <tr>
+                                                <td colspan="19">*Click for  <a target="_blank" href="https://docs.google.com/spreadsheets/d/1X3ZO3SIRm7emv3F5jCU116EprDWJnRGNqCB8x5HqOws/edit#gid=1481057674">Data Freeze Train 2.0 Report</a></td>
+                                        </tr>
+                                </tfoot>
+
+</table>
+</p>
+</div>
+
+
+<script type="text/javascript">
+updateTable('train2','train2.json');
+</script>
+
+
+<h2>Map for Train 2.0</h2>
+<div id="trainMap" style="position:relative; width:800px; height:500px"></div>
+</center>
+
+<script type="text/javascript">
+makeMap('trainMap','bubbles/traindata2.json');
+</script>
+
+<div id="#data3" style="width:911px;">
+<h2 style="float:left;">Live (as of 03/10/2015)</h2>
+<p>
+<br>
+<table name ="live" id="rounded-corner" summary="" style="width:911px">
+<thead>
+<tr><th></th><th><a target="_blank" href="log_train/1gtrepo-bsc.log">Barcelona</a></th><th><a target="_blank" href="log_train/1gtrepo-osdc-icgc.log">Chicago(ICGC)</a></th><th><a target="_blank" href="log_train/1gtrepo-osdc-tcga.log">Chicago(TCGA)</a>
+</th><th><a target="_blank" href="log_train/1gtrepo-dkfz.log">Heidelberg</a></th><th><a target="_blank" href="log_train/1gtrepo-ebi.log">London</a></th>
+<th><a target="_blank" href="log_train/1gtrepo-etri.log">Seoul</a></th><th><a target="_blank" href="log_train/1gtrepo-riken.log">Tokyo</a></th><th><a target="_blank" href="log_train/1gtrepo-cghub.log">Santa Cruz</a></th><th>Total</th><th>%</th></tr>
+</thead>
+<tbody>
+<tr><td><b>Aligned Specimens</b></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+
+<tr><td><b>Remaining Specimens to Align</b></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+
+<tr><td><b>Total Specimens</b></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>-</td></tr>
+</tbody>
+</table>
+</p>
+</div>
+
+
+<script>
+updateTable('live','live.json');
+</script>
+
+
+<h2>Live Map</h2>
+<div id="liveMap" style="position:relative; width:800px; height:500px"></div></center>
+
+<script>
+makeMap('liveMap','bubbles/livedata.json');
+</script>
+
 </center>
 </body>
 </html>
