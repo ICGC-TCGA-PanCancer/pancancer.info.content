@@ -481,7 +481,7 @@
 			fills: {
 				defaultFill: "#ABDDA4",
 				red: "#FF0000",
-                blue: "#63AFD0",
+                                blue: "#63AFD0",
 				yellow: "#FFFF00",
 				green: "#00FF00",
 				orange: "90FFFA"}
@@ -777,9 +777,10 @@
 			<div class="tab-content">
 				<div id="tab1" style="margin: 0px auto;position: relative; max-width: 800px;height: 900px;" class="tab active">
 					<p align="center">Overview of all the locations and their current status. Enlarged view of the UK to see Cambridge and Hinxton separately. To see projects click on tabs.</p>
-					<div id="tab1-map1" style="position: relative; width: 800px; max-height: 500px;" class="tab active"></div>
-					<div id="tab1-map2" style="position: relative; max-width: 800px; max-height: 500px;" class="tab active"></div>
-				</div>
+					<div id="tab1-map1" style="position: absolute; left:0px; width: 550px; height: 500px;display:inline"></div>
+					<div id="tab1-map2" style="position: absolute; border:1px solid black;left:550px; width: 250px; height: 250px;display:inline"></div>
+					<div id="tab1-map3" style="position: absolute; border:1px solid black;top:310px; left:550px; width: 250px; height: 250px;display:inline"></div>
+			</div>
 <script>
 	//map with all the bubbles on it
 	var colors = d3.scale.category10();
@@ -811,7 +812,7 @@
 		  }
 	});
 	});
-	
+
 	//first zoomed in map on UK
 	var zoom = new Datamap({
 		element: document.getElementById("tab1-map2"),
@@ -821,9 +822,9 @@
 			highlightOnHover: false,},
 			setProjection: function(element) {
 				var projection = d3.geo.mercator()
-				.center([1, 52])
+				.center([2, 53])
 				.rotate([4.4, 0])
-				.scale(3500)
+	                        .scale(750)
 				.translate([element.offsetWidth / 2, element.offsetHeight / 2]);
 				var path = d3.geo.path()
 				.projection(projection);
@@ -846,6 +847,41 @@ d3.json("front_uk.json", function(error, json) {
 		  }
 	});
 	});
+
+        var zoom2 = new Datamap({
+                element: document.getElementById("tab1-map3"),
+                scope: 'world',
+                geographyConfig: {
+                        popupOnHover: false,
+                        highlightOnHover: false,},
+                        setProjection: function(element) {
+                                var projection = d3.geo.mercator()
+                                .center([4.75,52.201466])
+                                .rotate([4.4, 0])
+                                .scale(7200)
+                                .translate([element.offsetWidth / 2, element.offsetHeight / 2]);
+                                var path = d3.geo.path()
+                                .projection(projection);
+                                return {path: path, projection: projection};
+                        },
+                fills: {
+                        defaultFill: "#ABDDA4",
+	red: "#FF0000",
+                        blue: "#63AFD0",
+                        yellow: "#FFFF00",
+                        green: "#00FF00",
+                        orange: "90FFFA"}
+                })
+
+d3.json("front_uk.json", function(error, json) {
+        json_data = json;
+        zoom2.bubbles(json_data, {
+                  popupTemplate: function(geo, data) {
+                          return "<div class='hoverinfo'>"+data.name+"<br/>Uploaded: " + data.uploaded + " Total: " +data.total+ "</div>";
+                  }
+        });
+        });
+
 
 </script>
 
