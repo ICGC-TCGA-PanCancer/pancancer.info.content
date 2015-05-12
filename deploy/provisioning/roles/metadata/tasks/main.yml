@@ -134,10 +134,6 @@
 #  shell: chdir=~ openssl aes-256-cbc -d -in .s3cfg.256 -out .s3cfg -pass env:cached_creds
 #  TODO: possibly reimplment this
 
-- name: Placeholder for S3 creds
-  sudo "{{ user_name }}"
-  shell: chdir=~ touch .s3cfg
-
 - name: Install the Cron Job
   sudo: "{{ user_name }}"
   command: crontab ~/gitroot/pancancer.info.content/deploy/configuration/crons/crontab
