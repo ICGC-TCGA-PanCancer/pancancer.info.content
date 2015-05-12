@@ -1,0 +1,11 @@
+<script type="text/javascript">
+  var choice = workflow == 'Sanger' ? 'sanger' : workflow == 'DKFZ/EMBL' ? 'dkfz' : 'sanger';
+  $('#'+choice).prop("checked",true);
+</script>
+<form name="f1">
+<b><span style="font-size:large">Variant Workflow: &nbsp;</span></b>
+<input type="radio" name="workflow" value="Sanger" onchange="selectVariantWorkflow(this)" id="sanger"> Sanger
+<input type="radio" name="workflow" value="DKFZ/EMBL"   onchange="selectVariantWorkflow(this)" id="dkfz"> DKFZ/EMBL
+<!--<input disabled=1 type="radio" name="workflow" value="Broad"   onchange="selectVariantWorkflow(this)"> Broad-->
+</form>
+

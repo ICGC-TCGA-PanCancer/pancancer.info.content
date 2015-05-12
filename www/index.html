@@ -1,62 +1,52 @@
 <html>
-<meta >
 <head>
-<meta name="google-site-verification" content="OzrZ5nFulNwQ1tXMi9ItSQUJV9VnyuoqZgGuh_KXyMg" />
-<link rel="shortcut icon" href="https://icgc.org/files/org_sys/pan.png">
-        <title>ICGC PanCancer Status</title>
-        <meta http-equiv="content-type" content="text/html;charset=utf-8" />
-        <meta name="generator" content="Geany 1.23.1" />
-        <meta charset="utf-8" http-equiv="refresh" content="600">
-        <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-        <link rel="stylesheet" type="text/css" href="style1.css">
-        <!-- I recommend you host this file on your own, since this will change without warning -->
-        <script src="http://datamaps.github.io/scripts/datamaps.world.min.js?v=1"></script>
-        <link rel="stylesheet" type="text/css" href="http://bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-        <meta charset="utf-8" http-equiv="refresh" content="600">
-</head>
-<style>
-        #headere{
-                background-color: #7FB5DA;
+  <title>ICGC PanCancer Status</title>
+  
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <meta name="generator" content="Geany 1.23.1" />
+  <meta charset="utf-8" http-equiv="refresh" content="600">
+  <meta name="google-site-verification" content="OzrZ5nFulNwQ1tXMi9ItSQUJV9VnyuoqZgGuh_KXyMg" />
 
-        }
-        #inside{
-                line-height: 50px;
-                font-size:12px;
-        }
-</style>
+  <link rel="stylesheet" type="text/css" href="style1.css">
+  <link rel="stylesheet" type="text/css" href="http://bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <script type="text/javascript" src="http://datamaps.github.io/scripts/datamaps.world.min.js?v=1"></script>
+  <script type="text/javascript" src="js/common.js"></script>
+  <script type="text/javascript">loadJS(['alignments','variant_calling'])</script>
+</head>
 <body>
 <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  function selectVariantWorkflow(wf) {
+    workflow = wf.value;    
+    $('#vhead1').html('Donors with '+ workflow  +' Variant Calls (Live)');
+    loadVariantData(workflow);
+  }
 
-  ga('create', 'UA-34523087-2', 'pancancer.info');
-  ga('create', 'UA-52348443-1', 'auto', {'name': 'newTracker'});
-  ga('send', 'pageview');
-  ga('newTracker.send', 'pageview');
+  function loadVariantData(wf) {
+    loadVariantTable1();
+    drawVariantChart1(wf);
+  }
 
+  $( document ).ready(function(){
+    $("#variant_workflow").load("variant_workflow_choice.html");
+    loadVariantData('Sanger');
+    loadAlignmentTable1();
+    loadAlignmentTable2();
+    loadAlignmentTable3();
+  });
 </script>
 <center>
 
   <div id="pancancer-header"></div>
-  <script type="text/javascript">
-    $("#pancancer-header").load("header.html");
-  </script>
 
   <h2>ICGC/TCGA PanCancer Status</h2>
 
-  <p style="width:900px;">For more information see our
-    <a href="https://wiki.oicr.on.ca/display/PANCANCER/PCAWG+Home">Wiki Space</a>.</p>
-
-<center>
-<p>For access to the daily-created JSON files used for the following tables and our ElasticSearch index please click <a href="gnos_metadata/">here</a>.<br>
-Details about this index can be found <a href="https://github.com/ICGC-TCGA-PanCancer/pancancer-sandbox/tree/develop/pcawg_metadata_parser">here</a>.</p>
-</center>
+<div id="variant_workflow"></div>
 
 <div id="#datatotal" style="width:911px;">
-<h2 style="float:left;">Donors with Sanger Variant Calls (Live)</h2>
+<h2 style="float:left;" id="vhead1">Donors with Sanger Variant Calls (Live)</h2>
 <p style="float:left;">The first column shows the number of donors aligned at a repo that have variants called. The subsequent columns show the location of the results. Note: Donors aligned at cloud X may have variants computed at cloud Y and VCFs uploaded to cloud Z. Currently, the cloud performing the computation is not shown but will be at a later time.</p>
 <p>
 <table name ="x12" id="rounded-corner" summary="">
@@ -80,7 +70,6 @@ Details about this index can be found <a href="https://github.com/ICGC-TCGA-PanC
 </div>
 
 <div id="#datatotal" style="width:1100px;">
-<h2 style="float:left;">Sanger Variant Calling History</h2>
 <p>
 <div id="chart_div"></div>
 </p>
@@ -155,307 +144,6 @@ Details about this index can be found <a href="https://github.com/ICGC-TCGA-PanC
 </table>
 </p>
 </div>
-
-<script type="text/javascript">
-    // Load the Visualization API and the piechart package.
-    google.load('visualization', '1', {'packages':['corechart']});
-      
-    // Set a callback to run when the Google Visualization API is loaded.
-    google.setOnLoadCallback(drawChart);
-      
-    function drawChart() {
-      var jsonData = $.ajax({
-          url: "gnos_metadata/latest/reports/summary_counts/summary_counts.json",
-          dataType:"text",
-          async: false
-          }).responseText;
-
-      data = $.parseJSON(jsonData)
-      
-      // Create our data table out of JSON data loaded from server.
-      var chart_data = new google.visualization.DataTable();
-      chart_data.addColumn('date', 'Date');
-      chart_data.addColumn('number', '# donor to be called');
-      chart_data.addColumn('number', 'Trajectory');
-      chart_data.addColumn('number', '# donor called');
-      var count_called_as_of_last_week = 0;
-      for ($i = 1; $i < data.length; $i++) {
-        var utc_time = new Date(data[$i][0] + 'T03:01:01')
-        var local_time = new Date(utc_time.valueOf() + utc_time.getTimezoneOffset() * 60000)
-        if ($i < data.length - 1) {
-          chart_data.addRow([local_time, data[$i][1], null, data[$i][2]]);
-        } else {
-          chart_data.addRow([local_time, data[$i][1], data[$i][2], data[$i][2]]);
-        }
-        if ($i == data.length - 8) { // count 7 days ago
-            count_called_as_of_last_week = data[$i][2];
-        }
-      }
-      //var count_to_be_called_as_of_last_day = data[data.length - 1][1];
-      // upon request from Brian on Feb 13, hard-code the total number of donors to be finished at the end to 2171 (count of train 2 donors)
-      var count_to_be_called_as_of_last_day = 2171 - data[data.length - 1][2];
-      var count_called_as_of_last_day = data[data.length - 1][2];
-
-      var last_date_utc_time = new Date(data[data.length - 1][0] + 'T03:01:01');
-      var last_date = new Date(utc_time.valueOf() + utc_time.getTimezoneOffset() * 60000);
-
-      var days_to_go = Math.round(count_to_be_called_as_of_last_day / ((count_called_as_of_last_day - count_called_as_of_last_week) / 7));
-
-      last_date.setDate(last_date.getDate() + days_to_go);
-
-
-      chart_data.addRow([last_date, null, count_to_be_called_as_of_last_day + count_called_as_of_last_day, null]);
-
-      var options = {
-          title: 'Sanger workflow variant calling progress (trajectory based on last 7 days\' overall throughput)',
-          curveType: 'function',
-          legend: { position: 'bottom' },
-          width: '100%',
-          height: 300,
-          pointSize: 6,
-      };
-
-      // Instantiate and draw our chart, passing in some options.
-      var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-      chart.draw(chart_data, options);
-    }
-</script>
-
-
-<script type="text/javascript">
-// some shared variables
-var repo_name = {
-    'bsc': 'Barcelona',
-    'osdc-icgc': 'Chicago(ICGC)',
-    'osdc-tcga': 'Chicago(TCGA)',
-    'dkfz': 'Heidelberg',
-    'ebi': 'London',
-    'cghub': 'Santa Cruz',
-    'etri': 'Seoul',
-    'riken': 'Tokyo'
-}
-var repos = ['bsc', 'osdc-icgc', 'dkfz',
-              'ebi', 'cghub', 'etri', 'riken'
-            ];
-
-
-$(document).ready(function () {
-    var repos = ['bsc', 'osdc-icgc', 'osdc-tcga', 'dkfz',
-              'ebi', 'cghub', 'etri', 'riken'
-            ];
-    var report_data_url = "gnos_metadata/latest/reports/gnos_repo_summary/";
-
-    $.getJSON(report_data_url + 'live_sanger_variant_called_donors.repos.json',
-    function (json) {
-        var total = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-        var tr;
-
-        for (var i = 0; i < repos.length; i++) {
-            if (json[repos[i]] == undefined) {
-                continue;
-            }
-            tr = $('<tr/>');
-            tr.append("<td>" + repo_name[repos[i]] 
-                             + " ("
-                             + (json[repos[i]]['_ori_count'].length == 0 ? 0 : json[repos[i]]['_ori_count'][0])
-                             + ")"
-                             + "</td>");
-            //tr.append("<td>" 
-            //    + json[repos[i]]['_ori_count'][0]
-            //    + "</td>");
-            total[0] += (json[repos[i]]['_ori_count'].length == 0 ? 0 : json[repos[i]]['_ori_count'][0]);
-            
-            for (var j = 0; j < repos.length; j++) {
-                var aligned_donors = json[repos[i]][repos[j]] == undefined ? 0 : json[repos[i]][repos[j]][0];
-                var aligned_donors_url = report_data_url
-                                         + 'live_sanger_variant_called_donors.'
-                                         + repos[i] + "." + repos[j] + ".txt";
-                tr.append("<td>" + (aligned_donors == 0 ? "" : "<a href='" + aligned_donors_url + "'>")
-                                 + aligned_donors
-                                 + (aligned_donors == 0 ? "" : "</a>")
-                                 + "</td>");
-                total[j+1] += aligned_donors;
-            }
-            $("table[name='x12']").append(tr);
-        }
-
-        for (var i = 0; i < json.length; i++) {
-            for (var j = 0; j < ctypes.length; j++) {
-                total[j] += json[i][ctypes[j]][0];
-            }
-        }
-        tr = $('<tr/>');
-        tr.append("<td><font color=\"red\">[Total ("+total[0]+")]</font></td>");
-        for (var i = 1; i < total.length; i++) {
-            tr.append("<td>" + total[i] + "</td>");
-        }
-        $("table[name='x12']").append(tr);
-
-        tfoot = $('<tfoot/>');
-        //tfoot.append('<tr><td colspan="50">*Report processed: ' + json[0]['timestamp'] + '</td></tr>');
-        $("table[name='x12']").append(tfoot);
-    });
-});
-
-
-// Total Donor Info table
-$(document).ready(function () {
-    var report_data_url = "gnos_metadata/latest/reports/donors_alignment_summary/"; 
-    $.getJSON(report_data_url + "donor.json",
-    function (json) {
-        var t_both_aligned = 0;
-        var t_normal_aligned_tumor_not = 0;
-        var t_tumor_aligned_normal_not = 0;
-        var t_both_not = 0;
-        var t_normal_aligned_tumor_missing = 0;
-        var t_normal_unaligned_tumor_missing = 0;
-        var t_tumor_aligned_normal_missing = 0;
-        var t_tumor_unaligned_normal_missing = 0;
-        var ctypes = ['both_aligned', 'normal_aligned_tumor_not', 'tumor_aligned_normal_not',
-                      'both_not', 'normal_aligned_tumor_missing', 'normal_unaligned_tumor_missing',
-                      'tumor_aligned_normal_missing', 'tumor_unaligned_normal_missing'
-                     ];
-        var total = [0, 0, 0, 0, 0, 0, 0, 0];
-        var tr;
-        for (var i = 0; i < json.length; i++) {
-            for (var j = 0; j < ctypes.length; j++) {
-                total[j] += json[i][ctypes[j]];
-            }
-        }
-        tr = $('<tr/>');
-        tr.append("<td><font color=\"red\">[Total]</font></td>");
-        for (var i = 0; i < total.length; i++) {
-            tr.append("<td>" + total[i] + "</td>");
-        }
-        $("table[name='x9']").append(tr);
-
-        for (var i = 0; i < json.length; i++) {
-            tr = $('<tr/>');
-            tr.append("<td>" + json[i].project + "</td>");
-            
-            for (var j = 0; j < ctypes.length; j++) {
-                var cell_value = json[i][ctypes[j]] == 0 ? 0
-                   : "<a href='" + report_data_url + json[i]['project'] + "." + ctypes[j] + ".donors.txt'>" + json[i][ctypes[j]] + "</a>";
-                tr.append("<td>" + cell_value + "</td>");
-                total[j] += json[i][ctypes[j]];
-            }
-            $("table[name='x9']").append(tr);
-        }
-
-
-        tfoot = $('<tfoot/>');
-        tfoot.append('<tr><td colspan="50">*Report processed: ' + json[0]['timestamp'] + '</td></tr>');
-        $("table[name='x9']").append(tfoot);
-    });
-});
-
-
-// GNOS summary donor table, for aligned BAM synchronization and variant calling status
-$(document).ready(function () {
-    var report_data_url = "gnos_metadata/latest/reports/gnos_repo_summary/";
-    var sanger_variant_data = {}
-    $.getJSON(report_data_url + "live_sanger_variant_called_donors.repos.json", function(data){
-        sanger_variant_data = data
-    });
-
-    $.getJSON(report_data_url + "live_alignment_completed_donors.repos.json",
-    function (json) {
-        var total = [0, 0, 0, 0, 0, 0, 0, 0];
-        var tr;
-
-        for (var i = 0; i < Object.keys(json).length; i++) {
-            tr = $('<tr/>');
-            tr.append("<td>" + repo_name[repos[i]] 
-                             + " ("
-                             + json[repos[i]]['_ori_count'][0]
-                             + ")"
-                             + "</td>");
-            //tr.append("<td>" 
-            //    + json[repos[i]]['_ori_count'][0]
-            //    + "</td>");
-            total[0] += json[repos[i]]['_ori_count'][0];
-            
-            for (var j = 0; j < repos.length; j++) {
-                var aligned_donors = json[repos[i]][repos[j]] == undefined ? 0 : json[repos[i]][repos[j]][0];
-                var aligned_donors_url = report_data_url
-                                         + "live_alignment_completed_donors."
-                                         + repos[i] + "." + repos[j] + ".txt";
-                tr.append("<td>" + (aligned_donors == 0 ? "" : "<a href='" + aligned_donors_url + "'>")
-                                 + aligned_donors
-                                 + (aligned_donors == 0 ? "" : "</a>")
-                                 + "</td>");
-                total[j+1] += aligned_donors;
-            }
-            $("table[name='x10']").append(tr);
-        }
-
-        for (var i = 0; i < json.length; i++) {
-            for (var j = 0; j < ctypes.length; j++) {
-                total[j] += json[i][ctypes[j]][0];
-            }
-        }
-        tr = $('<tr/>');
-        tr.append("<td><font color=\"red\">[Total ("+total[0]+")]</font></td>");
-        for (var i = 1; i < total.length; i++) {
-            tr.append("<td>" + total[i] + "</td>");
-        }
-        $("table[name='x10']").append(tr);
-
-        tfoot = $('<tfoot/>');
-        //tfoot.append('<tr><td colspan="50">*Report processed: ' + json[0]['timestamp'] + '</td></tr>');
-        $("table[name='x10']").append(tfoot);
-    });
-});
-
-
-// GNOS summary specimen table, for aligned BAM synchronization
-$(document).ready(function () {
-    var report_data_url = "gnos_metadata/latest/reports/gnos_repo_summary/"; 
-    $.getJSON(report_data_url + "live_alignment_completed_donors.repos.json",
-    function (json) {
-        var total = [0, 0, 0, 0, 0, 0, 0, 0];
-        var tr;
-
-        for (var i = 0; i < Object.keys(json).length; i++) {
-            tr = $('<tr/>');
-            tr.append("<td>" + repo_name[repos[i]]
-                             + " ("
-                             + (json[repos[i]]['_ori_count'][1] + json[repos[i]]['_ori_count'][2])
-                             + ")"
-                             + "</td>");
-            //tr.append("<td>" + (json[repos[i]]['_ori_count'][1] + json[repos[i]]['_ori_count'][2])+ "</td>");
-            total[0] += json[repos[i]]['_ori_count'][1] + json[repos[i]]['_ori_count'][2];
-            
-            for (var j = 0; j < repos.length; j++) {
-                var cell_value = json[repos[i]][repos[j]] == undefined ? 0 : (json[repos[i]][repos[j]][1] + json[repos[i]][repos[j]][2]);
-                tr.append("<td>" + cell_value + "</td>");
-                total[j+1] += cell_value;
-            }
-            $("table[name='x11']").append(tr);
-        }
-
-        for (var i = 0; i < json.length; i++) {
-            for (var j = 0; j < ctypes.length; j++) {
-                total[j] += json[i][ctypes[j]][1] + json[i][ctypes[j]][2];
-            }
-        }
-        tr = $('<tr/>');
-        tr.append("<td><font color=\"red\">[Total ("+total[0]+")]</font></td>");
-        for (var i = 1; i < total.length; i++) {
-            tr.append("<td>" + total[i] + "</td>");
-        }
-        $("table[name='x11']").append(tr);
-
-        tfoot = $('<tfoot/>');
-        //tfoot.append('<tr><td colspan="50">*Report processed: ' + json[0]['timestamp'] + '</td></tr>');
-        $("table[name='x11']").append(tfoot);
-    });
-});
-
-
-
-</script>
-
 </center>
 </body>
 </html>
