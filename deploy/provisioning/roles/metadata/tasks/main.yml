@@ -136,7 +136,7 @@
 
 - name: Placeholder for S3 creds
   sudo "{{ user_name }}"
-  shell: chdir=~ openssl touch .s3cfg
+  shell: chdir=~ touch .s3cfg
 
 - name: Install the Cron Job
   sudo: "{{ user_name }}"
