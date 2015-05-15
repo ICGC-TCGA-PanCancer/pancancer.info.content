@@ -89,11 +89,15 @@ function loadVariantTable1() {
         var tr;
 
         for (var i = 0; i < repos.length; i++) {
+	    var rname = repo_name[repos[i]];
+	    if (rname.match(/Heidelberg \(Open/)) {
+		rname = 'Heidelberg';
+	    }
             if (json[repos[i]] == undefined) {
                 continue;
             }
             tr = $('<tr/>');
-            tr.append("<td>" + repo_name[repos[i]] 
+            tr.append("<td>" + rname 
                              + " ("
                              + (json[repos[i]]['_ori_count'].length == 0 ? 0 : json[repos[i]]['_ori_count'][0])
                              + ")"
@@ -404,8 +408,8 @@ function table_header_x1() {
 <th>AWS Ireland</th> \
 <th>Barcelona</th> \
 <th>Cambridge</th> \
-<th>Heidelberg</th> \
-<th>Heidelberg (HPC)</th> \
+<th>Heidelberg<br>(OpenStack)</th> \
+<th>Heidelberg<br>(HPC)</th> \
 <th><font color="red">[Total]</font></th>';
 
     $('#x1h').html(workflow == 'Sanger' ? sanger_h : dkfz_h);
