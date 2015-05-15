@@ -21,7 +21,7 @@ function appendToHeader(url) {
     $("head").append(s);
 }
 
-// loads dependent javascript on request
+// Loads dependent javascript on request
 function loadJS(js) {
     if (typeof(js) != 'object'){
 	js = [js];
@@ -32,7 +32,7 @@ function loadJS(js) {
 }
 
 
-//For getting GET params
+// For getting GET params
 function getSearchParameters() {
     var prmstr = decodeURIComponent(window.location.search.slice(1));
     return prmstr != null && prmstr != "" ? transformToAssocArray(prmstr) : {};

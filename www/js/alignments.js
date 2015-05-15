@@ -80,6 +80,76 @@ updateTable = function(ele,jsonFile) {
     });
 }
 
+updateLiveTable = function(ele) {
+    var jsonFile = "gnos_metadata/latest/reports/gnos_repo_summary/live_alignment_completed_donors.repos.json";
+    var repos = ['bsc', 'osdc-icgc', 'dkfz', 'ebi', 'etri', 'riken', 'cghub'];
+    
+    var table = document.getElementsByName(ele);
+    var json_data;
+    var cell_1 = [];
+    var cell_2 = [];
+    var cell_3 = [];
+    var val_1 = [];
+    var val_2 = [];
+    var val_3 = [];
+    var total_1 = 0;
+    var total_2 = 0;
+    var total_3 = 0;
+
+    d3.json(jsonFile, function(error, json) {
+        json_data = json;
+	console.log(Object.keys(json_data));
+        var arr =[];
+        for (var i = 0; i < repos.length; i++){
+	    console.log(repos[i]);
+	    var aligned = json_data[repos[i]][repos[i]][0];
+	    var donor_total = json_data[repos[i]]['_ori_count'][0];
+	    var unaligned = donor_total - aligned;
+
+            cell_1[i] = table[0].rows[1].cells[i+1];
+            val_1[i] = cell_1[i].firstChild.data;
+            cell_1[i].firstChild.data = ''+aligned;
+            total_1 += aligned;
+
+            cell_2[i] = table[0].rows[2].cells[i+1];
+            val_2[i] = cell_2[i].firstChild.data;
+            cell_2[i].firstChild.data = ''+unaligned;
+            total_2 += unaligned;
+
+            cell_3[i] = table[0].rows[3].cells[i+1];
+            val_3[i] = cell_3[i].firstChild.data;
+            cell_3[i].firstChild.data = ''+donor_total;
+            total_3 += donor_total;
+
+        }
+
+        cell_1[9] = table[0].rows[1].cells[9];
+        cell_2[9] = table[0].rows[2].cells[9];
+        cell_3[9] = table[0].rows[3].cells[9];
+
+
+        cell_1[9].firstChild.data = '' + total_1;
+        cell_2[9].firstChild.data = '' + total_2;
+        cell_3[9].firstChild.data = '' + total_3;
+
+        cell_1[10] = table[0].rows[1].cells[9];
+        cell_2[10] = table[0].rows[2].cells[9];
+        cell_1[11] = table[0].rows[1].cells[10];
+        cell_2[11] = table[0].rows[2].cells[10];
+
+        var ave_1 = (total_1/total_3)*100;
+        var num_1 = ave_1.toFixed(2);
+        var ave_2 = (total_2/total_3)*100;
+        var num_2 = ave_2.toFixed(2);
+
+        cell_1[11].firstChild.data = '' + num_1;
+        cell_2[11].firstChild.data = '' + num_2;
+
+    });
+}
+
+
+
 var makeMap = function(mapContainer,mapData) {
     var colors = d3.scale.category10();
 

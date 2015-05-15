@@ -47,7 +47,7 @@ function drawVariantChart1(workflow) {
     chart_data.addColumn('number', '# donor called');
     var count_called_as_of_last_week = 0;
     for ($i = 1; $i < data.length; $i++) {
-	console.log(data[$i]);
+	//console.log(data[$i]);
 	var local_time = realTime(data[$i][0]);
 	chart_data.addRow([local_time, data[$i][1], data[$i][2]]);
     }
@@ -178,7 +178,7 @@ function drawVariantChart2(workflow) {
         : workflow == 'DKFZ/EMBL'   ? 'gnos_metadata/latest/reports/embl-dkfz_summary_counts/hist_summary_site_counts.json'
         :                        'gnos_metadata/latest/reports/summary_counts/hist_summary_site_counts.json';
 
-    console.log(report_data_url);
+    //console.log(report_data_url);
     var json2 = $.ajax({
         url: report_data_url,
         dataType:"text",
@@ -189,7 +189,7 @@ function drawVariantChart2(workflow) {
     data2.reverse();
 
 
-    if (data2.length < 9) {
+    if (data2.length < 8) {
         $('#thead0').html(workflow+' Variant Calls by Compute Sites: Insufficient data for cumulative plot');
 	$('#chart_div2').empty();
 	$('#total').empty();
@@ -202,6 +202,8 @@ function drawVariantChart2(workflow) {
         return 1;
     }
 
+
+    cumulative_table();
 
     var chart_data = new google.visualization.DataTable();
     chart_data.addColumn('string', 'Date');
@@ -263,6 +265,8 @@ function drawVariantChart2(workflow) {
 	}
 
 	$('#'+repos3[i]).html('&nbsp;'+count.toString()+ " ("+diff+")");
+	//console.log(document.getElementById(cumulative_table));
+	//console.log($('#cumulative_table').html());
     }
     
     diff = today_total - last_week_total;
@@ -280,12 +284,11 @@ function drawVariantChart2(workflow) {
 	colors: colors,
 	vAxis: {viewWindow: {min: 0}, title: '# donors'},
 	hAxis: {slantedText: true, slantedTextAngle: 45},
-        curveType: 'function',
         legend: { position: 'right'},
         width: '100%',
         height: 700,
         pointSize: 5,
-	chartArea:{left:50,top:50,width:'80%',height:'80%'}
+	chartArea:{left:50,top:50,width:'75%',height:'80%'}
     };
 
     $('#chart_div2').empty();
@@ -345,6 +348,7 @@ function loadRepos() {
 	'osdc-icgc': 'Chicago(ICGC)',
 	'osdc-tcga': 'Chicago(TCGA)',
 	'dkfz': 'Heidelberg',
+        'dkfz_hpc': 'Heidelberg (HPC)',
 	'ebi': 'London',
 	'ucsc': 'Santa Cruz',
 	'cghub': 'Santa Cruz',
@@ -370,8 +374,9 @@ function loadRepos() {
 	chicago = [ "pdc(1.1+2.0)", "pdc1_1", "pdc2_0" ]
     }
     else if (workflow == 'DKFZ/EMBL') {
-	repos2 = ["aws_ireland","bsc","sanger","dkfz"];
-	repos3 = repos;
+	repos2 = ["aws_ireland","bsc","sanger","dkfz","dkfz_hpc"];
+	repos3 = repos2;
+	repo_name['dkfz'] = 'Heidelberg (OpenStack)';
     }
 
 }
@@ -400,6 +405,7 @@ function table_header_x1() {
 <th>Barcelona</th> \
 <th>Cambridge</th> \
 <th>Heidelberg</th> \
+<th>Heidelberg (HPC)</th> \
 <th><font color="red">[Total]</font></th>';
 
     $('#x1h').html(workflow == 'Sanger' ? sanger_h : dkfz_h);
@@ -424,14 +430,16 @@ function cumulative_table() {
   <tr><td><b>Total</b></td><td id="total"></td></tr> \
 </table>';
 
-    var dkfz_t = ' \
-  <table id="rounded-corner" style="position:absolute;float:left"> \
+    var dkfz_t = '\
+<table id="rounded-corner"> \
     <tr><th id="thead1"></th><th id="thead2"></th></tr> \
     <tr><td>AWS Ireland</td><td id="aws_ireland"></td></tr> \
     <tr><td>Barcelona</td><td id="bsc"></td></tr> \
     <tr><td>Cambridge</td><td id="sanger"></td></tr> \
-    <tr><td>Heidelberg</td><td id="dkfz"></td></tr> \
+    <tr><td>Heidelberg (OpenStack)</td><td id="dkfz"></td></tr> \
+    <tr><td>Heidelberg (HPC)</td><td id="dkfz_hpc"></td></tr> \
 </table>';
 
     $('#cumulative_table').html(workflow == 'Sanger' ? sanger_t : dkfz_t);
+    console.log($('#cumulative_table').html());
 }
