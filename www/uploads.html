@@ -3,42 +3,24 @@
 <meta charset="utf-8">
 <title>ICGC PanCancer Status</title>
 <head>
-    <link rel="shortcut icon" href="https://icgc.org/files/org_sys/pan.png">
-    <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script type="text/javascript" src="http://d3js.org/topojson.v1.min.js"></script>
-    <script type="text/javascript" src="http://datamaps.github.io/scripts/datamaps.all.min.js"></script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script type="text/javascript" src="http://bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="style2.css">
-    <link rel="stylesheet" type="text/css" href="http://bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-    <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  <title>ICGC PanCancer Status</title>
 
-  ga('create', 'UA-34523087-2', 'pancancer.info');
-  ga('create', 'UA-52348443-1', 'auto', {'name': 'newTracker'});
-  ga('send', 'pageview');
-  ga('newTracker.send', 'pageview');
-</script>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <meta name="generator" content="Geany 1.23.1" />
+  <meta charset="utf-8" http-equiv="refresh" content="600">
+  <meta name="google-site-verification" content="OzrZ5nFulNwQ1tXMi9ItSQUJV9VnyuoqZgGuh_KXyMg" />
+
+  <link rel="stylesheet" type="text/css" href="style2.css">
+  <link rel="stylesheet" type="text/css" href="http://bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="http://d3js.org/topojson.v1.min.js"></script>
+  <script type="text/javascript" src="http://datamaps.github.io/scripts/datamaps.world.min.js?v=1"></script>
+
+  <script type="text/javascript" src="js/common.js"></script>
 </head>
-<style>
-	#headere{
-	background-color: #7FB5DA;		
-	}
-	#inside{
-		line-height: 50px;
-		font-size:12px;
-	}
-	#city{
-                border-color:#0000ff;
-        }
-        #gnos{
-                border-color:#0000ff;
-        }
-</style>
 <body>
   <div id="pancancer-header"></div>
   <script type="text/javascript">
@@ -74,31 +56,31 @@
 		<th scope="col">ICGC Percentage</th>
 		<th scope="col"><a title="This column shows the totals of all the TCGA projects.">TCGA Total</a></th>
 		<th scope="col">TCGA Percentage</th>
-		<th scope="col"><a title="This column shows the totals of both the ICGC and TCGA projects.">Cumluative Total</a></th>				
+		<th scope="col"><a title="This column shows the totals of both the ICGC and TCGA projects.">Cumluative Total</a></th>
 		<th scope="col">Cumulative Percentage</th>
-	      </tr>
-	    </thead>
-	    <tbody>
-	      <tr>
-		<td><b>Total Number of Specimens</b></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td></td><td>0</td><td></td><td>0</td><td></td>
-	      </tr>
-	      <tr>
-		<td><b>Specimens Uploaded</b></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-	      </tr>
-	      <tr>
-		<td><b>Specimens Left</b></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-	      </tr>
-	      <tr>
-		<td><b>Matched Tumour/Normal Pairs</b></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-	      </tr>
-	    </tbody>
-	    <tfoot>
-	      <tr>
+		      </tr>
+	          </thead>
+	        <tbody>
+		        <tr>
+			  <td><b>Total Number of Specimens</b></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td></td><td>0</td><td></td><td>0</td><td></td>
+			        </tr>
+			      <tr>
+				<td><b>Specimens Uploaded</b></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+				      </tr>
+			            <tr>
+				      <td><b>Specimens Left</b></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+				            </tr>
+				          <tr>
+					    <td><b>Matched Tumour/Normal Pairs</b></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+					          </tr>
+					      </tbody>
+		    <tfoot>
+		            <tr>
                 <td colspan="19">*Updates every day at 13:00 GMT, hover over the column headers to see more information.</td>
               </tr>
             </tfoot>
-	  </table>
-	</div><!--table-->
+		      </table>
+</div><!--table-->
       </div><!--tablediv-->
       <div id="chartdiv">
 	<div id="charttop">
@@ -106,38 +88,38 @@
           <div id="radio" style="margin-right:200px;">
             <div id="city" style="float:left;">
               <b><p style="margin-left:5px;font-size:12px;width:130px;">Project Cities</p></b>
-              <input style="margin-left:5px;" type="radio" name="time" id="hr1" onchange="checkr1()">Daily
-              <input style="margin-left:5px;" type="radio" name="time" id="day1" onchange="checkr1()">Weekly
+              <input style="margin-left:5px;" type="radio" name="time" id="hr1" onchange="checkr1()"> Daily
+              <input style="margin-left:5px;" type="radio" name="time" id="day1" onchange="checkr1()"> Weekly
             </div><!--city-->
             <div id="gnos" style="float:left;">
               <b><p style="margin-left:5px;font-size:12px;">GNOS Repos</p></b>
-              <input style="margin-left:5px;" type="radio" name="time" id="dkfz1" onchange="checkr1()">DKFZ
-              <input style="margin-left:5px;" type="radio" name="time" id="ebi1" onchange="checkr1()">EBI
-              <input style="margin-left:5px;" type="radio" name="time" id="bsc1" onchange="checkr1()">BSC
-              <input style="margin-left:5px;" type="radio" name="time" id="etri1" onchange="checkr1()">ETRI
-              <input style="margin-left:5px;" type="radio" name="time" id="osdc1" onchange="checkr1()">OSDC
-              <input style="margin-left:5px;" type="radio" name="time" id="riken1" onchange="checkr1()">RIKEN
+              <input style="margin-left:5px;" type="radio" name="time" id="dkfz1" onchange="checkr1()"> DKFZ
+              <input style="margin-left:5px;" type="radio" name="time" id="ebi1" onchange="checkr1()"> EBI
+              <input style="margin-left:5px;" type="radio" name="time" id="bsc1" onchange="checkr1()"> BSC
+              <input style="margin-left:5px;" type="radio" name="time" id="etri1" onchange="checkr1()"> ETRI
+              <input style="margin-left:5px;" type="radio" name="time" id="osdc1" onchange="checkr1()"> OSDC
+              <input style="margin-left:5px;" type="radio" name="time" id="riken1" onchange="checkr1()"> RIKEN
             </div><!--gnos-->
-	  </div><!--radio-->
+	      </div><!--radio-->
         </div><!--charttop-->
         <div id ="chartbottom">
           <h3 style="margin-left: 100px;">Number of Specimens Uploaded</h3>
           <div id="radio" style="margin-right:200px;">
             <div id="city" style="float:left;">
               <b><p style="margin-left:5px;font-size:12px;width:130px;">Project Cities</p></b>
-              <input style="margin-left:5px;" type="radio" name="time" id="hr2" onchange="checkr2()">Daily
-              <input style="margin-left:5px;" type="radio" name="time" id="day2" onchange="checkr2()">Weekly
+              <input style="margin-left:5px;" type="radio" name="time" id="hr2" onchange="checkr2()"> Daily
+              <input style="margin-left:5px;" type="radio" name="time" id="day2" onchange="checkr2()"> Weekly
             </div><!--city-->
             <div id="gnos" style="float:left;">
               <b><p style="margin-left:5px;font-size:12px;">GNOS Repos</p></b>
-              <input style="margin-left:5px;" type="radio" name="time" id="dkfz2" onchange="checkr2()">DKFZ
-              <input style="margin-left:5px;" type="radio" name="time" id="ebi2" onchange="checkr2()">EBI
-              <input style="margin-left:5px;" type="radio" name="time" id="bsc2" onchange="checkr2()">BSC
-              <input style="margin-left:5px;" type="radio" name="time" id="etri2" onchange="checkr2()">ETRI
-              <input style="margin-left:5px;" type="radio" name="time" id="osdc2" onchange="checkr2()">OSDC
-              <input style="margin-left:5px;" type="radio" name="time" id="riken2" onchange="checkr2()">RIKEN
+              <input style="margin-left:5px;" type="radio" name="time" id="dkfz2" onchange="checkr2()"> DKFZ
+              <input style="margin-left:5px;" type="radio" name="time" id="ebi2" onchange="checkr2()"> EBI
+              <input style="margin-left:5px;" type="radio" name="time" id="bsc2" onchange="checkr2()"> BSC
+              <input style="margin-left:5px;" type="radio" name="time" id="etri2" onchange="checkr2()"> ETRI
+              <input style="margin-left:5px;" type="radio" name="time" id="osdc2" onchange="checkr2()"> OSDC
+              <input style="margin-left:5px;" type="radio" name="time" id="riken2" onchange="checkr2()"> RIKEN
             </div><!--gnos-->
-	  </div><!--radio-->
+	      </div><!--radio-->
         </div><!--chartbottom-->
       </div><!--chartdiv-->
       <script type="text/javascript">
@@ -195,12 +177,12 @@
 	x.domain(data.map(function (d) { return d.quarter; }));
 	
 	//if (maxnum == 1){
-	//	y.domain([0,100]);
-	//	}
+	//y.domain([0,100]);
+	//}
 	//else {
 	//y.domain([0,d3.max(seriesData, function (c) { 
-	//	return d3.max(c.values, function (d) { return d.value; });
-	//	})
+	//return d3.max(c.values, function (d) { return d.value; });
+	//})
 	//  ]);
 	//}
 	y.domain([0,
@@ -325,7 +307,7 @@
 	}
 	});
 	}
-		 
+	 
 	// checks which data to graph for the proportion chart
         function checkr1(){
         if (document.getElementById("hr1").checked == true){
@@ -400,29 +382,29 @@
         }         
         ;
 }
-			
-		    //calls function to make the charts
-		    charts("ave_data/ave_data.csv","Percentage Uploaded %","Uploaded %","top",1,1);
+	
+	    //calls function to make the charts
+	    charts("ave_data/ave_data.csv","Percentage Uploaded %","Uploaded %","top",1,1);
                     charts("up_data/up_data.csv","Uploaded","Uploaded","bottom",0,2);
-			</script>
-	</div><!--center1-->
+	</script>
+      </div><!--center1-->
 <script type="text/javascript">
       //creates the maps and arcs for all except cambridge
       
       //world with all bubbles
       function whole_world(tab,file,arc){
-		  var colors = d3.scale.category10();
-		  //basic map config with custom fills, mercator projection
-		  var pic = new Datamap({
-			  scope: "world",
-			  element: document.getElementById(tab),
-			  
-			  geographyConfig: {
-				  popupOnHover: false,
-				  highlightOnHover: false,},
-			  
-			  projection: 'mercator',
-			  
+      var colors = d3.scale.category10();
+      //basic map config with custom fills, mercator projection
+      var pic = new Datamap({
+      scope: "world",
+      element: document.getElementById(tab),
+      
+      geographyConfig: {
+        popupOnHover: false,
+        highlightOnHover: false,},
+      
+        projection: 'mercator',
+      
 			  fills: {
 				  defaultFill: "#ABDDA4",
 				  red: "#FF0000",
@@ -432,29 +414,29 @@
 				  orange: "90FFFA"}
 			})
 				  
-		  //creates the bubbles
-		  var json_data;
+      //creates the bubbles
+      var json_data;
 		  
-		  d3.json(""+file, function(error, json) {
-			  json_data = json;
-			  pic.bubbles(json_data, {
-				 popupTemplate: function(geo, data) {
-					 if(data.fillKey !== "blue"){
-					  return "<div class='hoverinfo'>"+data.project+"<br/>Uploaded: " + data.uploaded + " Total: " +data.total+ "</div>";	}
-					  else{return "<div class='hoverinfo'>"+data.project};
+      d3.json(""+file, function(error, json) {
+        json_data = json;
+        pic.bubbles(json_data, {
+          popupTemplate: function(geo, data) {
+            if(data.fillKey !== "blue"){
+              return "<div class='hoverinfo'>"+data.project+"<br/>Uploaded: " + data.uploaded + " Total: " +data.total+ "</div>";	}
+              else{return "<div class='hoverinfo'>"+data.project};
 					  }
-			  });
-		  });
+        });
+      });
 		   
-		   //creates the arcs
-		   var arc_data1;
-			  d3.json(""+arc, function(error, json) {
-			  arc_data1 = json;
-			   pic.arc(arc_data1,  {strokeWidth: 2, arcSharpness: 0});
-			   });
+    //creates the arcs
+    var arc_data1;
+    d3.json(""+arc, function(error, json) {
+      arc_data1 = json;
+      pic.arc(arc_data1,  {strokeWidth: 2, arcSharpness: 0});
+      });
 		   
 		 
-		}
+    }
 	
 	//map for cambridge and hinxton
 	function world_uk(tab,filename,arc){
@@ -487,33 +469,33 @@
 				orange: "90FFFA"}
 		})
 
-		//creates the bubbles
-		var json_data;
+    //creates the bubbles
+    var json_data;
 
-		d3.json(""+filename, function(error, json) {
-			json_data = json;
-			zoom.bubbles(json_data, {
-				popupTemplate: function(geo, data) {
-					if (data.fillKey !== "blue"){
-					return "<div class='hoverinfo'>"+data.name+"<br/>Uploaded: " + data.uploaded + " Total: " +data.total+ "</div>";}
-					else {return "<div class='hoverinfo'>"+data.name;};
-				}
-			});
-		});
-		
-		//creates the arcs
-		var arc_data1;
-			  d3.json(""+arc, function(error, json) {
-			  arc_data1 = json;
-			   pic.arc(arc_data1,  {strokeWidth: 2, arcSharpness: 0});
-			   });
-		
+    d3.json(""+filename, function(error, json) {
+    json_data = json;
+    zoom.bubbles(json_data, {
+    popupTemplate: function(geo, data) {
+    if (data.fillKey !== "blue"){
+    return "<div class='hoverinfo'>"+data.name+"<br/>Uploaded: " + data.uploaded + " Total: " +data.total+ "</div>";}
+    else {return "<div class='hoverinfo'>"+data.name;};
+      }
+      });
+      });
+      
+      //creates the arcs
+      var arc_data1;
+        d3.json(""+arc, function(error, json) {
+        arc_data1 = json;
+         pic.arc(arc_data1,  {strokeWidth: 2, arcSharpness: 0});
+         });
+      
 
 }
 </script>
 <script type="text/javascript">
-	//updates the table
-	var table = document.getElementsByName("x");
+  //updates the table
+  var table = document.getElementsByName("x");
         var table2 = document.getElementsByName("x1");
         var json_data;
         var json_data2;
@@ -567,127 +549,127 @@
                         
         });
 
-	d3.json("bubbles/bubble_data.json", function(error, json) {
+				    d3.json("bubbles/bubble_data.json", function(error, json) {
                 json_data = json;
                 for (var i = 1,j = 0; i < json_data.length/2 + 2, j < json_data.length; i++, j+=2){
                 
-		cell_1[i] = table[0].rows[2].cells[i];
-		val_1[i] = cell_1[i].firstChild.data;
-		cell_1[i].firstChild.data = ''+json_data[j].uploaded;
-		total_1 += json_data[j].uploaded;
-		
-		cell_3[i] = table[0].rows[1].cells[i];
-		val_3[i] = cell_3[i].firstChild.data;
-		cell_3[i].firstChild.data = ''+json_data[j].total;
-		total_3 += json_data[j].total;
-		
-		cell_6[i] = table[0].rows[4].cells[i];
-		val_6[i] = cell_6[i].firstChild.data;
-		cell_6[i].firstChild.data = ''+json_data[j].match;
-		total_6 += json_data[j].match;
-		
-		cell_2[i] = table[0].rows[3].cells[i];
-		val_2[i] = cell_2[i].firstChild.data;
-		var left = json_data[j].total - json_data[j].uploaded;
-	        if (left < 0){left = 0;};
-		cell_2[i].firstChild.data = ''+left;
-		total_2 += left;
-		}
-		
-		cell_1[13] = table[0].rows[1].cells[13];
-		cell_2[13] = table[0].rows[2].cells[13];
-		cell_1[15] = table[0].rows[1].cells[15];
-		cell_2[15] = table[0].rows[2].cells[15];
-		cell_1[14] = table[0].rows[1].cells[14];
-		cell_2[14] = table[0].rows[2].cells[14];
-		cell_3[13] = table[0].rows[3].cells[13];
-		cell_3[14] = table[0].rows[3].cells[14];
-		cell_3[15] = table[0].rows[3].cells[15];
-		cell_6[13] = table[0].rows[4].cells[13];
-		cell_6[15] = table[0].rows[4].cells[15];
-		cell_6[14] = table[0].rows[4].cells[14];
-		
-		cell_1[12] = table[0].rows[1].cells[12];
-		cell_2[12] = table[0].rows[2].cells[12];
-		cell_3[12] = table[0].rows[3].cells[12];
-		cell_6[12] = table[0].rows[4].cells[12];
-		
-		cell_1[16] = table[0].rows[1].cells[16];
-		cell_2[16] = table[0].rows[2].cells[16];
-		cell_3[16] = table[0].rows[3].cells[16];
-		cell_6[16] = table[0].rows[4].cells[16];
-		
-		cell_1[17] = table[0].rows[1].cells[17];
-		cell_2[17] = table[0].rows[2].cells[17];
-		cell_3[17] = table[0].rows[3].cells[17];
-		cell_6[17] = table[0].rows[4].cells[17];
-		
-		cell_1[18] = table[0].rows[1].cells[18];
-		cell_2[18] = table[0].rows[2].cells[18];
-		cell_3[18] = table[0].rows[3].cells[18];
-		cell_6[18] = table[0].rows[4].cells[18];
-				
-		var icgctotal = json_data[0].total_icgc;
-		var missing = json_data[0].missing;
-		var diff = icgctotal - total_3;
-		//var tcgatotal = json_data[0].tcga_total;
-		//var tcgamatch = json_data[0].tcga_match;
-		//var tcgaup = json_data[0].tcga_up;
-		//var tcgatotalmatches = json_data[0].tcga_matches;
-		var tcgatotal = 1874;
-		var tcgamatch = 912;
-		var tcgaup = 1874;
-		var tcgatotalmatches = 912;
-	
-		cell_1[12].firstChild.data = 60;
-		cell_3[12].firstChild.data = 60;
-		cell_2[12].firstChild.data = 0;
-		cell_6[12].firstChild.data = 0;
-		
-		cell_2[13].firstChild.data = total_1;
-		cell_1[13].firstChild.data = icgctotal;
-		cell_3[13].firstChild.data = icgctotal - total_1;
-		cell_6[13].firstChild.data = total_6;
-		
-		var icgc_ave1 = 100*(total_1/(icgctotal));
-		var icgc_ave2 = 100*((total_2+diff)/(icgctotal));
+								      cell_1[i] = table[0].rows[2].cells[i];
+								      val_1[i] = cell_1[i].firstChild.data;
+								      cell_1[i].firstChild.data = ''+json_data[j].uploaded;
+								      total_1 += json_data[j].uploaded;
+								      
+								      cell_3[i] = table[0].rows[1].cells[i];
+								      val_3[i] = cell_3[i].firstChild.data;
+								      cell_3[i].firstChild.data = ''+json_data[j].total;
+								      total_3 += json_data[j].total;
+								      
+								      cell_6[i] = table[0].rows[4].cells[i];
+								      val_6[i] = cell_6[i].firstChild.data;
+								      cell_6[i].firstChild.data = ''+json_data[j].match;
+								      total_6 += json_data[j].match;
+								      
+								      cell_2[i] = table[0].rows[3].cells[i];
+								      val_2[i] = cell_2[i].firstChild.data;
+								      var left = json_data[j].total - json_data[j].uploaded;
+								              if (left < 0){left = 0;};
+											 cell_2[i].firstChild.data = ''+left;
+											 total_2 += left;
+											 }
+											 
+											 cell_1[13] = table[0].rows[1].cells[13];
+											 cell_2[13] = table[0].rows[2].cells[13];
+											 cell_1[15] = table[0].rows[1].cells[15];
+											 cell_2[15] = table[0].rows[2].cells[15];
+											 cell_1[14] = table[0].rows[1].cells[14];
+											 cell_2[14] = table[0].rows[2].cells[14];
+											 cell_3[13] = table[0].rows[3].cells[13];
+											 cell_3[14] = table[0].rows[3].cells[14];
+											 cell_3[15] = table[0].rows[3].cells[15];
+											 cell_6[13] = table[0].rows[4].cells[13];
+											 cell_6[15] = table[0].rows[4].cells[15];
+											 cell_6[14] = table[0].rows[4].cells[14];
+											 
+											 cell_1[12] = table[0].rows[1].cells[12];
+											 cell_2[12] = table[0].rows[2].cells[12];
+											 cell_3[12] = table[0].rows[3].cells[12];
+											 cell_6[12] = table[0].rows[4].cells[12];
+											 
+											 cell_1[16] = table[0].rows[1].cells[16];
+											 cell_2[16] = table[0].rows[2].cells[16];
+											 cell_3[16] = table[0].rows[3].cells[16];
+											 cell_6[16] = table[0].rows[4].cells[16];
+											 
+											 cell_1[17] = table[0].rows[1].cells[17];
+											 cell_2[17] = table[0].rows[2].cells[17];
+											 cell_3[17] = table[0].rows[3].cells[17];
+											 cell_6[17] = table[0].rows[4].cells[17];
+											 
+											 cell_1[18] = table[0].rows[1].cells[18];
+											 cell_2[18] = table[0].rows[2].cells[18];
+											 cell_3[18] = table[0].rows[3].cells[18];
+											 cell_6[18] = table[0].rows[4].cells[18];
+											 
+											 var icgctotal = json_data[0].total_icgc;
+											 var missing = json_data[0].missing;
+											 var diff = icgctotal - total_3;
+											 //var tcgatotal = json_data[0].tcga_total;
+											 //var tcgamatch = json_data[0].tcga_match;
+											 //var tcgaup = json_data[0].tcga_up;
+											 //var tcgatotalmatches = json_data[0].tcga_matches;
+											 var tcgatotal = 1874;
+											 var tcgamatch = 912;
+											 var tcgaup = 1874;
+											 var tcgatotalmatches = 912;
+											 
+											 cell_1[12].firstChild.data = 60;
+											 cell_3[12].firstChild.data = 60;
+											 cell_2[12].firstChild.data = 0;
+											 cell_6[12].firstChild.data = 0;
+											 
+											 cell_2[13].firstChild.data = total_1;
+											 cell_1[13].firstChild.data = icgctotal;
+											 cell_3[13].firstChild.data = icgctotal - total_1;
+											 cell_6[13].firstChild.data = total_6;
+											 
+											 var icgc_ave1 = 100*(total_1/(icgctotal));
+											 var icgc_ave2 = 100*((total_2+diff)/(icgctotal));
                 var icgc_ave3 = 100*(total_6/(json_data[0].match_total));
-		
-		cell_2[14].firstChild.data = ''+total_1+'/'+icgctotal+' ('+icgc_ave1.toFixed(2)+')';
-		cell_3[14].firstChild.data = ''+(total_2+diff)+'/'+icgctotal+' ('+icgc_ave2.toFixed(2)+')';
-		cell_6[14].firstChild.data = ''+total_6+'/'+json_data[0].match_total+' ('+icgc_ave3.toFixed(2)+')';
+											 
+											 cell_2[14].firstChild.data = ''+total_1+'/'+icgctotal+' ('+icgc_ave1.toFixed(2)+')';
+											 cell_3[14].firstChild.data = ''+(total_2+diff)+'/'+icgctotal+' ('+icgc_ave2.toFixed(2)+')';
+											 cell_6[14].firstChild.data = ''+total_6+'/'+json_data[0].match_total+' ('+icgc_ave3.toFixed(2)+')';
 
-		cell_2[15].firstChild.data = ''+tcgaup;
-		cell_3[15].firstChild.data = ''+(tcgatotal-tcgaup);
-		cell_1[15].firstChild.data = ''+(tcgatotal);
-		cell_6[15].firstChild.data = ''+(tcgamatch);	
-		
-		var tcga_ave1 = 100*(tcgaup/tcgatotal);
-		var tcga_ave2 = 100*((tcgatotal - tcgaup)/tcgatotal);
-		var tcga_ave3 = 100*(tcgamatch/tcgatotalmatches);
-				
-		cell_2[16].firstChild.data = ''+tcgaup+'/'+tcgatotal+' ('+tcga_ave1.toFixed(2)+')';
-		cell_3[16].firstChild.data = ''+tcgatotal - tcgaup+'/'+tcgatotal+' ('+tcga_ave2.toFixed(2)+')';
-		cell_6[16].firstChild.data = ''+tcgamatch+'/'+tcgatotalmatches+' ('+tcga_ave3.toFixed(2)+')';
-		
-		cell_2[17].firstChild.data = tcgaup + total_1;
-		cell_3[17].firstChild.data = (tcgatotal - tcgaup) + (icgctotal - total_1);
-		cell_1[17].firstChild.data = tcgatotal + icgctotal;
-		cell_6[17].firstChild.data = tcgamatch + total_6;	
-	
-		var all_ave1 = 100*((tcgaup + total_1)/(tcgatotal + icgctotal));
-		var all_ave2 = 100*(((tcgatotal - tcgaup) + (icgctotal - total_1))/(tcgatotal + icgctotal));
-		var all_ave3 = 100*((tcgamatch + total_6)/(tcgatotalmatches+json_data[0].match_total));
-		
-		cell_2[18].firstChild.data = ''+(tcgaup + total_1)+'/'+(tcgatotal + icgctotal)+' ('+all_ave1.toFixed(2)+') ';
-		cell_3[18].firstChild.data = ''+((tcgatotal - tcgaup) + (icgctotal - total_1))+'/'+(tcgatotal + icgctotal)+' ('+all_ave2.toFixed(2)+') ';
-		cell_6[18].firstChild.data = ''+(tcgamatch + total_6)+'/'+(tcgatotalmatches+json_data[0].match_total)+' ('+all_ave3.toFixed(2)+') ';	
-		
-	});
+											 cell_2[15].firstChild.data = ''+tcgaup;
+											 cell_3[15].firstChild.data = ''+(tcgatotal-tcgaup);
+											 cell_1[15].firstChild.data = ''+(tcgatotal);
+											 cell_6[15].firstChild.data = ''+(tcgamatch);
+											 
+											 var tcga_ave1 = 100*(tcgaup/tcgatotal);
+											 var tcga_ave2 = 100*((tcgatotal - tcgaup)/tcgatotal);
+											 var tcga_ave3 = 100*(tcgamatch/tcgatotalmatches);
+											 
+											 cell_2[16].firstChild.data = ''+tcgaup+'/'+tcgatotal+' ('+tcga_ave1.toFixed(2)+')';
+											 cell_3[16].firstChild.data = ''+tcgatotal - tcgaup+'/'+tcgatotal+' ('+tcga_ave2.toFixed(2)+')';
+											 cell_6[16].firstChild.data = ''+tcgamatch+'/'+tcgatotalmatches+' ('+tcga_ave3.toFixed(2)+')';
+											 
+											 cell_2[17].firstChild.data = tcgaup + total_1;
+											 cell_3[17].firstChild.data = (tcgatotal - tcgaup) + (icgctotal - total_1);
+											 cell_1[17].firstChild.data = tcgatotal + icgctotal;
+											 cell_6[17].firstChild.data = tcgamatch + total_6;
+											 
+											 var all_ave1 = 100*((tcgaup + total_1)/(tcgatotal + icgctotal));
+											 var all_ave2 = 100*(((tcgatotal - tcgaup) + (icgctotal - total_1))/(tcgatotal + icgctotal));
+											 var all_ave3 = 100*((tcgamatch + total_6)/(tcgatotalmatches+json_data[0].match_total));
+											 
+											 cell_2[18].firstChild.data = ''+(tcgaup + total_1)+'/'+(tcgatotal + icgctotal)+' ('+all_ave1.toFixed(2)+') ';
+											 cell_3[18].firstChild.data = ''+((tcgatotal - tcgaup) + (icgctotal - total_1))+'/'+(tcgatotal + icgctotal)+' ('+all_ave2.toFixed(2)+') ';
+											 cell_6[18].firstChild.data = ''+(tcgamatch + total_6)+'/'+(tcgatotalmatches+json_data[0].match_total)+' ('+all_ave3.toFixed(2)+') ';
+											 
+											 });
 
 </script>
-	<div id="center2">
-	<br>
+<div id="center2">
+  <br>
 <table name="x1" id="rounded-corner" summary="" style="float:left;margin-left:30px;margin-top:5px;">
         <thead>
                                         <tr>
@@ -729,7 +711,7 @@
                                         </tr>
                                         <tr>
                                                 <td>Normal</td><td>0</td> <td>0</td>
-					</tr>
+						</tr>
                                         <tr>
                                                 <td>Normal</td><td>0</td> <td>0</td>
                                         </tr>
@@ -740,8 +722,8 @@
                                                 <td>Normal</td><td>0</td> <td>0</td>
                                         </tr>
 					<tr>
-						<td>Normal</td><td>0</td> <td>0</td>
-					</tr>
+					  <td>Normal</td><td>0</td> <td>0</td>
+					  </tr>
 					<tr>
                                                 <td>Normal</td><td>0</td> <td>0</td>
                                         </tr>
@@ -752,16 +734,16 @@
                                                 <td>Normal</td><td>0</td> <td>0</td>
                                         </tr>
 					<tr>
-						<td>Normal</td><td>0</td> <td>0</td>
-					</tr>
+					  <td>Normal</td><td>0</td> <td>0</td>
+					  </tr>
 
                                 </tbody>
 
         </table>
 
-		<div class="tabs">
-			<ul class="tab-links">
-				<li class="active"><a href="#tab1">Overview</a></li>
+<div class="tabs">
+  <ul class="tab-links">
+    <li class="active"><a href="#tab1">Overview</a></li>
                                 <li><a href="#tab2">Heidelberg</a></li>
                                 <li><a href="#tab3">Cambridge</a></li>
                                 <li><a href="#tab4">Hinxton</a></li>
@@ -773,36 +755,37 @@
 				<li><a href="#tab10">Kalyani</a></li>
 				<li><a href="#tab11">Brisbane</a></li>
 				<li><a href="#tab12">Beijing</a></li>
-			</ul>   
-			<div class="tab-content">
-				<div id="tab1" style="margin: 0px auto;position: relative; max-width: 800px;height: 900px;" class="tab active">
-					<p align="center">Overview of all the locations and their current status. Enlarged view of the UK to see Cambridge and Hinxton separately. To see projects click on tabs.</p>
-					<div id="tab1-map1" style="position: absolute; left:0px; width: 550px; height: 500px;display:inline"></div>
-					<div id="tab1-map2" style="position: absolute; border:1px solid black;left:550px; width: 250px; height: 250px;display:inline"></div>
-					<div id="tab1-map3" style="position: absolute; border:1px solid black;top:310px; left:550px; width: 250px; height: 250px;display:inline"></div>
-			</div>
+  </ul>   
+  <div class="tab-content">
+    <div id="tab1" style="margin: 0px auto;position: relative; max-width: 800px;height: 900px;" class="tab active">
+      <p align="center">Overview of all the locations and their current status. Enlarged view of the UK to see Cambridge and Hinxton separately. To see projects click on tabs.</p>
+      <div id="tab1-map1" style="position: absolute; left:0px; width: 550px; height: 500px;display:inline"></div>
+      <div id="tab1-map2" style="position: absolute; border:1px solid black;left:550px; width: 250px; height: 250px;display:inline"></div>
+      <div id="tab1-map3" style="position: absolute; border:1px solid black;top:310px; left:550px; width: 250px; height: 250px;display:inline"></div>
+    </div>
+
 <script>
-	//map with all the bubbles on it
-	var colors = d3.scale.category10();
-	//basic map config with custom fills, mercator projection
-	var pic = new Datamap({
-		scope: "world",
-		element: document.getElementById("tab1-map1"),
-		geographyConfig: {
-			popupOnHover: false,
-			highlightOnHover: false,},
+  //map with all the bubbles on it
+  var colors = d3.scale.category10();
+  //basic map config with custom fills, mercator projection
+  var pic = new Datamap({
+  scope: "world",
+  element: document.getElementById("tab1-map1"),
+  geographyConfig: {
+  popupOnHover: false,
+  highlightOnHover: false,},
 
         projection: 'mercator',
 
         fills: {defaultFill: "#ABDDA4",
-				red: "#FF0000",
+  red: "#FF0000",
                 blue: "#63AFD0",
-				yellow: "#FFFF00",
-				green: "#00FF00",
-				orange: "90FFFA"}
-				})
+  yellow: "#FFFF00",
+  green: "#00FF00",
+  orange: "90FFFA"}
+  })
 
-	var json_data;
+  var json_data;
 
 	d3.json("bubbles/bubble_data.json", function(error, json) {
 	json_data = json;
@@ -837,16 +820,17 @@
 			yellow: "#FFFF00",
 			green: "#00FF00",
 			orange: "90FFFA"}
-		})
+		});
 		
-d3.json("front_uk.json", function(error, json) {
-	json_data = json;
-	zoom.bubbles(json_data, {
-		  popupTemplate: function(geo, data) {
-			  return "<div class='hoverinfo'>"+data.name+"<br/>Uploaded: " + data.uploaded + " Total: " +data.total+ "</div>";
-		  }
-	});
-	});
+
+  d3.json("front_uk.json", function(error, json) {
+  json_data = json;
+  zoom.bubbles(json_data, {
+    popupTemplate: function(geo, data) {
+    return "<div class='hoverinfo'>"+data.name+"<br/>Uploaded: " + data.uploaded + " Total: " +data.total+ "</div>";
+    }
+  });
+  });
 
         var zoom2 = new Datamap({
                 element: document.getElementById("tab1-map3"),
@@ -866,15 +850,15 @@ d3.json("front_uk.json", function(error, json) {
                         },
                 fills: {
                         defaultFill: "#ABDDA4",
-	red: "#FF0000",
+                        red: "#FF0000",
                         blue: "#63AFD0",
                         yellow: "#FFFF00",
                         green: "#00FF00",
                         orange: "90FFFA"}
-                })
+                });
 
-d3.json("front_uk.json", function(error, json) {
-        json_data = json;
+  d3.json("front_uk.json", function(error, json) {
+    json_data = json;
         zoom2.bubbles(json_data, {
                   popupTemplate: function(geo, data) {
                           return "<div class='hoverinfo'>"+data.name+"<br/>Uploaded: " + data.uploaded + " Total: " +data.total+ "</div>";
@@ -882,11 +866,10 @@ d3.json("front_uk.json", function(error, json) {
         });
         });
 
-
 </script>
 
-				<div id="tab2"  style="margin:0px auto;position:relative; width: 800px; height: 500px;"class="tab">
-					<!--drop down menu-->
+<div id="tab2"  style="margin:0px auto;position:relative; width: 800px; height: 500px;"class="tab">
+  <!--drop down menu-->
                                         <select id="HEID" onchange = "run1()">
                                           <option value="1" selected="selected">PBCA-DE</option>
                                           <option value="2">MALY-DE</option>
@@ -894,9 +877,9 @@ d3.json("front_uk.json", function(error, json) {
                                         </select>
                                 <div id="tab2a" style="margin:0px auto;position:relative; width: 800px; height: 500px;">
                                 </div></div>
-		 
-				<div id="tab3" style="margin:0px auto;position:relative; width: 800px; height: 500px;"class="tab">
-					<!--drop down menu-->
+ 
+<div id="tab3" style="margin:0px auto;position:relative; width: 800px; height: 500px;"class="tab">
+  <!--drop down menu-->
                                         <select id="CAM" onchange="run2()">
                                           <option value="1"selected="selected">ESAD-UK</option>
                                           <option value="2" >BRCA-EU</option>
@@ -905,7 +888,7 @@ d3.json("front_uk.json", function(error, json) {
                                 </div></div>
 
                                 <div id="tab4" style="margin:0px auto;position:relative; width: 800px; height: 500px;"class="tab">
-                                	<!--drop down menu-->
+                                  <!--drop down menu-->
                                         <select id="HIN" onchange="run3()">
                                           <option value="1"selected="selected">BRCA-UK</option>
                                           <option value="2">CMDI-UK</option>
@@ -914,7 +897,7 @@ d3.json("front_uk.json", function(error, json) {
                                         </select>
                                 <div id="tab4a" style="margin:0px auto;position:relative; width: 800px; height: 500px;">
                                 </div></div>
-					
+				
 				<div id="tab5" style="margin:0px auto;position:relative; width: 800px; height: 500px;"class="tab">
                                 </div>
 
@@ -931,10 +914,10 @@ d3.json("front_uk.json", function(error, json) {
                                 </div>
 
 				<div id="tab10" style="margin:0px auto;position:relative; width: 800px; height: 500px;"class="tab">
-				</div>
+				  </div>
 
 				<div id="tab11" style="margin:0px auto;position:relative; width: 800px; height: 500px;"class="tab">
-				        <!--drop down menu-->
+				          <!--drop down menu-->
                                         <select id="AU" onchange="run4()">
                                           <option value="1"selected="selected">PACA-AU</option>
                                           <option value="2">PAEN-AU</option>
@@ -944,17 +927,17 @@ d3.json("front_uk.json", function(error, json) {
                                 </div></div>
 
 				<div id="tab12" style="margin:0px auto;position:relative; width: 800px; height: 500px;"class="tab">
-				</div>
+				  </div>
 
 
-			</div><!--tab-content-->
-		</div><!--tabs-->
-	</div><!--center2-->
+				</div><!--tab-content-->
+  </div><!--tabs-->
+</div><!--center2-->
 </div><!--fullcontain-->
 <script>
 
-	//checks what data to show for Heidelberg
-	function run1() {
+  //checks what data to show for Heidelberg
+  function run1() {
     var e = document.getElementById("HEID");
     var strUser = e.options[e.selectedIndex].value;
     if (strUser == "1"){
@@ -971,7 +954,7 @@ d3.json("front_uk.json", function(error, json) {
     }
         }
 
-	 //checks what data to show for Cambridge
+   //checks what data to show for Cambridge
          function run2() {
     var e = document.getElementById("CAM");
     var strUser = e.options[e.selectedIndex].value;
@@ -1023,15 +1006,15 @@ d3.json("front_uk.json", function(error, json) {
     whole_world("tab11a","bubbles/OV-AU_bub.json","OV-AU.json");
     }
         }
-	
-	$(document).ready(function() {
-		$('.tabs .tab-links a').on('click', function(e)  {
+  
+  $(document).ready(function() {
+  $('.tabs .tab-links a').on('click', function(e)  {
         var currentAttrValue = $(this).attr('href');
  
         // Show/Hide Tabs
         $('.tabs ' + currentAttrValue).show().siblings().hide();
 
-		// Picking the right tab/file to show the map
+  // Picking the right tab/file to show the map
                 if (currentAttrValue.slice(1) == 'tab2' ){
                 $('#tab2a').empty();
                 whole_world(currentAttrValue.slice(1)+'a',"bubbles/PBCA-DE_bub.json","PBCA-DE.json");}
@@ -1056,17 +1039,17 @@ d3.json("front_uk.json", function(error, json) {
                 else if (currentAttrValue.slice(1) == 'tab9'){
                 $('#tab9').empty();
                 whole_world(currentAttrValue.slice(1),"bubbles/Seoul_bub.json","Seoul.json");}
-		else if (currentAttrValue.slice(1) == 'tab10'){
+  else if (currentAttrValue.slice(1) == 'tab10'){
                 $('#tab10').empty();
                 whole_world(currentAttrValue.slice(1),"bubbles/ORCA-IN_bub.json","ORCA-IN.json");}
-		else if (currentAttrValue.slice(1) == 'tab11'){
+  else if (currentAttrValue.slice(1) == 'tab11'){
                 $('#tab11a').empty();
                 whole_world(currentAttrValue.slice(1)+'a',"bubbles/PACA-AU_bub.json","PACA-AU.json");}
-		else if(currentAttrValue.slice(1) == 'tab12'){
-		$('#tab12').empty();
-		whole_world(currentAttrValue.slice(1),"bubbles/GACA-CN_bub.json","GACA-CN.json");}
+  else if(currentAttrValue.slice(1) == 'tab12'){
+  $('#tab12').empty();
+  whole_world(currentAttrValue.slice(1),"bubbles/GACA-CN_bub.json","GACA-CN.json");}
 
-		
+  
 
         // Change/remove current tab to active
         $(this).parent('li').addClass('active').siblings().removeClass('active');

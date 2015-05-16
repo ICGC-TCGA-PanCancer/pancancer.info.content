@@ -134,9 +134,11 @@ height:570px;
 <script type="text/javascript">
   $("#pancancer-header").load("header.html");
 </script>
+<br><br>
 <center>
 <div id="centre">
 <div id="contain">
+
 <h2 style="float:left;">Histogram of QC Metrics</h2>
 	<select style="float:right;margin-right:40px;margin-top:25px;" id="x-axis" onchange="run1()">
 	<option value="#_total_reads"selected="selected"># Total Reads</option>
