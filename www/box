@@ -43,7 +43,7 @@ div.tooltip {
 </style>
 <body>
 <script src="http://d3js.org/d3.v3.min.js"></script>
-<script src="/js/box.js"></script>
+<script src="box.js"></script>
 <script>
 
 var margin = {top: 10, right: 60, bottom: 20, left: 60},
