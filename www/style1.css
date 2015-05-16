@@ -1,3 +1,26 @@
+#pancancer-header {
+    width: 100%;
+}
+
+a.nodec {
+    text-decoration: none;
+    color: #4c4c4c;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#headere{
+    background-color: #7FB5DA;
+    display: block;
+    float:left;
+}
+
+#inside{
+    line-height: 50px;
+    font-size:12px;
+}
+
+
 body {
 	font: 14px sans-serif;
     color: #121401;
