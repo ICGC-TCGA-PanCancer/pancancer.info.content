@@ -445,5 +445,5 @@ function cumulative_table() {
 </table>';
 
     $('#cumulative_table').html(workflow == 'Sanger' ? sanger_t : dkfz_t);
-    console.log($('#cumulative_table').html());
+    //console.log($('#cumulative_table').html());
 }

@@ -1,5 +1,5 @@
 $('document').ready(function(){
-    $("#pancancer-header").load("/v2/header.html");
+    $("#pancancer-header").load("header.html");
 });
 
 // Google analytics
@@ -27,7 +27,7 @@ function loadJS(js) {
 	js = [js];
     }
     for (var i = 0; i < js.length; i++) {
-        appendToHeader('/js/'+js[i]+'.js');
+        appendToHeader('js/'+js[i]+'.js');
     }
 }
 
