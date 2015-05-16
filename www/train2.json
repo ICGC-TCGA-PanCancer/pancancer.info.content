@@ -1,10 +1,10 @@
 [
-{"repo": "gtrepo-bsc", "align": 1950, "total_unalign": 1950, "remaining": 0},
+{"repo": "gtrepo-bsc", "align": 685, "total_unalign": 685, "remaining": 0},
 {"repo": "gtrepo-osdc-icgc", "align": 4, "total_unalign": 4, "remaining": 0},
 {"repo": "gtrepo-osdc-tcga", "align": 15, "total_unalign": 15, "remaining": 0},
-{"repo": "gtrepo-dkfz", "align": 876, "total_unalign": 876, "remaining": 0},
-{"repo": "gtrepo-ebi", "align": 430, "total_unalign": 599, "remaining": 169},
+{"repo": "gtrepo-dkfz", "align": 820, "total_unalign": 820, "remaining": 0},
+{"repo": "gtrepo-ebi", "align": 0, "total_unalign": 0, "remaining": 0},
 {"repo": "gtrepo-etri", "align": 0, "total_unalign": 0, "remaining": 0},
-{"repo": "gtrepo-riken", "align": 935, "total_unalign": 935, "remaining": 0},
-{"repo": "gtrepo-cghub", "align": 0, "total_unalign": 0, "remaining": 0}
+{"repo": "gtrepo-riken", "align": 618, "total_unalign": 618, "remaining": 0},
+{"repo": "gtrepo-cghub", "align": 1792, "total_unalign": 1792, "remaining": 0}
 ]
