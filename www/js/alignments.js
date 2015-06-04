@@ -2,6 +2,7 @@
 google.load('visualization', '1', {'packages':['corechart']});
       
 
+var months;
 var repo_name = {
     'bsc': 'Barcelona',
     'osdc-icgc': 'Chicago(ICGC)',
@@ -15,6 +16,7 @@ var repo_name = {
 var aln_repos = ['bsc', 'osdc-icgc', 'dkfz',
               'ebi', 'cghub', 'etri', 'riken'
             ];
+
 
 updateTable = function(ele,jsonFile) {
     var table = document.getElementsByName(ele);
@@ -81,8 +83,8 @@ updateTable = function(ele,jsonFile) {
 }
 
 updateLiveTable = function(ele) {
-    var jsonFile = "gnos_metadata/latest/reports/gnos_repo_summary/live_alignment_completed_donors.repos.json";
-    var repos = ['bsc', 'osdc-icgc', 'dkfz', 'ebi', 'etri', 'riken', 'cghub'];
+    loadRepos();
+    var jsonFile = "gnos_metadata/latest/reports/specimen_alignment_summary/summary_site_counts.json";
     
     var table = document.getElementsByName(ele);
     var json_data;
@@ -98,13 +100,16 @@ updateLiveTable = function(ele) {
 
     d3.json(jsonFile, function(error, json) {
         json_data = json;
-	console.log(Object.keys(json_data));
         var arr =[];
-        for (var i = 0; i < repos.length; i++){
-	    console.log(repos[i]);
-	    var aligned = json_data[repos[i]][repos[i]][0];
-	    var donor_total = json_data[repos[i]]['_ori_count'][0];
-	    var unaligned = donor_total - aligned;
+        for (var i = 0; i < aln_repos.length; i++){
+	    var site_data = json_data[aln_repos[i]];
+	    var aligned   = parseInt(site_data['aligned'] || 0);
+	    var total     = parseInt(site_data['total'] || 0);
+	    var unaligned = parseInt(site_data['unaligned'] || 0);
+
+	    if (unaligned != total - aligned || (aligned + unaligned) != total) {
+		console.log("Something is fishy here.  The numbers don't add up: "+aligned+" "+unaligned+" "+total);
+	    }
 
             cell_1[i] = table[0].rows[1].cells[i+1];
             val_1[i] = cell_1[i].firstChild.data;
@@ -118,32 +123,32 @@ updateLiveTable = function(ele) {
 
             cell_3[i] = table[0].rows[3].cells[i+1];
             val_3[i] = cell_3[i].firstChild.data;
-            cell_3[i].firstChild.data = ''+donor_total;
-            total_3 += donor_total;
+            cell_3[i].firstChild.data = ''+total;
+            total_3 += total;
 
         }
 
-        cell_1[9] = table[0].rows[1].cells[9];
-        cell_2[9] = table[0].rows[2].cells[9];
-        cell_3[9] = table[0].rows[3].cells[9];
+        cell_1[7] = table[0].rows[1].cells[7];
+        cell_2[7] = table[0].rows[2].cells[7];
+        cell_3[7] = table[0].rows[3].cells[7];
 
 
-        cell_1[9].firstChild.data = '' + total_1;
-        cell_2[9].firstChild.data = '' + total_2;
-        cell_3[9].firstChild.data = '' + total_3;
+        cell_1[7].firstChild.data = '' + total_1;
+        cell_2[7].firstChild.data = '' + total_2;
+        cell_3[7].firstChild.data = '' + total_3;
 
-        cell_1[10] = table[0].rows[1].cells[9];
-        cell_2[10] = table[0].rows[2].cells[9];
-        cell_1[11] = table[0].rows[1].cells[10];
-        cell_2[11] = table[0].rows[2].cells[10];
+        cell_1[8] = table[0].rows[1].cells[7];
+        cell_2[8] = table[0].rows[2].cells[7];
+        cell_1[8] = table[0].rows[1].cells[8];
+        cell_2[8] = table[0].rows[2].cells[8];
 
         var ave_1 = (total_1/total_3)*100;
         var num_1 = ave_1.toFixed(2);
         var ave_2 = (total_2/total_3)*100;
         var num_2 = ave_2.toFixed(2);
 
-        cell_1[11].firstChild.data = '' + num_1;
-        cell_2[11].firstChild.data = '' + num_2;
+        cell_1[8].firstChild.data = '' + num_1;
+        cell_2[8].firstChild.data = '' + num_2;
 
     });
 }
@@ -458,4 +463,253 @@ function train1Map() {
 			 return "<div class='hoverinfo'>"+data.name+"<br/>Aligned: " + data.aligned + " Total: " +data.total+ "</div>";
 		     }
 		 });
+}
+
+
+function cumulative_table() {
+    var t = '\
+<table id="rounded-corner"> \
+  <tr><th id="thead1"></th><th id="thead2"></th></tr> \
+  <tr><td>Chicago (PDC2.0)</td><td id="pdc2_0"></td></tr> \
+  <tr><td>London</td><td id="ebi"></td></tr> \
+  <tr><td>Seoul</td><td id="etri"></td></tr> \
+  <tr><td>Tokyo</td><td id="riken"></td></tr> \
+  <tr><td>Toronto</td><td id="oicr"></td></tr> \
+  <tr><td>Unassigned</td><td id="unassigned"></td></tr> \
+  <tr><td><b>Total</b></td><td id="total"></td></tr> \
+</table>';
+
+    $('#cumulative_table').html(t);
+}
+
+function table_header_x1() {
+    var h = '\
+<th nowrap>Date <br/>(recent 8 days)</th> \
+<th>Chicago</th> \
+<th>London</th> \
+<th>Seoul</th> \
+<th>Tokyo</th> \
+<th>Toronto</th> \
+<th>Unassigned</th> \
+<th><font color="red">[Total]</font></th>';
+
+    $('#x1h').html(h);
+}
+
+
+//gnos_metadata/latest/reports/specimen_alignment_summary/hist_summary_site_counts.json
+//gnos_metadata/latest/reports/specimen_alignment_summary/summary_site_counts.json
+
+
+
+function drawAlignmentChart2() {
+    loadRepos();
+
+    var report_data_url = 'gnos_metadata/latest/reports/specimen_alignment_summary/hist_summary_site_counts.json';
+
+    var json2 = $.ajax({
+        url: report_data_url,
+        dataType:"text",
+        async: false
+    }).responseText;
+
+    data = $.parseJSON(json2)
+    data.reverse();
+
+    cumulative_table();
+
+    var chart_data = new google.visualization.DataTable();
+    chart_data.addColumn('string', 'Date');
+
+    for (var i = 0; i < aln_repos_chart.length; i++) {
+        chart_data.addColumn('number', repo_name[aln_repos_chart[i]]);
+    }
+
+    buildRows(data,chart_data);
+
+    var colors = ["#C0C0C0","#808080","#000000","#FF0000","#800000","#FFFF00",
+                  "#808000","#00FF00","#008000","#00FFFF","#008080","#0000FF",
+                  "#000080","#FF00FF","#800080"];
+
+    var today = realTime(data[data.length-1][0]);
+
+    var today_counts = data[data.length-1].pop();
+    var last_week_counts = data.length < 8 ? data[0].pop() : data[data.length-8].pop();
+
+    var today_total = 0;
+    var last_week_total = 0;
+    for (var i = 0; i < aln_repos.length; i++) {
+        var count = parseInt(today_counts[aln_repos[i]]['aligned'] || 0);
+        var last_count =  parseInt(last_week_counts[aln_repos[i]]['aligned'] || 0);
+
+        today_total += count;
+        last_week_total += last_count;
+
+        diff = count - last_count;
+        if (diff > 0) {
+            diff = "+"+diff;
+        }
+
+        $('#'+aln_repos[i]).html('&nbsp;'+count.toString()+ " ("+diff+")");
+    }
+
+    diff = today_total - last_week_total;
+    if (diff > 0) {
+        diff = "+"+diff;
+    }
+    dateString = months[today.getMonth()] + ' ' + today.getDate();
+
+    $('#total').html('&nbsp;'+today_total.toString()+ " ("+diff+")");
+    $('#thead0').html('Alignments by Compute Sites (Total: '+today_total+' as of '+dateString+')');
+    $('#thead1').html('Alignment Site');
+    $('#thead2').html('Completed Specimens as of '+dateString+' (change from last week)');
+
+    var options = {
+        colors: colors,
+        vAxis: {viewWindow: {min: 0}, title: '# aligned specimens'},
+        hAxis: {slantedText: true, slantedTextAngle: 45},
+        legend: { position: 'right'},
+        width: '100%',
+        height: 700,
+        pointSize: 5,
+        chartArea:{left:50,top:50,width:'75%',height:'80%'}
+    };
+
+    $('#chart_div2').empty();
+    var chart = new google.visualization.LineChart(document.getElementById('chart_div2'));
+    chart.draw(chart_data, options);
+}
+
+
+function buildRows(data,chart_data) {
+    var total = 0;
+
+    for (var i = 0; i < data.length; i++) {
+        date = realTime(data[i][0]);
+
+        counts = data[i][1];
+        total = 0;
+
+        dateString = date.getDate() + '-' + months[date.getMonth()];
+
+        var row = new Array;
+        row.push(dateString);
+
+        for (var j = 0; j < aln_repos_chart.length; j++) {
+	    var site_data = counts[aln_repos_chart[j]];
+	    var count = site_data['aligned'] || 0;
+
+	    count = parseInt(site_data['aligned']);
+
+	    row.push(count);
+	    total += count;
+	}
+    
+	console.log(row);
+	chart_data.addRow(row);
+    }
+
+    return total;
+}
+
+
+function loadAlignmentTable2() {
+
+    var report_data_url = 'gnos_metadata/latest/reports/specimen_alignment_summary/hist_summary_site_counts.json';
+
+    table_header_x1();
+    $("table[name='x1'] tbody").empty();
+
+
+    $.getJSON(report_data_url,
+	      function (json) {
+		  var tr;
+
+		  for (var i = 0; i < json.length; i++) {
+		      date = json[i][0];
+		      counts = json[i][1];
+		      total = 0;
+
+		      tr = $('<tr/>');
+		      tr.append("<td>" + date + "</td>");
+
+		      for (var j = 0; j < repos2.length; j++) {
+			  count = counts[repos2[j]] == undefined ? 0 : counts[repos2[j]]
+			  tr.append("<td>" + count + "</td>");
+			  total += count;
+		      }
+		      tr.append("<td><font color='red'>" + total + "</font></td>");
+		      $("table[name='x1']").append(tr);
+		      if (i >= 7) break;
+		  }
+
+		  tfoot = $('<tfoot/>');
+		  $("table[name='x1']").append(tfoot);
+	      });
+}
+
+
+function realTime(date) {
+    var utc_time = new Date(date + 'T03:01:01');
+    return new Date(utc_time.valueOf() + utc_time.getTimezoneOffset() * 60000);
+}
+
+function loadRepos() {
+    months = ['Jan','Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    repo_name = {
+        'aws_ireland': 'AWS Ireland',
+        'aws_oregon': 'AWS Oregon',
+        'bsc': 'Barcelona',
+        'pdc': 'Chicago',
+        'pdc1_1': 'Chicago (PDC1.1)',
+        'pdc2_0': 'Chicago (PDC2.0)',
+        'osdc-icgc': 'Chicago (ICGC)',
+        'osdc-tcga': 'Chicago (TCGA)',
+        'dkfz': 'Heidelberg',
+        'dkfz_hpc': 'Heidelberg (HPC)',
+        'ebi': 'London',
+        'ucsc': 'Santa Cruz',
+        'cghub': 'Santa Cruz',
+        'etri': 'Seoul',
+        'tokyo': 'Tokyo',
+        'riken': 'Tokyo',
+        'oicr': 'Toronto',
+        'idash': 'San Diego',
+        'sanger': 'Cambridge',
+	'unassigned': 'Unassigned'
+    }
+
+    aln_repos_chart = ['pdc2_0', 'ebi', 'etri', 'oicr', 'riken'];
+    aln_repos = ['pdc2_0', 'ebi', 'etri', 'oicr', 'riken','unassigned'];
+ }
+
+function table_header_x1() {
+    var sanger_h = ' \
+<th nowrap>Date <br/>(recent 8 days)</th> \
+<th>AWS Ireland</th> \
+<th>AWS Oregon</th> \
+<th>Barcelona</th> \
+<th>Cambridge</th> \
+<th>Chicago (PDC1.1)</th> \
+<th>Chicago (PDC2.0)</th> \
+<th>Heidelberg</th> \
+<th>London</th> \
+<th>San Diego</th> \
+<th>Santa Cruz</th> \
+<th>Seoul</th> \
+<th>Tokyo</th> \
+<th>Toronto</th> \
+<th><font color="red">[Total]</font></th>';
+
+    var dkfz_h = ' \
+<th nowrap>Date <br/>(recent 8 days)</th> \
+<th>AWS Ireland</th> \
+<th>Barcelona</th> \
+<th>Cambridge</th> \
+<th>Heidelberg<br>(OpenStack)</th> \
+<th>Heidelberg<br>(HPC)</th> \
+<th><font color="red">[Total]</font></th>';
+
+    $('#x1h').html(workflow == 'Sanger' ? sanger_h : dkfz_h);
 }
