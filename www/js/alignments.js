@@ -208,6 +208,9 @@ function loadAlignmentTable1() {
 		  var tr;
 		  
 		  for (var i = 0; i < Object.keys(json).length; i++) {
+		      if (!json[aln_repos[i]]) {
+			  continue;
+		      }
 		      tr = $('<tr/>');
 		      tr.append("<td>" + repo_name[aln_repos[i]]
 				+ " ("
@@ -468,7 +471,7 @@ function train1Map() {
 
 function cumulative_table() {
     var t = '\
-<table id="rounded-corner"> \
+<table class="rounded-corner"> \
   <tr><th id="thead1"></th><th id="thead2"></th></tr> \
   <tr><td>Chicago (PDC2.0)</td><td id="pdc2_0"></td></tr> \
   <tr><td>London</td><td id="ebi"></td></tr> \
@@ -482,10 +485,10 @@ function cumulative_table() {
     $('#cumulative_table').html(t);
 }
 
-function table_header_x1() {
+function table_header_site() {
     var h = '\
 <th nowrap>Date <br/>(recent 8 days)</th> \
-<th>Chicago</th> \
+<th>Chicago<br>(PDC2.0)</th> \
 <th>London</th> \
 <th>Seoul</th> \
 <th>Tokyo</th> \
@@ -493,13 +496,8 @@ function table_header_x1() {
 <th>Unassigned</th> \
 <th><font color="red">[Total]</font></th>';
 
-    $('#x1h').html(h);
+    $('#site_alignments_header').html(h);
 }
-
-
-//gnos_metadata/latest/reports/specimen_alignment_summary/hist_summary_site_counts.json
-//gnos_metadata/latest/reports/specimen_alignment_summary/summary_site_counts.json
-
 
 
 function drawAlignmentChart2() {
@@ -550,6 +548,7 @@ function drawAlignmentChart2() {
             diff = "+"+diff;
         }
 
+	//console.log(aln_repos[i]+' '+today_total);
         $('#'+aln_repos[i]).html('&nbsp;'+count.toString()+ " ("+diff+")");
     }
 
@@ -560,17 +559,18 @@ function drawAlignmentChart2() {
     dateString = months[today.getMonth()] + ' ' + today.getDate();
 
     $('#total').html('&nbsp;'+today_total.toString()+ " ("+diff+")");
-    $('#thead0').html('Alignments by Compute Sites (Total: '+today_total+' as of '+dateString+')');
+    $('#thead0').html('Current Status ('+dateString+')');
     $('#thead1').html('Alignment Site');
     $('#thead2').html('Completed Specimens as of '+dateString+' (change from last week)');
 
     var options = {
+	title: 'Alignments by site',
         colors: colors,
-        vAxis: {viewWindow: {min: 0}, title: '# aligned specimens'},
+        vAxis: {viewWindow: {min: 0}, title: 'Specimens'},
         hAxis: {slantedText: true, slantedTextAngle: 45},
         legend: { position: 'right'},
         width: '100%',
-        height: 700,
+        height: 500,
         pointSize: 5,
         chartArea:{left:50,top:50,width:'75%',height:'80%'}
     };
@@ -605,7 +605,6 @@ function buildRows(data,chart_data) {
 	    total += count;
 	}
     
-	console.log(row);
 	chart_data.addRow(row);
     }
 
@@ -613,13 +612,11 @@ function buildRows(data,chart_data) {
 }
 
 
-function loadAlignmentTable2() {
+function loadSiteAlignmentTable() {
 
     var report_data_url = 'gnos_metadata/latest/reports/specimen_alignment_summary/hist_summary_site_counts.json';
 
-    table_header_x1();
-    $("table[name='x1'] tbody").empty();
-
+    table_header_site();
 
     $.getJSON(report_data_url,
 	      function (json) {
@@ -633,13 +630,18 @@ function loadAlignmentTable2() {
 		      tr = $('<tr/>');
 		      tr.append("<td>" + date + "</td>");
 
-		      for (var j = 0; j < repos2.length; j++) {
-			  count = counts[repos2[j]] == undefined ? 0 : counts[repos2[j]]
+		      for (var j = 0; j < aln_repos.length; j++) {
+			  var site_data = counts[aln_repos[j]];
+			  //console.log(aln_repos[j]);
+			  //console.log(site_data);
+			  var count = site_data['aligned'] || 0;
+			  count = parseInt(site_data['aligned']);
+
 			  tr.append("<td>" + count + "</td>");
 			  total += count;
 		      }
 		      tr.append("<td><font color='red'>" + total + "</font></td>");
-		      $("table[name='x1']").append(tr);
+		      $("#site_alignments").append(tr);
 		      if (i >= 7) break;
 		  }
 
@@ -681,35 +683,64 @@ function loadRepos() {
     }
 
     aln_repos_chart = ['pdc2_0', 'ebi', 'etri', 'oicr', 'riken'];
-    aln_repos = ['pdc2_0', 'ebi', 'etri', 'oicr', 'riken','unassigned'];
+    aln_repos = ['pdc2_0', 'ebi', 'etri', 'riken','oicr','unassigned'];
  }
 
-function table_header_x1() {
-    var sanger_h = ' \
-<th nowrap>Date <br/>(recent 8 days)</th> \
-<th>AWS Ireland</th> \
-<th>AWS Oregon</th> \
-<th>Barcelona</th> \
-<th>Cambridge</th> \
-<th>Chicago (PDC1.1)</th> \
-<th>Chicago (PDC2.0)</th> \
-<th>Heidelberg</th> \
-<th>London</th> \
-<th>San Diego</th> \
-<th>Santa Cruz</th> \
-<th>Seoul</th> \
-<th>Tokyo</th> \
-<th>Toronto</th> \
-<th><font color="red">[Total]</font></th>';
 
-    var dkfz_h = ' \
-<th nowrap>Date <br/>(recent 8 days)</th> \
-<th>AWS Ireland</th> \
-<th>Barcelona</th> \
-<th>Cambridge</th> \
-<th>Heidelberg<br>(OpenStack)</th> \
-<th>Heidelberg<br>(HPC)</th> \
-<th><font color="red">[Total]</font></th>';
+function drawCumulativeTotalChart() {
 
-    $('#x1h').html(workflow == 'Sanger' ? sanger_h : dkfz_h);
+    var url = 'gnos_metadata/latest/reports/specimen_alignment_summary/hist_summary_site_counts.json';
+
+    var jsonData = $.ajax({
+        url: url,
+        dataType:"text",
+        async: false
+    }).responseText;
+
+    data = $.parseJSON(jsonData);
+    data.reverse();
+
+    var chart_data = new google.visualization.DataTable();
+    chart_data.addColumn('string', 'Date');
+    chart_data.addColumn('number', 'Total');
+
+    for (var i = 0; i < data.length; i++) {
+        date = realTime(data[i][0]);
+
+        counts = data[i][1];
+        total = 0;
+
+        dateString = date.getDate() + '-' + months[date.getMonth()];
+
+        var row = new Array;
+        row.push(' ');
+
+        for (var j = 0; j < aln_repos_chart.length; j++) {
+            var site_data = counts[aln_repos_chart[j]];
+            var count = site_data['aligned'] || 0;
+
+            count = parseInt(site_data['aligned']);
+
+            total += count;
+        }
+	row.push(total);
+        chart_data.addRow(row);
+    }
+
+    var options = {
+        title: 'Alignments',
+        legend: { position: 'right' },
+        width: '100%',
+        height: 250,
+        pointSize: 3,
+        chartArea:{left:50,top:50,width:'75%'},
+        hAxis: {gridlines:{count:0},
+                baselineColor:'white'},
+        vAxis: {title:'Specimens'}
+
+    };
+
+    $('#cumulative_total_chart').empty();
+    var chart = new google.visualization.LineChart(document.getElementById('cumulative_total_chart'));
+    chart.draw(chart_data, options);
 }
