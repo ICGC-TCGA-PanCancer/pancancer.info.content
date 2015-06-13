@@ -19,73 +19,140 @@
   <script type="text/javascript">loadJS('alignments')</script>
 </head>
 <body>
-<center>
+  <center>
   <div id="pancancer-header"></div>
-  <h2>Alignment Status</h2>
 
-<div id="#datatotal" style="width:911px;">
-<p style="float:left;">A comparison of donor alignment status across projects. This removes test data and factors in duplication of specimens across multiple GNOS repositories, producing the most accurate count of available donors we have available.</p>
-
-<p>
-<br>
-<table name ="x9" id="rounded-corner" summary="">
-<thead>
-<tr>
-    <th nowrap>Project code</th>
-    <th>Completed donors</th>
-    <th>Normal aligned, tumor unaligned</th>
-    <th>Tumor aligned, normal unaligned</th>
-    <th>Normal and tumor unaligned</th>
-    <th>Normal aligned, tumor missing</th>
-    <th>Normal unaligned, tumor missing</th>
-    <th>Tumor aligned, normal missing</th>
-    <th>Tumor unaligned, normal missing</th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
-</p>
-</div>
-
+  <h2>Donor Alignment Status</h2>
+  
+  <div id="#datatotal" style="width:911px;">
+    <p style="float:left;">
+      A comparison of donor alignment status across projects. This removes test data and factors in duplication of specimens across multiple 
+      GNOS repositories, producing the most accurate count of available donors we have available.
+    </p>
+    <p>
+      <br>
+      <table name ="x9" id="rounded-corner" summary="">
+	<thead>
+          <tr>
+	    <th nowrap>Project code</th>
+	    <th>Completed donors</th>
+	    <th>Normal aligned, tumor unaligned</th>
+	    <th>Tumor aligned, normal unaligned</th>
+	    <th>Normal and tumor unaligned</th>
+	    <th>Normal aligned, tumor missing</th>
+	    <th>Normal unaligned, tumor missing</th>
+	    <th>Tumor aligned, normal missing</th>
+	    <th>Tumor unaligned, normal missing</th>
+	  </tr>
+	</thead>
+	<tbody>
+	</tbody>
+      </table>
+    </p>
+  </div>
+  
 <script type="text/javascript">
 $('document').ready(function(){
-  loadAlignmentTable2();
   train1Table();
   train1Map();
+  loadSiteAlignmentTable();
+  drawAlignmentChart2();
 });
 </script>
 
 
-<center><div id="#data1" style="width:911px;">
-<h2 style="float:left">Data Train 1.0</h2>
-<p style = "float:left">This table only displays specimens from data train 1.0. Only specimens from <a target="_blank" href="https://docs.google.com/spreadsheets/d/14NItsHKJUevHZIuFkFTwNF-C12WbXTrFe0oM0Xq6b4M/edit#gid=111470950">Data Freeze Train 1.0 Report</a> are included.</p>
+<div id="#data2" style="width:911px;">
+<h2 style="float:left;">Specimen Alignment Status</h2>
 <p>
 <br>
-<table name ="x" id="rounded-corner" summary="" style="width:911px">
+<table name ="live" id="rounded-corner" summary="" style="width:911px">
 <thead>
-<tr><th></th><th><a target="_blank" href="log_train/1gtrepo-bsc.log">Barcelona</a></th><th><a target="_blank" href="log_train/1gtrepo-osdc.log">Chicago</a></th><th><a target="_blank" href="log_train/1gtrepo-dkfz.log">Heidelberg</a></th>
-<th><a target="_blank" href="log_train/1gtrepo-ebi.log">London</a></th><th><a target="_blank" href="log_train/1gtrepo-etri.log">Seoul</a></th>
-<th><a target="_blank" href="log_train/1gtrepo-riken.log">Tokyo</a></th><th><a target="_blank" href="log_train/1gtrepo-cghub_data1.log">Santa Cruz</a></th><th>Total</th><th>%</th></tr>
+<tr>
+  <th></th>
+  <th>Chicago (PDC2.0)</th>
+  <th>London</th>
+  <th>Seoul</th>
+  <th>Tokyo</th>
+  <th>Toronto</th>
+  <th>Unassigned</th>
+  <th>Total</th>
+  <th>%</th>
+</tr>
 </thead>
 <tbody>
-<tr><td><b>Aligned Specimens</b></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
-
-<tr><td><b>Remaining Specimens to Align</b></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
-
-<tr><td><b>Total Specimens</b></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+<tr>
+  <td><b>Aligned Specimens</b></td>
+  <td>0</td>
+  <td>0</td>
+  <td>0</td>
+  <td>0</td>
+  <td>0</td>
+  <td>0</td>
+  <td>0</td>
+  <td>0</td>
+</tr>
+<tr>
+  <td><b>Remaining Specimens to Align</b></td>
+  <td>0</td>
+  <td>0</td>
+  <td>0</td>
+  <td>0</td>
+  <td>0</td>
+  <td>0</td>
+  <td>0</td>
+  <td>0</td>
+</tr>
+<tr>
+  <td><b>Total Specimens</b></td>
+  <td>0</td>
+  <td>0</td>
+  <td>0</td>
+  <td>0</td>
+  <td>0</td>
+  <td>0</td>
+  <td>0</td>
+  <td>-</td>
+</tr>
 </tbody>
-<tfoot>
-  <tr>
-    <td colspan="19">*Click for  <a target="_blank" href="https://docs.google.com/spreadsheets/d/14NItsHKJUevHZIuFkFTwNF-C12WbXTrFe0oM0Xq6b4M/edit#gid=111470950">Data Freeze Train 1.0 Report</a></td>
-  </tr>
-</tfoot>
 </table>
 </p>
 </div>
 
-<h2>Map for Train 1.0</h2>
-<div id="container2" style="position:relative; width:911px; height:500px"></div>
+
+<script>
+updateLiveTable('live');
+</script>
+
+
+<div id="#datatotal" style="width:911px;">
+<h2 style="float:left;">Alignments by Compute Sites</h2>
+<p style="float:left;"></p>
+<p>
+<br>
+<table id="site_alignments" id="rounded-corner" summary="">
+<thead id="site_alignments_header">
+</thead>
+<tbody>
+</tbody>
+</table>
+</p>
+</div>
+
+<script>
+loadAlignmentTable2();
+</script>
+
+
+<div id="#datatotal" style="width:1000px;">
+  <h2 id="thead0"></h2>
+  <p id="cumulative_chart">
+  <br>
+  <div id="cumulative_table">
+  </div>
+  <div id="chart_div2"></div>
+  </p>
+</div>
+
 
 <div id="#data2" style="width:911px;">
 <h2 style="float:left;">Data Train 2.0</h2>
@@ -123,48 +190,41 @@ updateTable('train2','train2.json');
 
 <h2>Map for Train 2.0</h2>
 <div id="trainMap" style="position:relative; width:800px; height:500px"></div>
-</center>
 
 <script type="text/javascript">
 makeMap('trainMap','bubbles/traindata2.json');
 </script>
 
-<!-- disabled pending availability of live data summery
 
-<div id="#data3" style="width:911px;">
-<h2 style="float:left;">Live</h2>
+<center><div id="#data1" style="width:911px;">
+<h2 style="float:left">Data Train 1.0</h2>
+<p style = "float:left">This table only displays specimens from data train 1.0. Only specimens from <a target="_blank" href="https://docs.google.com/spreadsheets/d/14NItsHKJUevHZIuFkFTwNF-C12WbXTrFe0oM0Xq6b4M/edit#gid=111470950">Data Freeze Train 1.0 Report</a> are included.</p>
 <p>
 <br>
-<table name ="live" id="rounded-corner" summary="" style="width:911px">
+<table name ="x" id="rounded-corner" summary="" style="width:911px">
 <thead>
-<tr><th></th><th><a target="_blank" href="log_train/1gtrepo-bsc.log">Barcelona</a></th><th><a target="_blank" href="log_train/1gtrepo-osdc-icgc.log">Chicago(ICGC)</a></th><th><a target="_blank" href="log_train/1gtrepo-osdc-tcga.log">Chicago(TCGA)</a>
-</th><th><a target="_blank" href="log_train/1gtrepo-dkfz.log">Heidelberg</a></th><th><a target="_blank" href="log_train/1gtrepo-ebi.log">London</a></th>
-<th><a target="_blank" href="log_train/1gtrepo-etri.log">Seoul</a></th><th><a target="_blank" href="log_train/1gtrepo-riken.log">Tokyo</a></th><th><a target="_blank" href="log_train/1gtrepo-cghub.log">Santa Cruz</a></th><th>Total</th><th>%</th></tr>
+<tr><th></th><th><a target="_blank" href="log_train/1gtrepo-bsc.log">Barcelona</a></th><th><a target="_blank" href="log_train/1gtrepo-osdc.log">Chicago</a></th><th><a target="_blank" href="log_train/1gtrepo-dkfz.log">Heidelberg</a></th>
+<th><a target="_blank" href="log_train/1gtrepo-ebi.log">London</a></th><th><a target="_blank" href="log_train/1gtrepo-etri.log">Seoul</a></th>
+<th><a target="_blank" href="log_train/1gtrepo-riken.log">Tokyo</a></th><th><a target="_blank" href="log_train/1gtrepo-cghub_data1.log">Santa Cruz</a></th><th>Total</th><th>%</th></tr>
 </thead>
 <tbody>
-<tr><td><b>Aligned Specimens</b></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+<tr><td><b>Aligned Specimens</b></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
 
-<tr><td><b>Remaining Specimens to Align</b></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+<tr><td><b>Remaining Specimens to Align</b></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
 
-<tr><td><b>Total Specimens</b></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>-</td></tr>
+<tr><td><b>Total Specimens</b></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
 </tbody>
+<tfoot>
+  <tr>
+    <td colspan="19">*Click for  <a target="_blank" href="https://docs.google.com/spreadsheets/d/14NItsHKJUevHZIuFkFTwNF-C12WbXTrFe0oM0Xq6b4M/edit#gid=111470950">Data Freeze Train 1.0 Report</a></td>
+  </tr>
+</tfoot>
 </table>
 </p>
 </div>
 
-
-<script>
-updateLiveTable('live');
-</script>
-
-
-<h2>Live Map</h2>
-<div id="liveMap" style="position:relative; width:800px; height:500px"></div></center>
-
-<script>
-makeMap('liveMap','bubbles/livedata.json');
-</script>
--->
+<h2>Map for Train 1.0</h2>
+<div id="container2" style="position:relative; width:911px; height:500px"></div>
 
 </center>
 </body>
