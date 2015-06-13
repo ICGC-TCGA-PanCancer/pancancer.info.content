@@ -1,4 +1,3 @@
-
 // Load the Visualization API and the piechart package.
 google.load('visualization', '1', {'packages':['corechart']});
 
@@ -17,8 +16,10 @@ function loadVariantWorkflow() {
     setVariantHeaders(wf);
     loadVariantTable1();
     drawVariantChart1(wf);
+    updateLiveTable();
     loadVariantTable2();
     drawVariantChart2(wf);
+    drawCumulativeTotalChart(wf);
 }
 
 function setVariantHeaders(wf) {
@@ -47,7 +48,6 @@ function drawVariantChart1(workflow) {
     chart_data.addColumn('number', '# donor called');
     var count_called_as_of_last_week = 0;
     for ($i = 1; $i < data.length; $i++) {
-	//console.log(data[$i]);
 	var local_time = realTime(data[$i][0]);
 	chart_data.addRow([local_time, data[$i][1], data[$i][2]]);
     }
@@ -55,11 +55,11 @@ function drawVariantChart1(workflow) {
 
     var options = {
         title: workflow+' workflow variant calling progress',
-        curveType: 'function',
         legend: { position: 'bottom' },
         width: '100%',
         height: 300,
-        pointSize: 6,
+        pointSize: 3,
+	chartArea:{left:50,top:50,width:'100%'}
     };
     
     // Instantiate and draw our chart, passing in some options.
@@ -137,14 +137,13 @@ function loadVariantTable1() {
 }
 	     
 
-
 function loadVariantTable2() {
 
     var report_data_url = workflow == 'Sanger' ? 'gnos_metadata/latest/reports/sanger_summary_counts/hist_summary_site_counts.json'
         : workflow == 'DKFZ/EMBL'   ? 'gnos_metadata/latest/reports/embl-dkfz_summary_counts/hist_summary_site_counts.json'
         :                        'gnos_metadata/latest/reports/summary_counts/hist_summary_site_counts.json';
 
-    table_header_x1();
+    table_header();
     $("table[name='x1'] tbody").empty();
 
 
@@ -158,9 +157,9 @@ function loadVariantTable2() {
             total = 0;
 
             tr = $('<tr/>');
-            tr.append("<td>" + date + "</td>");
+            tr.append("<td nowrap>" + date + "</td>");
 
-            for (var j = 0; j < repos2.length; j++) {
+            for (var j = 0; j < repos2.length - 1; j++) {
                 count = counts[repos2[j]] == undefined ? 0 : counts[repos2[j]]
                 tr.append("<td>" + count + "</td>");
                 total += count;
@@ -192,30 +191,15 @@ function drawVariantChart2(workflow) {
     data2 = $.parseJSON(json2)
     data2.reverse();
 
-
-    if (data2.length < 8) {
-        $('#thead0').html(workflow+' Variant Calls by Compute Sites: Insufficient data for cumulative plot');
-	$('#chart_div2').empty();
-	$('#total').empty();
-	$('#thead1').empty();
-	$('#thead2').empty();
-	$('#cumulative_table').empty();
-	for (i=0;i<repos3.length;i++) {
-	    $('#'+repos3[i]).empty();
-	}
-        return 1;
-    }
-
-
     cumulative_table();
 
     var chart_data = new google.visualization.DataTable();
     chart_data.addColumn('string', 'Date');
 
-    for (var i = 0; i < repos3.length; i++) {
+    var i;
+    for (i = 0; i < repos3.length; i++) {
 	chart_data.addColumn('number', repo_name[repos3[i]]);
     }
-
 
     // only historic data for Sanger
     if (workflow == 'Sanger') {
@@ -244,6 +228,7 @@ function drawVariantChart2(workflow) {
 
     var today_total = 0;
     var last_week_total = 0;
+
     for (var i = 0; i < repos3.length; i++) {
 	var count = 0;
 	var last_count = 0;
@@ -280,20 +265,22 @@ function drawVariantChart2(workflow) {
     dateString = months[today.getMonth()] + ' ' + today.getDate();
 
     $('#total').html('&nbsp;'+today_total.toString()+ " ("+diff+")");
-    $('#thead0').html(workflow+' Variant Calls by Compute Sites (Total: '+today_total+' as of '+dateString+')');
+    $('#thead0').html('Current Status ('+dateString+')');
     $('#thead1').html(workflow+' Variant Calling Site');
     $('#thead2').html('Completed Donors as of '+dateString+' (change from last week)');
-    
+
     var options = {
-	colors: colors,
-	vAxis: {viewWindow: {min: 0}, title: '# donors'},
-	hAxis: {slantedText: true, slantedTextAngle: 45},
+	title: workflow+' workflow variant calls by site',
+        colors: colors,
+        vAxis: {viewWindow: {min: 0}, title: 'Donors'},
+        hAxis: {slantedText: true, slantedTextAngle: 45},
         legend: { position: 'right'},
-        width: '100%',
+	width: '100%',
         height: 700,
-        pointSize: 5,
-	chartArea:{left:50,top:50,width:'75%',height:'80%'}
+	pointSize: 3,
+        chartArea:{left:80,top:50,width:'75%'}
     };
+
 
     $('#chart_div2').empty();
     var chart = new google.visualization.LineChart(document.getElementById('chart_div2'));
@@ -370,24 +357,26 @@ function loadRepos() {
 
     if (workflow == 'Sanger') {
 	repos2 = [ "aws_ireland", "aws_oregon", "bsc", "sanger", "pdc1_1", "pdc2_0",
-		   "dkfz", "ebi", "idash", "ucsc", "etri", "tokyo", "oicr" ]
+		   "dkfz", "ebi", "idash", "ucsc", "etri", "tokyo", "oicr", "Unassigned" ];
 
 	repos3 = [ "aws_ireland", "aws_oregon", "bsc", "sanger", "pdc",
-		   "dkfz", "ebi", "idash", "ucsc", "etri", "tokyo", "oicr" ]
+		   "dkfz", "ebi", "idash", "ucsc", "etri", "tokyo", "oicr" ];
 
-	chicago = [ "pdc(1.1+2.0)", "pdc1_1", "pdc2_0" ]
+	chicago = [ "pdc(1.1+2.0)", "pdc1_1", "pdc2_0" ];
     }
     else if (workflow == 'DKFZ/EMBL') {
-	repos2 = ["aws_ireland","bsc","sanger","dkfz","dkfz_hpc"];
-	repos3 = repos2;
+	repos2 = ["aws_ireland","bsc","sanger","dkfz","dkfz_hpc","Unassigned"];
+	repos3 = ["aws_ireland","bsc","sanger","dkfz","dkfz_hpc"];
 	repo_name['dkfz'] = 'Heidelberg (OpenStack)';
     }
 
 }
 
-function table_header_x1() {
+function table_header(table) {
+    if (!table) {
+	table = 'x1h';
+    }
     var sanger_h = ' \
-<th nowrap>Date <br/>(recent 8 days)</th> \
 <th>AWS Ireland</th> \
 <th>AWS Oregon</th> \
 <th>Barcelona</th> \
@@ -400,24 +389,35 @@ function table_header_x1() {
 <th>Santa Cruz</th> \
 <th>Seoul</th> \
 <th>Tokyo</th> \
-<th>Toronto</th> \
-<th><font color="red">[Total]</font></th>';
+<th>Toronto</th>';
 
     var dkfz_h = ' \
-<th nowrap>Date <br/>(recent 8 days)</th> \
 <th>AWS Ireland</th> \
 <th>Barcelona</th> \
 <th>Cambridge</th> \
 <th>Heidelberg<br>(OpenStack)</th> \
-<th>Heidelberg<br>(HPC)</th> \
-<th><font color="red">[Total]</font></th>';
+<th>Heidelberg<br>(HPC)</th>';
 
-    $('#x1h').html(workflow == 'Sanger' ? sanger_h : dkfz_h);
+
+    var h = workflow == 'Sanger' ? sanger_h : dkfz_h;
+
+    if (table == 'x1h') {
+	h = '<th nowrap>Date<br>(Recent 8 days)</th>'+h+
+	    '<th><font color="red">Total</font></th>';
+    }
+    else {
+	h = '<th>&nbsp;</th>'+h+
+	    '<th>Unassigned</th>'+
+	    '<th>Total</th><th>%</th>';
+    }
+
+
+    $('#'+table).html(h);
 }
 
 function cumulative_table() {
     var sanger_t = '\
-<table id="rounded-corner"> \
+<table style="float:left" class="rounded-corner"> \
   <tr><th id="thead1"></th><th id="thead2"></th></tr> \
   <tr><td>AWS Ireland</td><td id="aws_ireland"></td></tr> \
   <tr><td>AWS Oregon</td><td id="aws_oregon"></td></tr> \
@@ -432,18 +432,125 @@ function cumulative_table() {
   <tr><td>Tokyo</td><td id="tokyo"></td></tr> \
   <tr><td>Toronto</td><td id="oicr"></td></tr> \
   <tr><td><b>Total</b></td><td id="total"></td></tr> \
-</table>';
+</table> <br clear="all" />';
 
     var dkfz_t = '\
-<table id="rounded-corner"> \
+<table style="float:left" class="rounded-corner"> \
     <tr><th id="thead1"></th><th id="thead2"></th></tr> \
     <tr><td>AWS Ireland</td><td id="aws_ireland"></td></tr> \
     <tr><td>Barcelona</td><td id="bsc"></td></tr> \
     <tr><td>Cambridge</td><td id="sanger"></td></tr> \
     <tr><td>Heidelberg (OpenStack)</td><td id="dkfz"></td></tr> \
     <tr><td>Heidelberg (HPC)</td><td id="dkfz_hpc"></td></tr> \
-</table>';
+</table> <br clear="all" />';
 
     $('#cumulative_table').html(workflow == 'Sanger' ? sanger_t : dkfz_t);
     //console.log($('#cumulative_table').html());
+}
+
+
+function drawCumulativeTotalChart(workflow) {
+
+    var url = workflow == 'Sanger' ? 'gnos_metadata/latest/reports/sanger_summary_counts/summary_counts.json'
+        : workflow == 'DKFZ/EMBL'   ? 'gnos_metadata/latest/reports/embl-dkfz_summary_counts/summary_counts.json'
+        :                        'gnos_metadata/latest/reports/summary_counts/summary_counts.json';
+
+    var jsonData = $.ajax({
+        url: url,
+        dataType:"text",
+        async: false
+    }).responseText;
+
+    data = $.parseJSON(jsonData);
+    data.reverse();
+
+    // Create our data table out of JSON data loaded from server.                                                                                                                                                                                                                                                                                                                             
+    var chart_data = new google.visualization.DataTable();
+    chart_data.addColumn('date', 'Date');
+    chart_data.addColumn('number', 'Total');
+
+    var count_called_as_of_last_week = 0;
+    
+    var i = 0;
+    data.pop();
+    while (i < data.length) {
+	datum = data[i];
+        var local_time = realTime(datum[0]);
+        chart_data.addRow([local_time, datum[2]]);
+	i++;
+    }
+
+    var options = {
+        title: workflow+' workflow variant calls',
+        legend: { position: 'right' },
+        width: '100%',
+        height: 250,
+        pointSize: 3,
+	chartArea:{left:80,top:50,width:'75%'},
+	hAxis: {gridlines:{count:0},
+		baselineColor:'white'},
+	vAxis: {title:'Donors'}
+
+    };
+
+    $('#cumulative_total_chart').empty();
+    var chart = new google.visualization.LineChart(document.getElementById('cumulative_total_chart'));
+    chart.draw(chart_data, options);
+}
+
+
+updateLiveTable = function() {
+    loadRepos();
+
+    var report_data_url = workflow == 'Sanger' ? 'gnos_metadata/latest/reports/sanger_summary_counts/summary_compute_site_counts.json'
+        : workflow == 'DKFZ/EMBL'   ? 'gnos_metadata/latest/reports/embl-dkfz_summary_counts/summary_compute_site_counts.json'
+        :                        'gnos_metadata/latest/reports/summary_counts/hist_summary_site_counts.json';
+
+    table_header('live_h');
+    $("#live tbody").empty();
+
+    $.getJSON( report_data_url, 
+	       function (json){
+		   var total_row = $('<tr/>');
+		   var called_row = $('<tr/>');
+		   var uncalled_row = $('<tr/>');
+		   total_row.append('<td>Total</td>');
+		   called_row.append('<td nowrap>Variant Called &nbsp;&nbsp;</td>');
+		   uncalled_row.append('<td>Uncalled</td>');
+		   var totals = {
+		       total:0,
+		       called:0,
+		       uncalled:0
+		   };
+
+		   for (var j = 0; j < repos2.length; j++) {
+		       counts = json[repos2[j]];
+		       total  = counts['Total'] || 0;
+		       called = counts['Called'] || 0;
+		       uncalled = counts['To_be_called'] || 0;
+		       totals['total'] += total;
+		       totals['called'] += called;
+		       totals['uncalled'] += uncalled;
+		       total_row.append('<td>'+total+'</td>');
+		       called_row.append('<td>'+called+'</td>');
+		       uncalled_row.append('<td>'+uncalled+'</td>');
+		   }
+		   
+
+		   percent_called = totals['called'] ? 100 * totals['called']/totals['total'] : 0;
+		   percent_uncalled = totals['uncalled'] ? 100 * totals['uncalled']/totals['total'] : 0;
+
+		   total_row.append('<td>'+totals['total']+'</td>');
+		   total_row.append('<td>-</td>');
+		   called_row.append('<td>'+totals['called']+'</td>');
+		   called_row.append('<td>'+percent_called.toFixed(2)+'</td>');
+		   uncalled_row.append('<td>'+totals['uncalled']+'</td>');
+		   uncalled_row.append('<td>'+percent_uncalled.toFixed(2)+'</td>');
+		   
+
+		   $('#live tbody').append(called_row);
+		   $('#live tbody').append(uncalled_row);
+		   $('#live tbody').append(total_row);
+	       });
+
 }
