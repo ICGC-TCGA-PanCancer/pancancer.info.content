@@ -17,7 +17,7 @@
   <script type="text/javascript">loadJS('variant_calling')</script>
 </head>
 <body>
-<script>
+  <script type="text/javascript">
   $('document').ready(function(){
     $("#variant_workflow").load("variant_workflow_choice.html");
   });
@@ -25,73 +25,66 @@
   $( document ).ready(function(){
     loadVariantWorkflow()
   });
-</script>
-</head>
-<body >
-<center>
+  </script>
+
+
   <div id="pancancer-header"></div>
+  <div class="content">
+    <center>
+      <h2>Variant Calling Status</h2>
+      <div id="variant_workflow" style="width:400px"></div>
+    </center>
+    
+    <h2 class="c1" id="head1">Donors with Sanger Variant Calls (Live)</h2>
+    
+    <p class="c2">The first column shows the number of donors aligned at a repo that
+      have variants called. The subsequent columns show the location of the results.
+      Note: Donors aligned at cloud X may have variants computed at cloud Y and VCFs
+      uploaded to cloud Z. Currently, the cloud performing the computation is not shown
+      but will be at a later time.</p>
+    
+    <table name="x12" class="rounded-corner" summary="">
+      <thead>
+        <tr>
+          <th nowrap="nowrap">Donors aligned at<br />
+            (donor count)</th>
+          <th>VCF at Barcelona</th>
+          <th>VCF at Chicago (ICGC)</th>
+          <th>VCF at Chicago (TCGA)</th>
+          <th>VCF at Heidelberg</th>
+          <th>VCF at London</th>
+          <th>VCF at Santa Cruz</th>
+          <th>VCF at Seoul</th>
+          <th>VCF at Tokyo</th>
+        </tr>
+      </thead>
+    </table>
+    <div id="chart_div" class="chart" style="width:1100px"></div>
+    <br clear="all" />
 
-  <h2>Variant Calling Status</h2>
-
-<div id="variant_workflow"></div>
-<div id="#datatotal" style="width:911px;">
-<h2 style="float:left;" id="head1">Donors with Sanger Variant Calls (Live)</h2>
-<p style="float:left;">The first column shows the number of donors aligned at a repo that have variants called. 
-The subsequent columns show the location of the results. Note: Donors aligned at cloud X may have variants computed at cloud 
-Y and VCFs uploaded to cloud Z. Currently, the cloud performing the computation is not shown but will be at a later time.</p>
-<p>
-<br>
-<table name ="x12" id="rounded-corner" summary="">
-<thead>
-<tr>
-    <th nowrap>Donors aligned at<br/>(donor count)</th>
-    <th>VCF at Barcelona</th>
-    <th>VCF at Chicago (ICGC)</th>
-    <th>VCF at Chicago (TCGA)</th>
-    <th>VCF at Heidelberg</th>
-    <th>VCF at London</th>
-    <th>VCF at Santa Cruz</th>
-    <th>VCF at Seoul</th>
-    <th>VCF at Tokyo</th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
-</p>
-</div>
-
-<div id="#datatotal" style="width:1100px;">
-<p>
-<div id="chart_div"></div>
-</p>
-</div>
-
-<div id="#datatotal" style="width:911px;">
-<h2 style="float:left;" id="head2">Sanger Variant Calls by Compute Sites</h2>
-<p style="float:left;"></p>
-<p>
-<br>
-<table name ="x1" id="rounded-corner" summary="">
-<thead id="x1h">
-</thead>
-<tbody>
-</tbody>
-</table>
-</p>
-</div>
+    <h2 class="c1" id="head2">Sanger Variant Calls by Compute Sites</h2>
+    <h3 id="thead0"></h3>
+    <table id="live" style="float:left" class="rounded-corner c5" summary="">
+      <thead id="live_h"></thead>
+      <tbody></tbody>
+    </table>
+    <br clear="all" />
 
 
+    <div id="cumulative_table"></div>
+    <br clear="all" />
 
-<div id="#datatotal" style="width:1000px;">
-  <h2 id="thead0"></h2>
-  <p id="cumulative_chart">
-  <br>
-  <div id="cumulative_table">
+    <h3>Weekly</h3>
+    <table name="x1" class="rounded-corner" summary="" style="float:left">
+      <thead id="x1h"></thead>
+    </table>
+    <br clear="all">
+
+
   </div>
-  <div id="chart_div2"></div>
-  </p>
-</div>
-
+  
+  <div id="cumulative_total_chart" class="chart"></div>
+  <div id="chart_div2" class="chart"></div>
+  
 </body>
 </html>
