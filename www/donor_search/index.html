@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>How to pass parameter to server</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://issues.wenzhixin.net.cn/bootstrap-table/assets/bootstrap-table/src/bootstrap-table.css">
+    <link rel="stylesheet" href="http://issues.wenzhixin.net.cn/bootstrap-table/assets/examples.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <!--<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.8.1/bootstrap-table.min.js"></script>-->
+    <script src="bootstrap-table/1.8.1/bootstrap-table.js"></script>
+    <script src="http://issues.wenzhixin.net.cn/bootstrap-table/assets/bootstrap-table/src/extensions/export/bootstrap-table-export.js"></script>
+    <script src="//rawgit.com/kayalshri/tableExport.jquery.plugin/master/tableExport.js"></script>
+    <script src="//rawgit.com/kayalshri/tableExport.jquery.plugin/master/jquery.base64.js"></script>
+    <!--
+    <script src="bootstrap-table-cookie.js"></script>
+    <script src="ga.js"></script>
+    -->
+</head>
+<body>
+    <div class="container">
+        <h2>PCAWG Donor Search</h2>
+        <div id="toolbar">
+          <b>Examples: </b>
+          <button id="ex1" class="btn btn-default">PACA-CA</button>
+          <button id="ex2" class="btn btn-default">normal_aligned=T</button>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+              More <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <li><a id="ex10" href="#">Normal and tumor aligned</a></li>
+              <li><a id="ex3" href="#">Submiiter Donor ID</a></li>
+              <li><a id="ex4" href="#">Submitter Specimen ID</a></li>
+              <li><a id="ex5" href="#">Any ID</a></li>
+              <li><a id="ex6" href="#">Any keyword - embl</a></li>
+              <li><a id="ex7" href="#">Variant called - sanger</a></li>
+              <li><a id="ex8" href="#">Tumor specimen count - 3</a></li>
+              <li><a id="ex11" href="#">QC failed</a></li>
+              <li><a id="ex12" href="#">Blacklisted</a></li>
+            </ul>
+          </div>
+          
+        </div>
+        <table data-toggle="table"
+               data-toolbar="#toolbar"
+               data-url="/api/v0/donor/search"
+               data-sort-name="project"
+               data-pagination="true"
+               data-side-pagination="server"
+               data-page-list="[10, 20, 40, 100, 500]"
+               data-search="true"
+               data-trim-on-search="false"
+               data-show-refresh="true"
+               data-height="100%"
+               data-show-columns="true"
+               data-show-toggle="true"
+               data-show-export="true"
+               data-export-types="['json', 'csv']"
+               >
+            <thead>
+            <tr>
+                <th data-field="project" data-sortable="true" data-formatter="projectFormatter" data-switchable="false">Project</th>
+                <th data-field="donor_unique_id" data-sortable="true" data-formatter="donorIdFormatter" data-switchable="false">Donor ID</th>
+                <th data-field="normal_specimen_id" data-sortable="true">Normal specimen</th>
+                <th data-field="normal_aligned" data-sortable="true">N. aligned</th>
+                <th data-field="tumor_specimen_id" data-sortable="true">Tumor specimen</th>
+                <th data-field="tumor_aligned" data-sortable="true">T. aligned</th>
+                <th data-field="tumor_count" data-sortable="true">T. count</th>
+                <th data-field="variant_called" data-sortable="false">Variant called</th>
+                <th data-field="qc_failed" data-sortable="true">QC failed</th>
+                <th data-field="blacklisted" data-sortable="true">Blacklisted</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+    <script>
+        var $ex1 = $('#ex1');
+        var $ex2 = $('#ex2');
+        var $ex3 = $('#ex3');
+        var $ex4 = $('#ex4');
+        var $ex5 = $('#ex5');
+        var $ex6 = $('#ex6');
+        var $ex7 = $('#ex7');
+        var $ex8 = $('#ex8');
+        var $ex10 = $('#ex10');
+        var $ex11 = $('#ex11');
+        var $ex12 = $('#ex12');
+
+        $(function () {
+            $ex1.click(function () {
+                var e = jQuery.Event("keyup");
+                e.keyCode = 13;
+                $('#search_str').val('PACA-CA').focus().trigger(e);
+            });
+            $ex2.click(function () {
+                var e = jQuery.Event("keyup");
+                e.keyCode = 13;
+                $('#search_str').val('normal_aligned=T').focus().trigger(e);
+            });
+            $ex3.click(function () {
+                var e = jQuery.Event("keyup");
+                e.keyCode = 13;
+                $('#search_str').val('submitter_donor_id=CGP_donor_*').focus().trigger(e);
+            });
+            $ex4.click(function () {
+                var e = jQuery.Event("keyup");
+                e.keyCode = 13;
+                $('#search_str').val('normal_specimen_id=87c075a4-3b9a-4048-b63b-c2daa44b1f2e').focus().trigger(e);
+            });
+            $ex5.click(function () {
+                var e = jQuery.Event("keyup");
+                e.keyCode = 13;
+                $('#search_str').val('010*').focus().trigger(e);
+            });
+            $ex6.click(function () {
+                var e = jQuery.Event("keyup");
+                e.keyCode = 13;
+                $('#search_str').val('embl').focus().trigger(e);
+            });
+            $ex7.click(function () {
+                var e = jQuery.Event("keyup");
+                e.keyCode = 13;
+                $('#search_str').val('variant_called=sanger').focus().trigger(e);
+            });
+            $ex8.click(function () {
+                var e = jQuery.Event("keyup");
+                e.keyCode = 13;
+                $('#search_str').val('tumor_count=3').focus().trigger(e);
+            });
+            $ex10.click(function () {
+                var e = jQuery.Event("keyup");
+                e.keyCode = 13;
+                $('#search_str').val('normal_aligned=T tumor_aligned=T').focus().trigger(e);
+            });
+            $ex11.click(function () {
+                var e = jQuery.Event("keyup");
+                e.keyCode = 13;
+                $('#search_str').val('qc_failed=T').focus().trigger(e);
+            });
+            $ex12.click(function () {
+                var e = jQuery.Event("keyup");
+                e.keyCode = 13;
+                $('#search_str').val('blacklisted=T').focus().trigger(e);
+            });
+        });
+
+        function queryParams(params) {
+            params.your_param1 = 1; // add param1
+            params.your_param2 = 2; // add param2
+            // console.log(JSON.stringify(params));
+            // {"limit":10,"offset":0,"order":"asc","your_param1":1,"your_param2":2}
+            return params;
+        }
+
+        function projectFormatter(value) {
+            return '<a target="_blank" href="https://dcc.icgc.org/projects/' + value + '">' + value + '</a>';
+        }
+
+        function donorIdFormatter(value) {
+            var submitter_donor_id = value.split("::")[1]
+            return '<a target="_blank" href="/donor/' + value + '">' + submitter_donor_id + '</a>';
+        }
+
+        function starsFormatter(value) {
+            number = value.replace('$','');
+            if (number < 10) {
+                return '<i class="glyphicon glyphicon-star"></i> ' + value;
+            } else {
+                return value;
+            }
+        }
+    </script>
+</body>
+</html>
