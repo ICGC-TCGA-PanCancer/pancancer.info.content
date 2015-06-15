@@ -3,6 +3,6 @@
 # gnostransfer monitor cron job
 6 * * * * /home/ubuntu/gitroot/pancancer.info.content/deploy/configuration/crons/generate_html_report.cron  >> /home/ubuntu/logs/transfer.log 2>&1
 # Daily S3 Backup
-1 6 * * * /home/ubuntu/gitroot/pancancer.info.content/deploy/configuration/crons/s3backup.sh /path/to/data >> /home/ubuntu/logs/s3backup.log 2>&1
+1 6 * * * /usr/local/bin/s3cmd -Fv sync --recursive /mnt/data/pancancer-sandbox/pcawg_metadata_parser/gnos_metadata/ S3://pancancer.info.metadata >> /home/ubuntu/logs/s3backup.log 2>&1
 # decider cron job
 0 */4 * * * /home/ubuntu/gitroot/pancancer.info.content/deploy/configuration/crons/deciders.cron >> /home/ubuntu/logs/deciders.log 2>&1
