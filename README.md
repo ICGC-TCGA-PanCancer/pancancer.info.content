@@ -14,3 +14,10 @@ with a smaller elasticsearch heap:
 ```
 sudo sed "s/ES_HEAP_SIZE=8g/#ES_HEAP_SIZE=8g/g" -i /etc/init.d/elasticsearch && sudo service elasticsearch restart
 ```
+
+## S3 Backups
+
+Please note that the elasticsearch backups are handled by a cron job like the following:
+```
+/usr/local/bin/s3cmd -Fv sync --recursive /mnt/data/pancancer-sandbox/pcawg_metadata_parser/gnos_metadata/ S3://pancancer.info.metadata
+```
