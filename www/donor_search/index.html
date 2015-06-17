@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>How to pass parameter to server</title>
+    <title>Donor search</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://issues.wenzhixin.net.cn/bootstrap-table/assets/bootstrap-table/src/bootstrap-table.css">
@@ -39,6 +39,7 @@
               <li><a id="ex8" href="#">Tumor specimen count - 3</a></li>
               <li><a id="ex11" href="#">QC failed</a></li>
               <li><a id="ex12" href="#">Blacklisted</a></li>
+              <li><a id="ex13" href="#">Donors with no issue flaged</a></li>
             </ul>
           </div>
           
@@ -87,6 +88,7 @@
         var $ex10 = $('#ex10');
         var $ex11 = $('#ex11');
         var $ex12 = $('#ex12');
+        var $ex13 = $('#ex13');
 
         $(function () {
             $ex1.click(function () {
@@ -144,6 +146,11 @@
                 e.keyCode = 13;
                 $('#search_str').val('blacklisted=T').focus().trigger(e);
             });
+            $ex13.click(function () {
+                var e = jQuery.Event("keyup");
+                e.keyCode = 13;
+                $('#search_str').val('qc_failed=F blacklisted=F').focus().trigger(e);
+            });
         });
 
         function queryParams(params) {
@@ -155,12 +162,14 @@
         }
 
         function projectFormatter(value) {
-            return '<a target="_blank" href="https://dcc.icgc.org/projects/' + value + '">' + value + '</a>';
+            return '<a target="_blank" href="../gnos_metadata/latest/reports/donors/' + value + '">' + value + '</a>';
         }
 
         function donorIdFormatter(value) {
+            var project_code = value.split("::")[0]
             var submitter_donor_id = value.split("::")[1]
-            return '<a target="_blank" href="/donor/' + value + '">' + submitter_donor_id + '</a>';
+            return '<a target="_blank" href="../gnos_metadata/latest/reports/donors/' + 
+                    project_code + '/' + submitter_donor_id + '.json' + '">' + submitter_donor_id + '</a>';
         }
 
         function starsFormatter(value) {
