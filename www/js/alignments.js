@@ -103,9 +103,20 @@ updateLiveTable = function(ele) {
         var arr =[];
         for (var i = 0; i < aln_repos.length; i++){
 	    var site_data = json_data[aln_repos[i]];
-	    var aligned   = parseInt(site_data['aligned'] || 0);
-	    var total     = parseInt(site_data['total'] || 0);
-	    var unaligned = parseInt(site_data['unaligned'] || 0);
+
+	    if (!site_data && aln_repos[i] == 'riken') {
+		site_data = json_data['tokyo'];
+	    }
+
+
+	    var aligned = 0;
+	    var total = 0;
+	    var unaligned = 0;
+	    if (site_data) {
+		aligned   = parseInt(site_data['aligned'] || 0);
+		total     = parseInt(site_data['total'] || 0);
+		unaligned = parseInt(site_data['unaligned'] || 0);
+	    }
 
 	    if (unaligned != total - aligned || (aligned + unaligned) != total) {
 		console.log("Something is fishy here.  The numbers don't add up: "+aligned+" "+unaligned+" "+total);
@@ -128,27 +139,27 @@ updateLiveTable = function(ele) {
 
         }
 
-        cell_1[7] = table[0].rows[1].cells[7];
-        cell_2[7] = table[0].rows[2].cells[7];
-        cell_3[7] = table[0].rows[3].cells[7];
-
-
-        cell_1[7].firstChild.data = '' + total_1;
-        cell_2[7].firstChild.data = '' + total_2;
-        cell_3[7].firstChild.data = '' + total_3;
-
-        cell_1[8] = table[0].rows[1].cells[7];
-        cell_2[8] = table[0].rows[2].cells[7];
         cell_1[8] = table[0].rows[1].cells[8];
         cell_2[8] = table[0].rows[2].cells[8];
+        cell_3[8] = table[0].rows[3].cells[8];
+
+
+        cell_1[8].firstChild.data = '' + total_1;
+        cell_2[8].firstChild.data = '' + total_2;
+        cell_3[8].firstChild.data = '' + total_3;
+
+        cell_1[9] = table[0].rows[1].cells[8];
+        cell_2[9] = table[0].rows[2].cells[8];
+        cell_1[9] = table[0].rows[1].cells[9];
+        cell_2[9] = table[0].rows[2].cells[9];
 
         var ave_1 = (total_1/total_3)*100;
         var num_1 = ave_1.toFixed(2);
         var ave_2 = (total_2/total_3)*100;
         var num_2 = ave_2.toFixed(2);
 
-        cell_1[8].firstChild.data = '' + num_1;
-        cell_2[8].firstChild.data = '' + num_2;
+        cell_1[9].firstChild.data = '' + num_1;
+        cell_2[9].firstChild.data = '' + num_2;
 
     });
 }
@@ -471,8 +482,9 @@ function train1Map() {
 
 function cumulative_table() {
     var t = '\
-<table class="rounded-corner"> \
+<table class="rounded-corner" style="float:left"> \
   <tr><th id="thead1"></th><th id="thead2"></th></tr> \
+  <tr><td>AWS Ireland</td><td id="aws_ireland"></td></tr> \
   <tr><td>Chicago (PDC2.0)</td><td id="pdc2_0"></td></tr> \
   <tr><td>London</td><td id="ebi"></td></tr> \
   <tr><td>Seoul</td><td id="etri"></td></tr> \
@@ -488,6 +500,7 @@ function cumulative_table() {
 function table_header_site() {
     var h = '\
 <th nowrap>Date <br/>(recent 8 days)</th> \
+<th>AWS Ireland</th> \
 <th>Chicago<br>(PDC2.0)</th> \
 <th>London</th> \
 <th>Seoul</th> \
@@ -537,9 +550,26 @@ function drawAlignmentChart2() {
     var today_total = 0;
     var last_week_total = 0;
     for (var i = 0; i < aln_repos.length; i++) {
-        var count = parseInt(today_counts[aln_repos[i]]['aligned'] || 0);
-        var last_count =  parseInt(last_week_counts[aln_repos[i]]['aligned'] || 0);
+        //console.log(aln_repos[i]);
+	var site_data = today_counts[aln_repos[i]];
+        if (!site_data && aln_repos[i] == 'riken') {
+            site_data = today_counts['tokyo'];
+        }
 
+
+	var count;
+	if (site_data) {
+	    count = parseInt(site_data['aligned'] || 0);
+	}
+	else {
+	    count = 0;
+	}
+
+	var last_week_data = last_week_counts[aln_repos[i]];
+        var last_count = 0;
+	if (last_week_data) {
+            last_count =  parseInt(last_week_data['aligned'] || 0);
+	}
         today_total += count;
         last_week_total += last_count;
 
@@ -596,11 +626,21 @@ function buildRows(data,chart_data) {
         row.push(dateString);
 
         for (var j = 0; j < aln_repos_chart.length; j++) {
+	    //console.log(aln_repos_chart[j]);
 	    var site_data = counts[aln_repos_chart[j]];
-	    var count = site_data['aligned'] || 0;
 
-	    count = parseInt(site_data['aligned']);
+	    if (!site_data && aln_repos_chart[j] == 'riken') {
+		site_data = counts['tokyo'];
+	    }
 
+	    var count;
+	    if (site_data) {
+		count = site_data['aligned'] || 0;
+		count = parseInt(site_data['aligned']);
+	    }
+	    else {
+		count = 1;
+	    }
 	    row.push(count);
 	    total += count;
 	}
@@ -632,10 +672,16 @@ function loadSiteAlignmentTable() {
 
 		      for (var j = 0; j < aln_repos.length; j++) {
 			  var site_data = counts[aln_repos[j]];
-			  //console.log(aln_repos[j]);
-			  //console.log(site_data);
-			  var count = site_data['aligned'] || 0;
-			  count = parseInt(site_data['aligned']);
+		
+			  if (!site_data && aln_repos[j] == 'riken') {
+			      site_data = counts['tokyo'];
+			  }
+
+			  var count = 0;
+			  if (site_data) {
+			      count = site_data['aligned'] || 0;
+			      count = parseInt(site_data['aligned']);
+			  }
 
 			  tr.append("<td>" + count + "</td>");
 			  total += count;
@@ -682,8 +728,8 @@ function loadRepos() {
 	'unassigned': 'Unassigned'
     }
 
-    aln_repos_chart = ['pdc2_0', 'ebi', 'etri', 'oicr', 'riken'];
-    aln_repos = ['pdc2_0', 'ebi', 'etri', 'riken','oicr','unassigned'];
+    aln_repos_chart = ['aws_ireland','pdc2_0', 'ebi', 'etri', 'oicr', 'riken'];
+    aln_repos = ['aws_ireland','pdc2_0', 'ebi', 'etri', 'riken','oicr','unassigned'];
  }
 
 
@@ -717,10 +763,11 @@ function drawCumulativeTotalChart() {
 
         for (var j = 0; j < aln_repos_chart.length; j++) {
             var site_data = counts[aln_repos_chart[j]];
-            var count = site_data['aligned'] || 0;
-
-            count = parseInt(site_data['aligned']);
-
+	    var count = 0;
+	    if (site_data) {
+		count = site_data['aligned'] || 0;
+		count = parseInt(site_data['aligned']);
+	    }
             total += count;
         }
 	row.push(total);
