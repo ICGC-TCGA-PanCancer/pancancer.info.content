@@ -11,10 +11,10 @@ var repo_name = {
     'ebi': 'London',
     'cghub': 'Santa Cruz',
     'etri': 'Seoul',
-    'riken': 'Tokyo'
+    'tokyo': 'Tokyo'
 }
 var aln_repos = ['bsc', 'osdc-icgc', 'dkfz',
-              'ebi', 'cghub', 'etri', 'riken'
+              'ebi', 'cghub', 'etri', 'tokyo'
             ];
 
 
@@ -103,11 +103,6 @@ updateLiveTable = function(ele) {
         var arr =[];
         for (var i = 0; i < aln_repos.length; i++){
 	    var site_data = json_data[aln_repos[i]];
-
-	    if (!site_data && aln_repos[i] == 'riken') {
-		site_data = json_data['tokyo'];
-	    }
-
 
 	    var aligned = 0;
 	    var total = 0;
@@ -488,7 +483,7 @@ function cumulative_table() {
   <tr><td>Chicago (PDC2.0)</td><td id="pdc2_0"></td></tr> \
   <tr><td>London</td><td id="ebi"></td></tr> \
   <tr><td>Seoul</td><td id="etri"></td></tr> \
-  <tr><td>Tokyo</td><td id="riken"></td></tr> \
+  <tr><td>Tokyo</td><td id="tokyo"></td></tr> \
   <tr><td>Toronto</td><td id="oicr"></td></tr> \
   <tr><td>Unassigned</td><td id="unassigned"></td></tr> \
   <tr><td><b>Total</b></td><td id="total"></td></tr> \
@@ -552,10 +547,6 @@ function drawAlignmentChart2() {
     for (var i = 0; i < aln_repos.length; i++) {
         //console.log(aln_repos[i]);
 	var site_data = today_counts[aln_repos[i]];
-        if (!site_data && aln_repos[i] == 'riken') {
-            site_data = today_counts['tokyo'];
-        }
-
 
 	var count;
 	if (site_data) {
@@ -629,10 +620,6 @@ function buildRows(data,chart_data) {
 	    //console.log(aln_repos_chart[j]);
 	    var site_data = counts[aln_repos_chart[j]];
 
-	    if (!site_data && aln_repos_chart[j] == 'riken') {
-		site_data = counts['tokyo'];
-	    }
-
 	    var count;
 	    if (site_data) {
 		count = site_data['aligned'] || 0;
@@ -673,10 +660,6 @@ function loadSiteAlignmentTable() {
 		      for (var j = 0; j < aln_repos.length; j++) {
 			  var site_data = counts[aln_repos[j]];
 		
-			  if (!site_data && aln_repos[j] == 'riken') {
-			      site_data = counts['tokyo'];
-			  }
-
 			  var count = 0;
 			  if (site_data) {
 			      count = site_data['aligned'] || 0;
@@ -721,15 +704,14 @@ function loadRepos() {
         'cghub': 'Santa Cruz',
         'etri': 'Seoul',
         'tokyo': 'Tokyo',
-        'riken': 'Tokyo',
         'oicr': 'Toronto',
         'idash': 'San Diego',
         'sanger': 'Cambridge',
 	'unassigned': 'Unassigned'
     }
 
-    aln_repos_chart = ['aws_ireland','pdc2_0', 'ebi', 'etri', 'oicr', 'riken'];
-    aln_repos = ['aws_ireland','pdc2_0', 'ebi', 'etri', 'riken','oicr','unassigned'];
+    aln_repos_chart = ['aws_ireland','pdc2_0', 'ebi', 'etri', 'oicr', 'tokyo'];
+    aln_repos = ['aws_ireland','pdc2_0', 'ebi', 'etri', 'tokyo','oicr','unassigned'];
  }
 
 
