@@ -7,1202 +7,36 @@
         <meta http-equiv="content-type" content="text/html;charset=utf-8" />
         <meta name="generator" content="Geany 1.23.1" />
         <meta charset="utf-8" http-equiv="refresh" content="600">
-	<link rel="shortcut icon" href="https://icgc.org/files/org_sys/pan.png">
+        <link rel="shortcut icon" href="https://icgc.org/files/org_sys/pan.png">
         <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
         <script type="text/javascript" src="http://d3js.org/topojson.v1.min.js"></script>
         <script type="text/javascript" src="http://datamaps.github.io/scripts/datamaps.all.min.js"></script>
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script type="text/javascript" src="http://bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <script type="text/javascript" src="js/common.js"></script>
+	<script type="text/javascript">loadJS('transfers')</script>
         <link rel="stylesheet" type="text/css" href="style2.css">
-        <link rel="stylesheet" type="text/css" href="http://bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">	
+        <link rel="stylesheet" type="text/css" href="http://bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
 </head>
-<style>
-	p {
-	         width:900px;
-	}
-</style>
 <body>
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-34523087-2', 'pancancer.info');
-  ga('create', 'UA-52348443-1', 'auto', {'name': 'newTracker'});
-  ga('send', 'pageview');
-  ga('newTracker.send', 'pageview');
-
-</script>
 <center>
-
   <div id="pancancer-header"></div>
-  <script type="text/javascript">
-    $("#pancancer-header").load("header.html");
-  </script>
-
-
+  <div class="content" id="contentWrapper">
   <h2>GNOS Transfer Speeds</h2>
 
 
 
 
 
-<!-- Virginia coords -->
 
 
 
 
-  
-  
 
-
-<h3>Data Transfer Speeds to AWS Ireland on 20150309.20:54:53</h3>
-<p style="width:900px">This report indicates the transfer speeds seen in a single-client test between AWS Ireland and the various GNOS repositories (an average over time report/plot will be implemented soon).  <font color="red">Red</font> indicates that GNOS download is disabled or &lt; 1MB/s in this location, <font color="#E6E600">Yellow</font> indicates &lt; 10 MB/s, and <font color="green">Green</font> indicates &gt; 10 MB/s.</p>
-
-<div>
-<!-- style="position:relative; width:800px; height:500px" -->
-<div id="container_ireland" style="width:800px; height:500px"></div>
-     <script>
-      var colors = d3.scale.category10();
-       //basic map config with custom fills, mercator projection
-      var mapireland = new Datamap({
-        scope: 'world',
-        element: document.getElementById('container_ireland'),
-        geographyConfig: {
-          popupOnHover: false,
-          highlightOnHover: false,
-          highlightFillColor: '#ABDDA4',
-        },
-        projection: 'mercator',
-        fills: {defaultFill: "#ABDDA4",
-                gt50: colors(Math.random() * 20),
-                // light blue
-                gt60: "#63AFD0",
-                // blue
-                gt70: "#0772A1",
-                // aws orange
-                gt80: "#FFAE00",
-                // red
-                gt90: "#FF0000",
-                // green
-                gt100: "#33CC33",
-                // yellow
-                gt110: "#FFFF00",
-                }
-      })
-
-       //bubbles, custom popup on hover template
-     mapireland.bubbles([
-
-       
-
-       
-       
-       
-       
-       
-       
-
-       
-         
-       
-
-       
-         
-         
-         
-
-       
-
-       {name: "Heidelberg", bandwidth: '24.1988030483848 MB/s', latitude: 49.403159, longitude: 8.676061, radius: 8, fillKey: 'gt100'},
-
-       
-
-       
-       
-       
-       
-       
-       
-
-       
-         
-       
-
-       
-         
-         
-         
-
-       
-
-       {name: "Seoul", bandwidth: '0.000244140625 MB/s', latitude: 37.553397, longitude: 126.980624, radius: 8, fillKey: 'gt90'},
-
-       
-
-       
-       
-       
-       
-       
-       
-
-       
-         
-       
-
-       
-         
-
-       
-
-       {name: "Chicago", bandwidth: '27.14635539877 MB/s', latitude: 41.891519, longitude: -87.629159, radius: 8, fillKey: 'gt100'},
-
-       
-
-       
-       
-       
-       
-       
-       
-
-       
-         
-       
-
-       
-        
-        
-        
-
-       
-
-       {name: "London", bandwidth: '22.6535845817746 MB/s', latitude: 51.507919, longitude: -0.123571, radius: 8, fillKey: 'gt100'},
-
-       
-
-       
-       
-       
-       
-       
-       
-
-       
-         
-       
-
-       
-        
-        
-        
-
-       
-
-       {name: "Santa Cruz", bandwidth: '16.1886471793523 MB/s', latitude: 36.971944, longitude: -122.026389, radius: 8, fillKey: 'gt100'},
-
-       
-
-       
-       
-       
-       
-       
-       
-
-       
-         
-       
-
-       
-          
-          
-          
-
-       
-
-       {name: "Tokyo", bandwidth: '33.1266111052085 MB/s', latitude: 35.684219, longitude: 139.75502, radius: 8, fillKey: 'gt100'},
-
-       
-
-      {name: "Amazon Ireland", bandwidth: '', latitude: 53.347778, longitude: -6.259722, radius: 8, fillKey: 'gt80'}
-
-     ]
-, {
-       popupTemplate: function(geo, data) {
-         return "<div class='hoverinfo'>"+data.name+"<br/>"+data.bandwidth+ "</div>";
-       }
-     });
-
- mapireland.arc([
-
- 
-
- 
- 
- 
- 
- 
- 
-
- 
-   
- 
-
- 
-   
-   
-   
-
- 
-{
-    origin: {
-        latitude: 49.403159,
-        longitude: 8.676061
-    },
-    destination: {
-        latitude: 53.347778,
-        longitude: -6.259722
-    },
-    options: {
-      strokeWidth: 2,
-      strokeColor: "#33CC33"
-    }
-},
- 
-
- 
- 
- 
- 
- 
- 
-
- 
-   
- 
-
- 
-   
-   
-   
-
- 
-{
-    origin: {
-        latitude: 37.553397,
-        longitude: 126.980624
-    },
-    destination: {
-        latitude: 53.347778,
-        longitude: -6.259722
-    },
-    options: {
-      strokeWidth: 2,
-      strokeColor: "#FF0000"
-    }
-},
- 
-
- 
- 
- 
- 
- 
- 
-
- 
-   
- 
-
- 
-   
-
- 
-{
-    origin: {
-        latitude: 41.891519,
-        longitude: -87.629159
-    },
-    destination: {
-        latitude: 53.347778,
-        longitude: -6.259722
-    },
-    options: {
-      strokeWidth: 2,
-      strokeColor: "#33CC33"
-    }
-},
- 
-
- 
- 
- 
- 
- 
- 
-
- 
-   
- 
-
- 
-  
-  
-  
-
- 
-{
-    origin: {
-        latitude: 51.507919,
-        longitude: -0.123571
-    },
-    destination: {
-        latitude: 53.347778,
-        longitude: -6.259722
-    },
-    options: {
-      strokeWidth: 2,
-      strokeColor: "#33CC33"
-    }
-},
- 
-
- 
- 
- 
- 
- 
- 
-
- 
-   
- 
-
- 
-  
-  
-  
-
- 
-{
-    origin: {
-        latitude: 36.971944,
-        longitude: -122.026389
-    },
-    destination: {
-        latitude: 53.347778,
-        longitude: -6.259722
-    },
-    options: {
-      strokeWidth: 2,
-      strokeColor: "#33CC33"
-    }
-},
- 
-
- 
- 
- 
- 
- 
- 
-
- 
-   
- 
-
- 
-    
-    
-    
-
- 
-{
-    origin: {
-        latitude: 35.684219,
-        longitude: 139.75502
-    },
-    destination: {
-        latitude: 53.347778,
-        longitude: -6.259722
-    },
-    options: {
-      strokeWidth: 2,
-      strokeColor: "#33CC33"
-    }
-},
- 
-
-],  {strokeWidth: 1, arcSharpness: 1.4});
-
-</script>
-
-
-<p>
-<br>
-<table name ="x1" class="rounded-corner" summary="">
-<thead>
-<tr>
-<th>Site</th>
-<th>MB/s to Ireland</th>
-<th>Genome Alignments per Day</th>
-<th>Variant Calling per Day</th>
-<th>Days to Transfer 100TB</th>
-</tr>
-</thead>
-<tbody>
-
-  
-
-  
-  
-  
-  
-
-  
-    
-  
-
-  
-   
-
-
-  
-<tr>
-  <td>cghub.ucsc.edu (Santa Cruz)</td>
-  <td>16.19</td>
-  <td>2.28</td>
-  <td>4.55</td>
-  <td>71.50</td>
-</tr>
-
-
-
-  
-  
-  
-  
-
-  
-    
-  
-
-  
-    
-
-
-  
-<tr>
-  <td>gtrepo-dkfz.annailabs.com (Heidelberg)</td>
-  <td>24.20</td>
-  <td>3.40</td>
-  <td>6.81</td>
-  <td>47.83</td>
-</tr>
-
-
-
-  
-  
-  
-  
-
-  
-    
-  
-
-  
-   
-
-
-  
-<tr>
-  <td>gtrepo-ebi.annailabs.com (London)</td>
-  <td>22.65</td>
-  <td>3.19</td>
-  <td>6.37</td>
-  <td>51.09</td>
-</tr>
-
-
-
-  
-  
-  
-  
-
-  
-    
-  
-
-  
-    
-
-
-  
-<tr>
-  <td>gtrepo-etri.annailabs.com (Seoul)</td>
-  <td>0.00</td>
-  <td>0.00</td>
-  <td>0.00</td>
-  <td>4740740.74</td>
-</tr>
-
-
-
-  
-  
-  
-  
-
-  
-    
-  
-
-  
-    
-
-  
-<tr>
-  <td>gtrepo-osdc-icgc.annailabs.com (Chicago)</td>
-  <td>27.15</td>
-  <td>3.82</td>
-  <td>7.63</td>
-  <td>42.64</td>
-</tr>
-
-
-
-  
-  
-  
-  
-
-  
-    
-  
-
-  
-     
-
-
-  
-<tr>
-  <td>gtrepo-riken.annailabs.com (Tokyo)</td>
-  <td>33.13</td>
-  <td>4.66</td>
-  <td>9.32</td>
-  <td>34.94</td>
-</tr>
-
-
-
-</tbody>
-<tfoot>
-          <tr>
-                  <td colspan="19">* Per day estimates are based on a single upload/download client transferring 300GB/genome each for unaligned (download) and aligned (uploaded) files (600GB total).</td>
-          </tr>
-  </tfoot>
-
-</table>
-</p>
-<!--
-<div id ="chartIreland">
-	<h3>Ireland MB/s</h3>
-</div>
--->
-</div>
-
-
-
-
-
-
-<!-- Virginia coords -->
-
-
-
-
-  
-  
-
-
-<h3>Data Transfer Speeds to AWS Tokyo on 20150309.22:22:00</h3>
-<p>This report indicates the transfer speeds seen in a single-client test between AWS Tokyo and the various GNOS repositories (an average over time report/plot will be implemented soon).  <font color="red">Red</font> indicates that GNOS download is disabled or &lt; 1MB/s in this location, <font color="#E6E600">Yellow</font> indicates &lt; 10 MB/s, and <font color="green">Green</font> indicates &gt; 10 MB/s.</p>
-
-<div>
-<!-- style="position:relative; width:800px; height:500px" -->
-<div id="container_tokyo" style="width:800px; height:500px"></div>
-     <script>
-      var colors = d3.scale.category10();
-       //basic map config with custom fills, mercator projection
-      var maptokyo = new Datamap({
-        scope: 'world',
-        element: document.getElementById('container_tokyo'),
-        geographyConfig: {
-          popupOnHover: false,
-          highlightOnHover: false,
-          highlightFillColor: '#ABDDA4',
-        },
-        projection: 'mercator',
-        fills: {defaultFill: "#ABDDA4",
-                gt50: colors(Math.random() * 20),
-                // light blue
-                gt60: "#63AFD0",
-                // blue
-                gt70: "#0772A1",
-                // aws orange
-                gt80: "#FFAE00",
-                // red
-                gt90: "#FF0000",
-                // green
-                gt100: "#33CC33",
-                // yellow
-                gt110: "#FFFF00",
-                }
-      })
-
-       //bubbles, custom popup on hover template
-     maptokyo.bubbles([
-
-       
-
-       
-       
-       
-       
-       
-       
-
-       
-         
-       
-
-       
-          
-          
-          
-
-       
-
-       {name: "Tokyo", bandwidth: '47.9152767771766 MB/s', latitude: 35.684219, longitude: 139.75502, radius: 8, fillKey: 'gt100'},
-
-       
-
-       
-       
-       
-       
-       
-       
-
-       
-         
-       
-
-       
-        
-        
-        
-
-       
-
-       {name: "London", bandwidth: '29.735969118427 MB/s', latitude: 51.507919, longitude: -0.123571, radius: 8, fillKey: 'gt100'},
-
-       
-
-       
-       
-       
-       
-       
-       
-
-       
-         
-       
-
-       
-        
-        
-        
-
-       
-
-       {name: "Santa Cruz", bandwidth: '26.4738625326397 MB/s', latitude: 36.971944, longitude: -122.026389, radius: 8, fillKey: 'gt100'},
-
-       
-
-       
-       
-       
-       
-       
-       
-
-       
-         
-       
-
-       
-         
-
-       
-
-       {name: "Chicago", bandwidth: '8.7471589618259 MB/s', latitude: 41.891519, longitude: -87.629159, radius: 8, fillKey: 'gt110'},
-
-       
-
-       
-       
-       
-       
-       
-       
-
-       
-         
-       
-
-       
-         
-         
-         
-
-       
-
-       {name: "Heidelberg", bandwidth: '2.08989662690596 MB/s', latitude: 49.403159, longitude: 8.676061, radius: 8, fillKey: 'gt110'},
-
-       
-
-       
-       
-       
-       
-       
-       
-
-       
-         
-       
-
-       
-         
-         
-         
-
-       
-
-       {name: "Seoul", bandwidth: '0.000260416666666667 MB/s', latitude: 37.553397, longitude: 126.980624, radius: 8, fillKey: 'gt90'},
-
-       
-
-      {name: "Amazon Tokyo", bandwidth: '', latitude: 42.916667, longitude: 143.2, radius: 8, fillKey: 'gt80'}
-
-     ]
-, {
-       popupTemplate: function(geo, data) {
-         return "<div class='hoverinfo'>"+data.name+"<br/>"+data.bandwidth+ "</div>";
-       }
-     });
-
- maptokyo.arc([
-
- 
-
- 
- 
- 
- 
- 
- 
-
- 
-   
- 
-
- 
-    
-    
-    
-
- 
-{
-    origin: {
-        latitude: 35.684219,
-        longitude: 139.75502
-    },
-    destination: {
-        latitude: 42.916667,
-        longitude: 143.2
-    },
-    options: {
-      strokeWidth: 2,
-      strokeColor: "#33CC33"
-    }
-},
- 
-
- 
- 
- 
- 
- 
- 
-
- 
-   
- 
-
- 
-  
-  
-  
-
- 
-{
-    origin: {
-        latitude: 51.507919,
-        longitude: -0.123571
-    },
-    destination: {
-        latitude: 42.916667,
-        longitude: 143.2
-    },
-    options: {
-      strokeWidth: 2,
-      strokeColor: "#33CC33"
-    }
-},
- 
-
- 
- 
- 
- 
- 
- 
-
- 
-   
- 
-
- 
-  
-  
-  
-
- 
-{
-    origin: {
-        latitude: 36.971944,
-        longitude: -122.026389
-    },
-    destination: {
-        latitude: 42.916667,
-        longitude: 143.2
-    },
-    options: {
-      strokeWidth: 2,
-      strokeColor: "#33CC33"
-    }
-},
- 
-
- 
- 
- 
- 
- 
- 
-
- 
-   
- 
-
- 
-   
-
- 
-{
-    origin: {
-        latitude: 41.891519,
-        longitude: -87.629159
-    },
-    destination: {
-        latitude: 42.916667,
-        longitude: 143.2
-    },
-    options: {
-      strokeWidth: 2,
-      strokeColor: "#FFFF00"
-    }
-},
- 
-
- 
- 
- 
- 
- 
- 
-
- 
-   
- 
-
- 
-   
-   
-   
-
- 
-{
-    origin: {
-        latitude: 49.403159,
-        longitude: 8.676061
-    },
-    destination: {
-        latitude: 42.916667,
-        longitude: 143.2
-    },
-    options: {
-      strokeWidth: 2,
-      strokeColor: "#FFFF00"
-    }
-},
- 
-
- 
- 
- 
- 
- 
- 
-
- 
-   
- 
-
- 
-   
-   
-   
-
- 
-{
-    origin: {
-        latitude: 37.553397,
-        longitude: 126.980624
-    },
-    destination: {
-        latitude: 42.916667,
-        longitude: 143.2
-    },
-    options: {
-      strokeWidth: 2,
-      strokeColor: "#FF0000"
-    }
-},
- 
-
-],  {strokeWidth: 1, arcSharpness: 1.4});
-
-</script>
-
-
-<p>
-<br>
-<table name ="x1" class="rounded-corner" summary="">
-<thead>
-<tr>
-<th>Site</th>
-<th>MB/s to Tokyo</th>
-<th>Genome Alignments per Day</th>
-<th>Variant Calling per Day</th>
-<th>Days to Transfer 100TB</th>
-</tr>
-</thead>
-<tbody>
-
-  
-
-  
-  
-  
-  
-
-  
-    
-  
-
-  
-   
-
-
-  
-<tr>
-  <td>cghub.ucsc.edu (Santa Cruz)</td>
-  <td>26.47</td>
-  <td>3.72</td>
-  <td>7.45</td>
-  <td>43.72</td>
-</tr>
-
-
-
-  
-  
-  
-  
-
-  
-    
-  
-
-  
-    
-
-
-  
-<tr>
-  <td>gtrepo-dkfz.annailabs.com (Heidelberg)</td>
-  <td>2.09</td>
-  <td>0.29</td>
-  <td>0.59</td>
-  <td>553.81</td>
-</tr>
-
-
-
-  
-  
-  
-  
-
-  
-    
-  
-
-  
-   
-
-
-  
-<tr>
-  <td>gtrepo-ebi.annailabs.com (London)</td>
-  <td>29.74</td>
-  <td>4.18</td>
-  <td>8.36</td>
-  <td>38.92</td>
-</tr>
-
-
-
-  
-  
-  
-  
-
-  
-    
-  
-
-  
-    
-
-
-  
-<tr>
-  <td>gtrepo-etri.annailabs.com (Seoul)</td>
-  <td>0.00</td>
-  <td>0.00</td>
-  <td>0.00</td>
-  <td>4444444.44</td>
-</tr>
-
-
-
-  
-  
-  
-  
-
-  
-    
-  
-
-  
-    
-
-  
-<tr>
-  <td>gtrepo-osdc-icgc.annailabs.com (Chicago)</td>
-  <td>8.75</td>
-  <td>1.23</td>
-  <td>2.46</td>
-  <td>132.32</td>
-</tr>
-
-
-
-  
-  
-  
-  
-
-  
-    
-  
-
-  
-     
-
-
-  
-<tr>
-  <td>gtrepo-riken.annailabs.com (Tokyo)</td>
-  <td>47.92</td>
-  <td>6.74</td>
-  <td>13.48</td>
-  <td>24.16</td>
-</tr>
-
-
-
-</tbody>
-<tfoot>
-          <tr>
-                  <td colspan="19">* Per day estimates are based on a single upload/download client transferring 300GB/genome each for unaligned (download) and aligned (uploaded) files (600GB total).</td>
-          </tr>
-  </tfoot>
-
-</table>
-</p>
-<!--
-<div id ="chartTokyo">
-	<h3>Tokyo MB/s</h3>
-</div>
--->
-</div>
-
-
-
-
-
-
-<!-- Virginia coords -->
-
-
-
-
-
-<h3>Data Transfer Speeds to AWS Virginia on 20150309.21:06:15</h3>
-<p>This report indicates the transfer speeds seen in a single-client test between AWS Virginia and the various GNOS repositories (an average over time report/plot will be implemented soon).  <font color="red">Red</font> indicates that GNOS download is disabled or &lt; 1MB/s in this location, <font color="#E6E600">Yellow</font> indicates &lt; 10 MB/s, and <font color="green">Green</font> indicates &gt; 10 MB/s.</p>
+<h3>Data Transfer Speeds to AWS Virginia on Jul 25, 2015, 09:10:30 UTC</h3>
+<p>This report indicates the transfer speeds seen in a single-client test between AWS Virginia and the other GNOS repositories<br>
+<b style="color:red">Red</b> means download is disabled or &lt; 1MB/s in this location, <b style="color:#FFC200">Amber</b> means &lt; 10 MB/s, and <b style="color:green">Green</b> means &gt; 10 MB/s.</p>
 
 <div>
 <!-- style="position:relative; width:800px; height:500px" -->
@@ -1232,7 +66,7 @@
                 // green
                 gt100: "#33CC33",
                 // yellow
-                gt110: "#FFFF00",
+                gt110: "#FFC200",
                 }
       })
 
@@ -1253,11 +87,55 @@
        
 
        
+        
+        
+        
+
+       
+
+       {name: "London", bandwidth: '27.9977496292497 MB/s', latitude: 51.507919, longitude: -0.123571, radius: 8, fillKey: 'gt100'},
+
+       
+
+       
+       
+       
+       
+       
+       
+
+       
+         
+       
+
+       
+        
+        
+        
+
+       
+
+       {name: "Santa Cruz", bandwidth: '21.1680362212965 MB/s', latitude: 36.971944, longitude: -122.026389, radius: 8, fillKey: 'gt100'},
+
+       
+
+       
+       
+       
+       
+       
+       
+
+       
+         
+       
+
+       
          
 
        
 
-       {name: "Chicago", bandwidth: '35.7838321165605 MB/s', latitude: 41.891519, longitude: -87.629159, radius: 8, fillKey: 'gt100'},
+       {name: "Chicago", bandwidth: '10.223952033303 MB/s', latitude: 41.891519, longitude: -87.629159, radius: 8, fillKey: 'gt100'},
 
        
 
@@ -1301,7 +179,7 @@
 
        
 
-       {name: "Heidelberg", bandwidth: '28.8309171632572 MB/s', latitude: 49.403159, longitude: 8.676061, radius: 8, fillKey: 'gt100'},
+       {name: "Heidelberg", bandwidth: '53.9244932127588 MB/s', latitude: 49.403159, longitude: 8.676061, radius: 8, fillKey: 'gt100'},
 
        
 
@@ -1323,51 +201,7 @@
 
        
 
-       {name: "Tokyo", bandwidth: '49.0839420644248 MB/s', latitude: 35.684219, longitude: 139.75502, radius: 8, fillKey: 'gt100'},
-
-       
-
-       
-       
-       
-       
-       
-       
-
-       
-         
-       
-
-       
-        
-        
-        
-
-       
-
-       {name: "Santa Cruz", bandwidth: '18.2583841836753 MB/s', latitude: 36.971944, longitude: -122.026389, radius: 8, fillKey: 'gt100'},
-
-       
-
-       
-       
-       
-       
-       
-       
-
-       
-         
-       
-
-       
-        
-        
-        
-
-       
-
-       {name: "London", bandwidth: '23.0032968651983 MB/s', latitude: 51.507919, longitude: -0.123571, radius: 8, fillKey: 'gt100'},
+       {name: "Tokyo", bandwidth: '5.31216648137458e-05 MB/s', latitude: 35.684219, longitude: 139.75502, radius: 8, fillKey: 'gt90'},
 
        
 
@@ -1382,6 +216,72 @@
 
  mapvirginia.arc([
 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+   
+ 
+
+ 
+  
+  
+  
+
+ 
+{
+    origin: {
+        latitude: 51.507919,
+        longitude: -0.123571
+    },
+    destination: {
+        latitude: 37.538346,
+        longitude: -77.461507
+    },
+    options: {
+      strokeWidth: 2,
+      strokeColor: "#33CC33"
+    }
+},
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+   
+ 
+
+ 
+  
+  
+  
+
+ 
+{
+    origin: {
+        latitude: 36.971944,
+        longitude: -122.026389
+    },
+    destination: {
+        latitude: 37.538346,
+        longitude: -77.461507
+    },
+    options: {
+      strokeWidth: 2,
+      strokeColor: "#33CC33"
+    }
+},
  
 
  
@@ -1509,73 +409,7 @@
     },
     options: {
       strokeWidth: 2,
-      strokeColor: "#33CC33"
-    }
-},
- 
-
- 
- 
- 
- 
- 
- 
-
- 
-   
- 
-
- 
-  
-  
-  
-
- 
-{
-    origin: {
-        latitude: 36.971944,
-        longitude: -122.026389
-    },
-    destination: {
-        latitude: 37.538346,
-        longitude: -77.461507
-    },
-    options: {
-      strokeWidth: 2,
-      strokeColor: "#33CC33"
-    }
-},
- 
-
- 
- 
- 
- 
- 
- 
-
- 
-   
- 
-
- 
-  
-  
-  
-
- 
-{
-    origin: {
-        latitude: 51.507919,
-        longitude: -0.123571
-    },
-    destination: {
-        latitude: 37.538346,
-        longitude: -77.461507
-    },
-    options: {
-      strokeWidth: 2,
-      strokeColor: "#33CC33"
+      strokeColor: "#FF0000"
     }
 },
  
@@ -1617,10 +451,10 @@
   
 <tr>
   <td>cghub.ucsc.edu (Santa Cruz)</td>
-  <td>18.26</td>
-  <td>2.57</td>
-  <td>5.14</td>
-  <td>63.39</td>
+  <td>21.17</td>
+  <td>2.98</td>
+  <td>5.95</td>
+  <td>54.68</td>
 </tr>
 
 
@@ -1641,10 +475,10 @@
   
 <tr>
   <td>gtrepo-dkfz.annailabs.com (Heidelberg)</td>
-  <td>28.83</td>
-  <td>4.05</td>
-  <td>8.11</td>
-  <td>40.14</td>
+  <td>53.92</td>
+  <td>7.58</td>
+  <td>15.17</td>
+  <td>21.46</td>
 </tr>
 
 
@@ -1665,10 +499,10 @@
   
 <tr>
   <td>gtrepo-ebi.annailabs.com (London)</td>
-  <td>23.00</td>
-  <td>3.23</td>
-  <td>6.47</td>
-  <td>50.31</td>
+  <td>28.00</td>
+  <td>3.94</td>
+  <td>7.87</td>
+  <td>41.34</td>
 </tr>
 
 
@@ -1712,10 +546,10 @@
   
 <tr>
   <td>gtrepo-osdc-icgc.annailabs.com (Chicago)</td>
-  <td>35.78</td>
-  <td>5.03</td>
-  <td>10.06</td>
-  <td>32.34</td>
+  <td>10.22</td>
+  <td>1.44</td>
+  <td>2.88</td>
+  <td>113.21</td>
 </tr>
 
 
@@ -1736,10 +570,10 @@
   
 <tr>
   <td>gtrepo-riken.annailabs.com (Tokyo)</td>
-  <td>49.08</td>
-  <td>6.90</td>
-  <td>13.80</td>
-  <td>23.58</td>
+  <td>0.00</td>
+  <td>0.00</td>
+  <td>0.00</td>
+  <td>21787860.22</td>
 </tr>
 
 
@@ -1753,235 +587,20 @@
 
 </table>
 </p>
-<!--
-<div id ="chartVirginia">
-	<h3>Virginia MB/s</h3>
+
+<div id="line_chart" class="chart"></div>
+
+<script>drawAlignmentChart2()</script>
+
+
 </div>
--->
+
+
+
+
+
 </div>
-
-
-
-
-<script type="text/javascript">
-                        function charts(data,label,popup,spot,maxnum,num){
-                        //creates the line chart
-                          var margin = {top: 20, right: 55, bottom: 160, left: 40},
-                                  width  = 800,
-                                  height = 250;
-
-                          var x = d3.scale.ordinal()
-                                  .rangeRoundBands([0, width], .1);
-
-                          var y = d3.scale.linear()
-                                  .rangeRound([height, 0]);
-
-                          var xAxis = d3.svg.axis()
-                                  .scale(x)
-                                  .ticks(20)
-                                  .orient("bottom");
-
-                          var yAxis = d3.svg.axis()
-                                  .scale(y)
-                                  .orient("left");
-
-                          var line = d3.svg.line()
-                                  .interpolate("linear")
-                                  .x(function (d) { return x(d.label) + x.rangeBand() / 2; })
-                                  .y(function (d) { return y(d.value); });
-
-                          var color = d3.scale.ordinal()
-                                  .range(["#001c9c","#7F5217","#475003","#9c8305","#d3c47c","#800000","#6C007D","#63AFD0","#FF0000","#FF00F7","#FAF569","#00FF66","#009891"]);
-
-                          var svg = d3.select("#chart"+spot).append("svg")
-                                  .attr("id","svg"+num)
-                                  .attr("width",  width  + margin.left + margin.right)
-                                  .attr("height", height + margin.top  + margin.bottom)
-                                  .append("g")
-                                  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-                          //reading in the data
-                          d3.csv(""+data, function (error, data) {
-
-                                var labelVar = 'quarter';
-                                var varNames = d3.keys(data[0]).filter(function (key) { return key !== labelVar;});
-                                color.domain(varNames);
-
-                                var seriesData = varNames.map(function (name) {
-                                  return {
-                                        name: name,
-                                        values: data.map(function (d) {
-                                          return {name: name, label: d[labelVar], value: +d[name]};
-                                        })
-                                  };
-                                });
-
-                                x.domain(data.map(function (d) { return d.quarter; }));
-
-                                //if (maxnum == 1){
-                                //      y.domain([0,100]);
-                                //      }
-                                //else {
-                                //y.domain([0,d3.max(seriesData, function (c) {
-                                //      return d3.max(c.values, function (d) { return d.value; });
-                                //      })
-                                //  ]);
-                                //}
-                                y.domain([0,
-
-                                    d3.max(seriesData, function (c) {
-                                      return d3.max(c.values, function (d) { return d.value; });
-                                    })
-                                ]);
-
-                                //var threshold = 4150;
-
-                                //var target = svg.append("line")
-                                  //      .attr("x1", 0)
-                                    //    .attr("y1", y(threshold))
-                                      //  .attr("x2", width)
-                                       // .attr("y2", y(threshold))
-                                        //.attr("stroke-width", 2)
-                                       //.style("stroke-dasharray", ("3, 3"))
-                                        //.attr("stroke", "red");
-
-                                svg.append("g")
-                                        .attr("class", "x axis")
-                                        .attr("transform", "translate(0," + height + ")")
-                                        .call(xAxis)
-                                        .selectAll("text")
-                                //.call(wrap, x.rangeBand())
-                                        .style("text-anchor", "end")
-                                        .attr("dx", "-.8em")
-                                        .attr("dy", ".15em")
-                                        .attr("transform", function(d) {
-                                                return "rotate(-70)"
-                                                });
-
-                                svg.append("g")
-                                        .attr("class", "y axis")
-                                        .call(yAxis)
-                                        .append("text")
-                                        .attr("transform", "rotate(-90)")
-                                        .attr("y", 6)
-                                       .attr("dy", ".71em")
-                                        .style("text-anchor", "end")
-                                        .text(""+label);
-
-                                var series = svg.selectAll(".series")
-                                        .data(seriesData)
-                                        .enter().append("g")
-                                        .attr("class", "series");
-
-                                series.append("path")
-                                  .attr("class", "line")
-                                  .attr("d", function (d) { return line(d.values); })
-                                  .style("stroke", function (d) { return color(d.name); })
-                                  .style("stroke-width", "4px")
-                                  .style("fill", "none")
-
-                                series.selectAll(".point")
-                                  .data(function (d) { return d.values; })
-                                  .enter().append("circle")
-                                   .attr("class", "point")
-                                   .attr("cx", function (d) { return x(d.label) + x.rangeBand()/2; })
-                                   .attr("cy", function (d) { return y(d.value); })
-                                   .attr("r", "5px")
-                                   .style("fill", function (d) { return color(d.name); })
-                                   .style("stroke", "grey")
-                                   .style("stroke-width", "2px")
-                                   .on("mouseover", function (d) { showPopover.call(this, d); })
-                                   .on("mouseout",  function (d) { removePopovers(); })
-
-                                var legend = svg.selectAll(".legend")
-                                        .data(varNames.slice().reverse())
-                                  .enter().append("g")
-                                        .attr("class", "legend")
-                                        .attr("transform", function (d, i) { return "translate(55," + i * 20 + ")"; });
-
-                                legend.append("rect")
-                                        .attr("x", width - 10)
-                                        .attr("width", 10)
-                                        .attr("height", 10)
-                                        .style("fill", color)
-                                        .style("stroke", "grey");
-
-                                legend.append("text")
-                                        .attr("x", width - 12)
-                                        .attr("y", 6)
-                                        .attr("dy", ".35em")
-                                        .style("text-anchor", "end")
-                                        .text(function (d) { return d; });
-
-                                //handles the hover aspect
-                                function removePopovers () {
-                                  $('.popover').each(function() {
-                                        $(this).remove();
-                                  });
-                                }
-
-                                function showPopover (d) {
-                                  $(this).popover({
-                                        title: d.name,
-                                        placement: 'auto top',
-                                        container: 'body',
-                                        trigger: 'manual',
-                                        html : true,
-                                        content: function() {
-                                          return "Date: " + d.label +
-                                                         "<br/>"+popup+ ": " + d3.format(",")(d.value ? d.value: d.y1 - d.y0); }
-                                  });
-                                  $(this).popover('show')
-                                }
-
-                                //rotates the x-axis label
-                                function wrap(text, width) {
-                                  text.each(function() {
-                                        var text = d3.select(this),
-                                                words = text.text().split(/\s+/).reverse(),
-                                                word,
-                                                line = [],
-                                                lineNumber = 0,
-                                                lineHeight = 1.1, // ems
-                                                y = text.attr("y"),
-                                                dy = parseFloat(text.attr("dy")),
-                                                tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
-while (word = words.pop()) {
-                                          line.push(word);
-                                          tspan.text(line.join(" "));
-
-                                          if (tspan.node().getComputedTextLength() > width) {
-                                                line.pop();
-                                                tspan.text(line.join(" "));
-
-                                                line = [word];
-                                                tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
-                                  }
-                                 }
-                                });
-                           }
-                          });
-                  }
-charts("tokyo_mbs.csv","MB/s","MB/s","Tokyo",1,1);
-charts("ireland_mbs.csv","MB/s","MB/s","Ireland",1,1);
-charts("virginia_mbs.csv","MB/s","MB/s","Virginia",1,1);
-</script>
 </center>
-
-<!--
-{name: "Barcelona", bandwidth: '??? MB/s', latitude: 41.378691, longitude: 2.175547, radius: 8, fillKey: 'gt90'},
-
-{name: "Tokyo", bandwidth: '45.7 MB/s', latitude: 35.684219, longitude: 139.755020, radius: 8, fillKey: 'gt100'},
-
-{name: "Seoul", bandwidth: '53 MB/s', latitude: 37.553397, longitude: 126.980624, radius: 8, fillKey: 'gt100'},
-
-{name: "Heidelberg", bandwidth: '45 MB/s', latitude: 49.403159, longitude: 8.676061, radius: 8, fillKey: 'gt100'},
-
-{name: "London", bandwidth: '3 MB/s', latitude: 51.507919, longitude: -0.123571, radius: 8, fillKey: 'gt110'},
-
-{name: "Santa Cruz", bandwidth: '53 MB/s', latitude: 36.971944, longitude: -122.026389, radius: 8, fillKey: 'gt100'},
-
--->
-
 </body>
 </html>
+
