@@ -13,7 +13,7 @@
         <script type="text/javascript" src="http://datamaps.github.io/scripts/datamaps.all.min.js"></script>
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script type="text/javascript" src="http://bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         <script type="text/javascript" src="js/common.js"></script>
 	<script type="text/javascript">loadJS('transfers')</script>
         <link rel="stylesheet" type="text/css" href="style2.css">
@@ -34,7 +34,7 @@
 
 
 
-<h3>Data Transfer Speeds to AWS Virginia on Jul 24, 2015, 17:27:13 UTC</h3>
+<h3>Data Transfer Speeds to AWS Virginia on Jul 25, 2015, 09:10:30 UTC</h3>
 <p>This report indicates the transfer speeds seen in a single-client test between AWS Virginia and the other GNOS repositories<br>
 <b style="color:red">Red</b> means download is disabled or &lt; 1MB/s in this location, <b style="color:#FFC200">Amber</b> means &lt; 10 MB/s, and <b style="color:green">Green</b> means &gt; 10 MB/s.</p>
 
@@ -87,13 +87,13 @@
        
 
        
-          
-          
-          
+        
+        
+        
 
        
 
-       {name: "Tokyo", bandwidth: '5.01900056076892e-05 MB/s', latitude: 35.684219, longitude: 139.75502, radius: 8, fillKey: 'gt90'},
+       {name: "London", bandwidth: '27.9977496292497 MB/s', latitude: 51.507919, longitude: -0.123571, radius: 8, fillKey: 'gt100'},
 
        
 
@@ -115,51 +115,7 @@
 
        
 
-       {name: "London", bandwidth: '28.1151406130201 MB/s', latitude: 51.507919, longitude: -0.123571, radius: 8, fillKey: 'gt100'},
-
-       
-
-       
-       
-       
-       
-       
-       
-
-       
-         
-       
-
-       
-        
-        
-        
-
-       
-
-       {name: "Santa Cruz", bandwidth: '27.8812722731467 MB/s', latitude: 36.971944, longitude: -122.026389, radius: 8, fillKey: 'gt100'},
-
-       
-
-       
-       
-       
-       
-       
-       
-
-       
-         
-       
-
-       
-         
-         
-         
-
-       
-
-       {name: "Heidelberg", bandwidth: '48.2639110523034 MB/s', latitude: 49.403159, longitude: 8.676061, radius: 8, fillKey: 'gt100'},
+       {name: "Santa Cruz", bandwidth: '21.1680362212965 MB/s', latitude: 36.971944, longitude: -122.026389, radius: 8, fillKey: 'gt100'},
 
        
 
@@ -179,7 +135,7 @@
 
        
 
-       {name: "Chicago", bandwidth: '10.784168583073 MB/s', latitude: 41.891519, longitude: -87.629159, radius: 8, fillKey: 'gt100'},
+       {name: "Chicago", bandwidth: '10.223952033303 MB/s', latitude: 41.891519, longitude: -87.629159, radius: 8, fillKey: 'gt100'},
 
        
 
@@ -205,6 +161,50 @@
 
        
 
+       
+       
+       
+       
+       
+       
+
+       
+         
+       
+
+       
+         
+         
+         
+
+       
+
+       {name: "Heidelberg", bandwidth: '53.9244932127588 MB/s', latitude: 49.403159, longitude: 8.676061, radius: 8, fillKey: 'gt100'},
+
+       
+
+       
+       
+       
+       
+       
+       
+
+       
+         
+       
+
+       
+          
+          
+          
+
+       
+
+       {name: "Tokyo", bandwidth: '5.31216648137458e-05 MB/s', latitude: 35.684219, longitude: 139.75502, radius: 8, fillKey: 'gt90'},
+
+       
+
       {name: "Amazon Virginia", bandwidth: '', latitude: 37.538346, longitude: -77.461507, radius: 8, fillKey: 'gt80'}
 
      ]
@@ -216,39 +216,6 @@
 
  mapvirginia.arc([
 
- 
-
- 
- 
- 
- 
- 
- 
-
- 
-   
- 
-
- 
-    
-    
-    
-
- 
-{
-    origin: {
-        latitude: 35.684219,
-        longitude: 139.75502
-    },
-    destination: {
-        latitude: 37.538346,
-        longitude: -77.461507
-    },
-    options: {
-      strokeWidth: 2,
-      strokeColor: "#FF0000"
-    }
-},
  
 
  
@@ -330,39 +297,6 @@
 
  
    
-   
-   
-
- 
-{
-    origin: {
-        latitude: 49.403159,
-        longitude: 8.676061
-    },
-    destination: {
-        latitude: 37.538346,
-        longitude: -77.461507
-    },
-    options: {
-      strokeWidth: 2,
-      strokeColor: "#33CC33"
-    }
-},
- 
-
- 
- 
- 
- 
- 
- 
-
- 
-   
- 
-
- 
-   
 
  
 {
@@ -414,6 +348,72 @@
 },
  
 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+   
+ 
+
+ 
+   
+   
+   
+
+ 
+{
+    origin: {
+        latitude: 49.403159,
+        longitude: 8.676061
+    },
+    destination: {
+        latitude: 37.538346,
+        longitude: -77.461507
+    },
+    options: {
+      strokeWidth: 2,
+      strokeColor: "#33CC33"
+    }
+},
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+   
+ 
+
+ 
+    
+    
+    
+
+ 
+{
+    origin: {
+        latitude: 35.684219,
+        longitude: 139.75502
+    },
+    destination: {
+        latitude: 37.538346,
+        longitude: -77.461507
+    },
+    options: {
+      strokeWidth: 2,
+      strokeColor: "#FF0000"
+    }
+},
+ 
+
 ],  {strokeWidth: 1, arcSharpness: 1.4});
 
 </script>
@@ -451,10 +451,10 @@
   
 <tr>
   <td>cghub.ucsc.edu (Santa Cruz)</td>
-  <td>27.88</td>
-  <td>3.92</td>
-  <td>7.84</td>
-  <td>41.51</td>
+  <td>21.17</td>
+  <td>2.98</td>
+  <td>5.95</td>
+  <td>54.68</td>
 </tr>
 
 
@@ -475,10 +475,10 @@
   
 <tr>
   <td>gtrepo-dkfz.annailabs.com (Heidelberg)</td>
-  <td>48.26</td>
-  <td>6.79</td>
-  <td>13.57</td>
-  <td>23.98</td>
+  <td>53.92</td>
+  <td>7.58</td>
+  <td>15.17</td>
+  <td>21.46</td>
 </tr>
 
 
@@ -499,10 +499,10 @@
   
 <tr>
   <td>gtrepo-ebi.annailabs.com (London)</td>
-  <td>28.12</td>
-  <td>3.95</td>
-  <td>7.91</td>
-  <td>41.17</td>
+  <td>28.00</td>
+  <td>3.94</td>
+  <td>7.87</td>
+  <td>41.34</td>
 </tr>
 
 
@@ -546,10 +546,10 @@
   
 <tr>
   <td>gtrepo-osdc-icgc.annailabs.com (Chicago)</td>
-  <td>10.78</td>
-  <td>1.52</td>
-  <td>3.03</td>
-  <td>107.32</td>
+  <td>10.22</td>
+  <td>1.44</td>
+  <td>2.88</td>
+  <td>113.21</td>
 </tr>
 
 
@@ -573,7 +573,7 @@
   <td>0.00</td>
   <td>0.00</td>
   <td>0.00</td>
-  <td>23060515.60</td>
+  <td>21787860.22</td>
 </tr>
 
 
@@ -598,7 +598,9 @@
 
 
 
+
 </div>
 </center>
 </body>
 </html>
+

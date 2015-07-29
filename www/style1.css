@@ -13,9 +13,15 @@
 
 #pancancer-header {
     width: 100%;
+    padding:0px;
+    background:#f3f3f3;
+    border-bottom:3px solid #8A8A8A;
 }
 
 a.nodec {
+    margin-top:20px;
+    font-size:15pt;
+    display: table-cell;
     text-decoration: none;
     color: #4c4c4c;
     padding-left: 10px;
@@ -23,14 +29,16 @@ a.nodec {
 }
 
 #headere{
-    display:block;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+li.menu {
     float:left;
-    width:100%;
-    margin-bottom:25px;
-    height:100px;
-    background:#f3f3f3;
-    border-bottom:3px solid #8A8A8A;
-    margin-top:-35px
+    height:80px;
+    padding-top:30px;
 }
 
 #inside{
@@ -55,8 +63,6 @@ img{
 	display:block;
 	padding: 10px;
 }
-
-
 
 #fullcontain{
 	margin: 0px auto;

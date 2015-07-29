@@ -24,13 +24,13 @@ function drawAlignmentChart2() {
 
     buildRows(data,chart_data);
 
-    var colors = ["#C0C0C0","#808080","#000000","#FF0000","#800000","#FFFF00"];
+    var colors = ["#C0C0C0","#808080","#000000","#FF0000","#800000","#FFFF00","#FFA500"];
 
     var options = {
         title: 'Data transfer rates',
         colors: colors,
-        vAxis: {viewWindow: {min: 0}, title: 'MB/s', logScale: true},
-        hAxis: {slantedText: true, slantedTextAngle: 45},
+        vAxis: {viewWindow: {min: 0}, title: 'MB/s'},//, logScale: true},
+        hAxis: {title: 'Time (UTC)', slantedText: true, slantedTextAngle: 45},
         legend: { position: 'right'},
         width: '100%',
         height: 600,
@@ -45,8 +45,7 @@ function drawAlignmentChart2() {
 
 function buildRows(data,chart_data) {
     var total = 0;
-
-
+    var months = [null, 'Jan','Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     var dates = Object.keys(data).sort();
 
     for (var i = 0; i < dates.length; i++) {
@@ -54,11 +53,18 @@ function buildRows(data,chart_data) {
 
         var row = new Array;
 	var pretty_date = date.replace(/:\d+$/,'');
-	pretty_date = pretty_date.replace(/\d{2}(\d{2})(\d{2})(\d{2})./,'$2\/$3\/$1 ');
+	matches = pretty_date.match(/\d{4}(\d{2})(\d{2})./);
+	month = months[parseInt(matches[1])];
+	day = matches[2];
+	pretty_date = pretty_date.replace(/\d{8}\./,month+' '+day+' ');
         row.push(pretty_date);
 
         for (var j = 0; j < repos.length; j++) {
-	    var num = data[date][repos[j]]["MB/s"];
+	    var date_data = data[date][repos[j]];
+	    var num = 0;
+	    if (date_data) {
+		num = date_data["MB/s"] || 0;
+	    }
             row.push(num);
         }
 
@@ -66,14 +72,7 @@ function buildRows(data,chart_data) {
     }
 }
 
-function realTime(date) {
-    var utc_time = new Date(date + 'T03:01:01');
-    return new Date(utc_time.valueOf() + utc_time.getTimezoneOffset() * 60000);
-}
-
 function loadRepos() {
-    months = ['Jan','Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
     repo_name = {
         'cghub.ucsc.edu': 'Santa Cruz',
         'gtrepo-osdc-icgc.annailabs.com': 'Chicago (ICGC)',
@@ -81,10 +80,12 @@ function loadRepos() {
         'gtrepo-ebi.annailabs.com': 'London',
         'gtrepo-etri.annailabs.com': 'Seoul',
         'gtrepo-riken.annailabs.com': 'Tokyo',
+	'gtrepo-bsc.annailabs.com': 'Barcelona',
     }
 
     repos = [
         'gtrepo-osdc-icgc.annailabs.com',
+	'gtrepo-bsc.annailabs.com',
 	'gtrepo-dkfz.annailabs.com',
 	'gtrepo-ebi.annailabs.com',
 	'cghub.ucsc.edu',
