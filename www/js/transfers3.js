@@ -29,7 +29,7 @@ function drawAlignmentChart2() {
     var options = {
         title: 'Data transfer rates',
         colors: colors,
-        vAxis: {viewWindow: {min: 0, max: 100}, title: 'MB/s'},//,logScale: true},
+        vAxis: {viewWindow: {min: 10, max: 100}, title: 'MB/s',logScale: true},
         hAxis: {title: 'Time (UTC)', slantedText: true, slantedTextAngle: 45},
         legend: { position: 'right'},
         width: '100%',
