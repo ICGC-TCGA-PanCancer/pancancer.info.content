@@ -24,11 +24,8 @@ function drawAlignmentChart2() {
 
     buildRows(data,chart_data);
 
-    var colors = ["#C0C0C0","#808080","#000000","#FF0000","#800000","#FFFF00","#FFA500"];
-
     var options = {
         title: 'Data transfer rates',
-        colors: colors,
         vAxis: {viewWindow: {min: 0, max: 100}, title: 'MB/s'},//,logScale: true},
         hAxis: {title: 'Time (UTC)', slantedText: true, slantedTextAngle: 45},
         legend: { position: 'right'},

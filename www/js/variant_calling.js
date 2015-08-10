@@ -222,10 +222,6 @@ function drawVariantChart2(workflow) {
 
     buildRows(data2,chart_data);
 
-    var colors = ["#C0C0C0","#808080","#000000","#FF0000","#800000","#FFFF00",
-		  "#808000","#00FF00","#008000","#00FFFF","#008080","#0000FF",
-		  "#000080","#FF00FF","#800080"];
-
     var today = realTime(data2[data2.length-1][0]);
 
     var today_counts = data2[data2.length-1].pop();
@@ -281,7 +277,6 @@ function drawVariantChart2(workflow) {
 
     var options = {
 	title: workflow+' workflow variant calls by site',
-        colors: colors,
         vAxis: {viewWindow: {min: 0}, title: 'Donors'},
         hAxis: {slantedText: true, slantedTextAngle: 45},
         legend: { position: 'right'},
@@ -375,17 +370,13 @@ function loadRepos() {
 	chicago = [ "pdc(1.1+2.0)", "pdc1_1", "pdc2_0" ];
     }
     else if (workflow == 'DKFZ/EMBL') {
-	repos2 = ["aws_ireland","bsc","sanger","dkfz","dkfz_hpc","Unassigned"];
-	repos3 = ["aws_ireland","bsc","sanger","dkfz","dkfz_hpc"];
+	repos2 = ["aws_ireland","bsc","sanger","dkfz","dkfz_hpc","oicr","Unassigned"];
+	repos3 = ["aws_ireland","bsc","sanger","dkfz","dkfz_hpc","oicr"];
 	repo_name['dkfz'] = 'Heidelberg (OpenStack)';
     }
     else if (workflow == 'Broad') {
-	repos2 = [ "aws_ireland", "aws_oregon", "bsc", "sanger", "pdc1_1", "pdc2_0",
-		   "dkfz", "dkfz_hpc", "ebi", "idash", "ucsc", "etri", "tokyo", "oicr", "Unassigned" ];
-	repos3 = [ "aws_ireland", "aws_oregon", "bsc", "sanger", "pdc",
-                   "dkfz", "dkfz_hpc", "ebi", "idash", "ucsc", "etri", "tokyo", "oicr"];
-	chicago = [ "pdc(1.1+2.0)", "pdc1_1", "pdc2_0" ];
-	repo_name['dkfz'] = 'Heidelberg (OpenStack)';
+	repos2 = [ "ucsc",  "Unassigned" ];
+	repos3 = [ "ucsc" ];
     }
 
 }
@@ -414,23 +405,11 @@ function table_header(table) {
 <th>Barcelona</th> \
 <th>Cambridge</th> \
 <th>Heidelberg<br>(OpenStack)</th> \
-<th>Heidelberg<br>(HPC)</th>';
+<th>Heidelberg<br>(HPC)</th> \
+<th>Toronto</th>';
 
     var broad_h = ' \
-<th>AWS Ireland</th> \
-<th>AWS Oregon</th> \
-<th>Barcelona</th> \
-<th>Cambridge</th> \
-<th>Chicago (PDC1.1)</th> \
-<th>Chicago (PDC2.0)</th> \
-<th>Heidelberg<br>(OpenStack)</th> \
-<th>Heidelberg<br>(HPC)</th> \
-<th>London</th> \
-<th>San Diego</th> \
-<th>Santa Cruz</th> \
-<th>Seoul</th> \
-<th>Tokyo</th> \
-<th>Toronto</th>';
+<th>Santa Cruz</th>';
 
     var h = workflow == 'Sanger'    ? sanger_h
           : workflow == 'DKFZ/EMBL' ? dkfz_h
@@ -469,32 +448,23 @@ function cumulative_table() {
   <tr><td><b>Total</b></td><td id="total"></td></tr> \
 </table> <br clear="all" />';
 
-    var dkfz_t = '\
+    var dkfz_t = ' \
 <table style="float:left" class="rounded-corner"> \
-    <tr><th id="thead1"></th><th id="thead2"></th></tr> \
-    <tr><td>AWS Ireland</td><td id="aws_ireland"></td></tr> \
-    <tr><td>Barcelona</td><td id="bsc"></td></tr> \
-    <tr><td>Cambridge</td><td id="sanger"></td></tr> \
-    <tr><td>Heidelberg (OpenStack)</td><td id="dkfz"></td></tr> \
-    <tr><td>Heidelberg (HPC)</td><td id="dkfz_hpc"></td></tr> \
+  <tr><th id="thead1"></th><th id="thead2"></th></tr> \
+  <tr><td>AWS Ireland</td><td id="aws_ireland"></td></tr> \
+  <tr><td>Barcelona</td><td id="bsc"></td></tr> \
+  <tr><td>Cambridge</td><td id="sanger"></td></tr> \
+  <tr><td>Heidelberg (OpenStack)</td><td id="dkfz"></td></tr> \
+  <tr><td>Heidelberg (HPC)</td><td id="dkfz_hpc"></td></tr> \
+  <tr><td>Toronto</td><td id="oicr"></td></tr> \
+  <tr><td><b>Total</b></td><td id="total"></td></tr> \
 </table> <br clear="all" />';
+
 
    var broad_t = ' \
 <table style="float:left" class="rounded-corner"> \
   <tr><th id="thead1"></th><th id="thead2"></th></tr> \
-  <tr><td>AWS Ireland</td><td id="aws_ireland"></td></tr> \
-  <tr><td>AWS Oregon</td><td id="aws_oregon"></td></tr> \
-  <tr><td>Barcelona</td><td id="bsc"></td></tr> \
-  <tr><td>Cambridge</td><td id="sanger"></td></tr> \
-  <tr><td>Chicago</td><td id="pdc"></td></tr> \
-  <tr><td>Heidelberg (OpenStack)</td><td id="dkfz"></td></tr> \
-  <tr><td>Heidelberg (HPC)</td><td id="dkfz_hpc"></td></tr> \
-  <tr><td>London</td><td id="ebi"></td></tr> \
-  <tr><td>San Diego</td><td id="idash"></td></tr> \
   <tr><td>Santa Cruz</td><td id="ucsc"></td></tr> \
-  <tr><td>Seoul</td><td id="etri"></td></tr> \
-  <tr><td>Tokyo</td><td id="tokyo"></td></tr> \
-  <tr><td>Toronto</td><td id="oicr"></td></tr> \
   <tr><td><b>Total</b></td><td id="total"></td></tr> \
 </table> <br clear="all" />';
 
@@ -505,6 +475,12 @@ function cumulative_table() {
 
 
 function drawCumulativeTotalChart(workflow) {
+
+    // There is no point is we only have a single site
+    if (repos3.length == 1) {
+	$('#cumulative_total_chart').empty();
+	return true;
+    }
 
     var url = workflow == 'Sanger'    ? path+'/sanger_summary_counts/summary_counts.json'
         :     workflow == 'DKFZ/EMBL' ? path+'/embl-dkfz_summary_counts/summary_counts.json'
