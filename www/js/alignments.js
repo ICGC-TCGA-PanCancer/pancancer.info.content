@@ -533,10 +533,6 @@ function drawAlignmentChart2() {
 
     buildRows(data,chart_data);
 
-    var colors = ["#C0C0C0","#808080","#000000","#FF0000","#800000","#FFFF00",
-                  "#808000","#00FF00","#008000","#00FFFF","#008080","#0000FF",
-                  "#000080","#FF00FF","#800080"];
-
     var today = realTime(data[data.length-1][0]);
 
     var today_counts = data[data.length-1].pop();
@@ -586,7 +582,6 @@ function drawAlignmentChart2() {
 
     var options = {
 	title: 'Alignments by site',
-        colors: colors,
         vAxis: {viewWindow: {min: 0}, title: 'Specimens'},
         hAxis: {slantedText: true, slantedTextAngle: 45},
         legend: { position: 'right'},

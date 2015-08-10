@@ -2,6 +2,7 @@
 google.load('visualization', '1', {'packages':['corechart']});
 
 var repo_name, repos, repos2, repos3, chicago, months;
+var path = 'gnos_metadata/latest/reports';
 loadRepos();
 
 var params = getSearchParameters();
@@ -26,21 +27,21 @@ function setVariantHeaders(wf) {
     $("#head1").html('Donors with '+ wf  +' Variant Calls (Live)');
     $("#head2").html(wf+' Variant Calls by Compute Sites');
 }
-      
+
 function drawVariantChart1(workflow) {
-    
-    var url = workflow == 'Sanger' ? 'gnos_metadata/latest/reports/sanger_summary_counts/summary_counts.json'
-	: workflow == 'DKFZ/EMBL'   ? 'gnos_metadata/latest/reports/embl-dkfz_summary_counts/summary_counts.json'
-	:                        'gnos_metadata/latest/reports/summary_counts/summary_counts.json'; 
+    var url = workflow == 'Sanger' ? path+'/sanger_summary_counts/summary_counts.json'
+	: workflow == 'DKFZ/EMBL'  ? path+'/embl-dkfz_summary_counts/summary_counts.json'
+	: workflow == 'Broad'      ? path+'/broad_summary_counts/summary_counts.json'
+        : '';
 
     var jsonData = $.ajax({
         url: url,
         dataType:"text",
           async: false
     }).responseText;
-    
+
     data = $.parseJSON(jsonData)
-      
+
     // Create our data table out of JSON data loaded from server.
     var chart_data = new google.visualization.DataTable();
     chart_data.addColumn('date', 'Date');
@@ -61,7 +62,7 @@ function drawVariantChart1(workflow) {
         pointSize: 3,
 	chartArea:{left:50,top:50,width:'100%'}
     };
-    
+
     // Instantiate and draw our chart, passing in some options.
     $('#chart_div').empty();
     var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
@@ -71,16 +72,19 @@ function drawVariantChart1(workflow) {
 function loadVariantTable1() {
 
     $("table[name='x12'] tbody").empty();
-    
+
     loadRepos();
 
     var report_data_url = "gnos_metadata/latest/reports/gnos_repo_summary/";
 
-    var json = workflow == 'Sanger' ? 'live_sanger_variant_called_donors.repos.json'
-        : workflow == 'DKFZ/EMBL'   ? 'live_embl-dkfz_variant_called_donors.repos.json'
-	:                        'live_sanger_variant_called_donors.repos.json';
+    var json = workflow == 'Sanger'    ? 'live_sanger_variant_called_donors.repos.json'
+        :      workflow == 'DKFZ/EMBL' ? 'live_embl-dkfz_variant_called_donors.repos.json'
+	:      workflow == 'Broad'     ? 'live_broad_variant_called_donors.repos.json'
+        : '';
 
-    var wf = workflow == 'Sanger' ? 'sanger' : 'embl-dkfz';
+    var wf = workflow == 'Sanger'    ? 'sanger'
+        :    workflow == 'DKFZ/EMBL' ? 'embl-dkfz'
+        :    'broad';
 
 
     $.getJSON(report_data_url + json,
@@ -97,13 +101,13 @@ function loadVariantTable1() {
                 continue;
             }
             tr = $('<tr/>');
-            tr.append("<td>" + rname 
+            tr.append("<td>" + rname
                              + " ("
                              + (json[repos[i]]['_ori_count'].length == 0 ? 0 : json[repos[i]]['_ori_count'][0])
                              + ")"
                              + "</td>");
             total[0] += (json[repos[i]]['_ori_count'].length == 0 ? 0 : json[repos[i]]['_ori_count'][0]);
-            
+
             for (var j = 0; j < repos.length; j++) {
                 var aligned_donors = json[repos[i]][repos[j]] == undefined ? 0 : json[repos[i]][repos[j]][0];
                 var aligned_donors_url = report_data_url
@@ -135,13 +139,14 @@ function loadVariantTable1() {
         $("table[name='x12']").append(tfoot);
     });
 }
-	     
+
 
 function loadVariantTable2() {
 
-    var report_data_url = workflow == 'Sanger' ? 'gnos_metadata/latest/reports/sanger_summary_counts/hist_summary_site_counts.json'
-        : workflow == 'DKFZ/EMBL'   ? 'gnos_metadata/latest/reports/embl-dkfz_summary_counts/hist_summary_site_counts.json'
-        :                        'gnos_metadata/latest/reports/summary_counts/hist_summary_site_counts.json';
+    var report_data_url = workflow == 'Sanger'    ? path+'/sanger_summary_counts/hist_summary_site_counts.json'
+        :                 workflow == 'DKFZ/EMBL' ? path+'/embl-dkfz_summary_counts/hist_summary_site_counts.json'
+        :                 workflow == 'Broad'     ? path+'/broad_summary_counts/hist_summary_site_counts.json'
+        : '';
 
     table_header();
     $("table[name='x1'] tbody").empty();
@@ -177,11 +182,11 @@ function loadVariantTable2() {
 function drawVariantChart2(workflow) {
     loadRepos();
 
-    var report_data_url = workflow == 'Sanger' ? 'gnos_metadata/latest/reports/sanger_summary_counts/hist_summary_site_counts.json'
-        : workflow == 'DKFZ/EMBL'   ? 'gnos_metadata/latest/reports/embl-dkfz_summary_counts/hist_summary_site_counts.json'
-        :                        'gnos_metadata/latest/reports/summary_counts/hist_summary_site_counts.json';
+    var report_data_url = workflow == 'Sanger'    ? path+'/sanger_summary_counts/hist_summary_site_counts.json'
+        :                 workflow == 'DKFZ/EMBL' ? path+'/embl-dkfz_summary_counts/hist_summary_site_counts.json'
+        :                 workflow == 'Broad'     ? path+'/broad_summary_counts/hist_summary_site_counts.json'
+        : '';
 
-    //console.log(report_data_url);
     var json2 = $.ajax({
         url: report_data_url,
         dataType:"text",
@@ -217,15 +222,16 @@ function drawVariantChart2(workflow) {
 
     buildRows(data2,chart_data);
 
-    var colors = ["#C0C0C0","#808080","#000000","#FF0000","#800000","#FFFF00",
-		  "#808000","#00FF00","#008000","#00FFFF","#008080","#0000FF",
-		  "#000080","#FF00FF","#800080"];
-
     var today = realTime(data2[data2.length-1][0]);
 
-    var today_counts = data2[data2.length-1].pop(); 
-    var last_week_counts = data2[data2.length-8].pop();
-
+    var today_counts = data2[data2.length-1].pop();
+    var last_week_counts;
+    if (data2.length < 8) {
+	last_week_counts = data2[0].pop();
+    }
+    else {
+	last_week_counts = data2[data2.length-8].pop();
+    }
     var today_total = 0;
     var last_week_total = 0;
 
@@ -247,7 +253,7 @@ function drawVariantChart2(workflow) {
 
 	today_total += count;
 	last_week_total += last_count;
-	
+
 	diff = count - last_count;
 	if (diff > 0) {
 	    diff = "+"+diff;
@@ -257,7 +263,7 @@ function drawVariantChart2(workflow) {
 	//console.log(document.getElementById(cumulative_table));
 	//console.log($('#cumulative_table').html());
     }
-    
+
     diff = today_total - last_week_total;
     if (diff > 0) {
 	diff = "+"+diff;
@@ -271,7 +277,6 @@ function drawVariantChart2(workflow) {
 
     var options = {
 	title: workflow+' workflow variant calls by site',
-        colors: colors,
         vAxis: {viewWindow: {min: 0}, title: 'Donors'},
         hAxis: {slantedText: true, slantedTextAngle: 45},
         legend: { position: 'right'},
@@ -316,14 +321,14 @@ function buildRows(data,chart_data) {
             total += count;
 	}
 	chart_data.addRow(row);
-    } 
+    }
 
     return total;
 }
 
 function realTime(date) {
     var utc_time = new Date(date + 'T03:01:01');
-    return new Date(utc_time.valueOf() + utc_time.getTimezoneOffset() * 60000);    
+    return new Date(utc_time.valueOf() + utc_time.getTimezoneOffset() * 60000);
 }
 
 function loadRepos() {
@@ -365,9 +370,13 @@ function loadRepos() {
 	chicago = [ "pdc(1.1+2.0)", "pdc1_1", "pdc2_0" ];
     }
     else if (workflow == 'DKFZ/EMBL') {
-	repos2 = ["aws_ireland","bsc","sanger","dkfz","dkfz_hpc","Unassigned"];
-	repos3 = ["aws_ireland","bsc","sanger","dkfz","dkfz_hpc"];
+	repos2 = ["aws_ireland","bsc","sanger","dkfz","dkfz_hpc","oicr","Unassigned"];
+	repos3 = ["aws_ireland","bsc","sanger","dkfz","dkfz_hpc","oicr"];
 	repo_name['dkfz'] = 'Heidelberg (OpenStack)';
+    }
+    else if (workflow == 'Broad') {
+	repos2 = [ "ucsc",  "Unassigned" ];
+	repos3 = [ "ucsc" ];
     }
 
 }
@@ -396,10 +405,15 @@ function table_header(table) {
 <th>Barcelona</th> \
 <th>Cambridge</th> \
 <th>Heidelberg<br>(OpenStack)</th> \
-<th>Heidelberg<br>(HPC)</th>';
+<th>Heidelberg<br>(HPC)</th> \
+<th>Toronto</th>';
 
+    var broad_h = ' \
+<th>Santa Cruz</th>';
 
-    var h = workflow == 'Sanger' ? sanger_h : dkfz_h;
+    var h = workflow == 'Sanger'    ? sanger_h
+          : workflow == 'DKFZ/EMBL' ? dkfz_h
+          : broad_h;
 
     if (table == 'x1h') {
 	h = '<th nowrap>Date<br>(Recent 8 days)</th>'+h+
@@ -416,7 +430,7 @@ function table_header(table) {
 }
 
 function cumulative_table() {
-    var sanger_t = '\
+    var sanger_t = ' \
 <table style="float:left" class="rounded-corner"> \
   <tr><th id="thead1"></th><th id="thead2"></th></tr> \
   <tr><td>AWS Ireland</td><td id="aws_ireland"></td></tr> \
@@ -434,26 +448,44 @@ function cumulative_table() {
   <tr><td><b>Total</b></td><td id="total"></td></tr> \
 </table> <br clear="all" />';
 
-    var dkfz_t = '\
+    var dkfz_t = ' \
 <table style="float:left" class="rounded-corner"> \
-    <tr><th id="thead1"></th><th id="thead2"></th></tr> \
-    <tr><td>AWS Ireland</td><td id="aws_ireland"></td></tr> \
-    <tr><td>Barcelona</td><td id="bsc"></td></tr> \
-    <tr><td>Cambridge</td><td id="sanger"></td></tr> \
-    <tr><td>Heidelberg (OpenStack)</td><td id="dkfz"></td></tr> \
-    <tr><td>Heidelberg (HPC)</td><td id="dkfz_hpc"></td></tr> \
+  <tr><th id="thead1"></th><th id="thead2"></th></tr> \
+  <tr><td>AWS Ireland</td><td id="aws_ireland"></td></tr> \
+  <tr><td>Barcelona</td><td id="bsc"></td></tr> \
+  <tr><td>Cambridge</td><td id="sanger"></td></tr> \
+  <tr><td>Heidelberg (OpenStack)</td><td id="dkfz"></td></tr> \
+  <tr><td>Heidelberg (HPC)</td><td id="dkfz_hpc"></td></tr> \
+  <tr><td>Toronto</td><td id="oicr"></td></tr> \
+  <tr><td><b>Total</b></td><td id="total"></td></tr> \
 </table> <br clear="all" />';
 
-    $('#cumulative_table').html(workflow == 'Sanger' ? sanger_t : dkfz_t);
+
+   var broad_t = ' \
+<table style="float:left" class="rounded-corner"> \
+  <tr><th id="thead1"></th><th id="thead2"></th></tr> \
+  <tr><td>Santa Cruz</td><td id="ucsc"></td></tr> \
+  <tr><td><b>Total</b></td><td id="total"></td></tr> \
+</table> <br clear="all" />';
+
+    var table = workflow == 'Sanger' ? sanger_t : workflow == 'DKFZ/EMBL' ? dkfz_t : broad_t;
+    $('#cumulative_table').html(table);
     //console.log($('#cumulative_table').html());
 }
 
 
 function drawCumulativeTotalChart(workflow) {
 
-    var url = workflow == 'Sanger' ? 'gnos_metadata/latest/reports/sanger_summary_counts/summary_counts.json'
-        : workflow == 'DKFZ/EMBL'   ? 'gnos_metadata/latest/reports/embl-dkfz_summary_counts/summary_counts.json'
-        :                        'gnos_metadata/latest/reports/summary_counts/summary_counts.json';
+    // There is no point is we only have a single site
+    if (repos3.length == 1) {
+	$('#cumulative_total_chart').empty();
+	return true;
+    }
+
+    var url = workflow == 'Sanger'    ? path+'/sanger_summary_counts/summary_counts.json'
+        :     workflow == 'DKFZ/EMBL' ? path+'/embl-dkfz_summary_counts/summary_counts.json'
+        :     workflow == 'Broad'     ? path+'/broad_summary_counts/summary_counts.json'
+        : '';
 
     var jsonData = $.ajax({
         url: url,
@@ -464,13 +496,12 @@ function drawCumulativeTotalChart(workflow) {
     data = $.parseJSON(jsonData);
     data.reverse();
 
-    // Create our data table out of JSON data loaded from server.                                                                                                                                                                                                                                                                                                                             
     var chart_data = new google.visualization.DataTable();
     chart_data.addColumn('date', 'Date');
     chart_data.addColumn('number', 'Total');
 
     var count_called_as_of_last_week = 0;
-    
+
     var i = 0;
     data.pop();
     while (i < data.length) {
@@ -502,14 +533,17 @@ function drawCumulativeTotalChart(workflow) {
 updateLiveTable = function() {
     loadRepos();
 
-    var report_data_url = workflow == 'Sanger' ? 'gnos_metadata/latest/reports/sanger_summary_counts/summary_compute_site_counts.json'
-        : workflow == 'DKFZ/EMBL'   ? 'gnos_metadata/latest/reports/embl-dkfz_summary_counts/summary_compute_site_counts.json'
-        :                        'gnos_metadata/latest/reports/summary_counts/hist_summary_site_counts.json';
+    var report_data_url = workflow == 'Sanger'    ? path+'/sanger_summary_counts/summary_compute_site_counts.json'
+        :                 workflow == 'DKFZ/EMBL' ? path+'/embl-dkfz_summary_counts/summary_compute_site_counts.json'
+        :                 workflow == 'Broad'     ? path+'/broad_summary_counts/summary_compute_site_counts.json'
+        : '';
+    
+    //console.log(report_data_url);
 
     table_header('live_h');
     $("#live tbody").empty();
 
-    $.getJSON( report_data_url, 
+    $.getJSON( report_data_url,
 	       function (json){
 		   var total_row = $('<tr/>');
 		   var called_row = $('<tr/>');
@@ -525,6 +559,10 @@ updateLiveTable = function() {
 
 		   for (var j = 0; j < repos2.length; j++) {
 		       counts = json[repos2[j]];
+		       if (!counts) {
+			   console.log("no counts for "+repos2[j]);
+			   continue;
+		       }
 		       total  = counts['Total'] || 0;
 		       called = counts['Called'] || 0;
 		       uncalled = counts['To_be_called'] || 0;
@@ -535,7 +573,7 @@ updateLiveTable = function() {
 		       called_row.append('<td>'+called+'</td>');
 		       uncalled_row.append('<td>'+uncalled+'</td>');
 		   }
-		   
+
 
 		   percent_called = totals['called'] ? 100 * totals['called']/totals['total'] : 0;
 		   percent_uncalled = totals['uncalled'] ? 100 * totals['uncalled']/totals['total'] : 0;
@@ -546,7 +584,7 @@ updateLiveTable = function() {
 		   called_row.append('<td>'+percent_called.toFixed(2)+'</td>');
 		   uncalled_row.append('<td>'+totals['uncalled']+'</td>');
 		   uncalled_row.append('<td>'+percent_uncalled.toFixed(2)+'</td>');
-		   
+
 
 		   $('#live tbody').append(called_row);
 		   $('#live tbody').append(uncalled_row);

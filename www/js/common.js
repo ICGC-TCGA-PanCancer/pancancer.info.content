@@ -13,6 +13,7 @@ ga('create', 'UA-52348443-1', 'auto', {'name': 'newTracker'});
 ga('send', 'pageview');
 ga('newTracker.send', 'pageview');
 
+document.write('<link rel="shortcut icon" href="favicon1.ico" />');
 
 function appendToHeader(url) {
     var s = document.createElement("script");
