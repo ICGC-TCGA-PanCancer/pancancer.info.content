@@ -588,6 +588,7 @@ function drawAlignmentChart2() {
         width: '100%',
         height: 500,
         pointSize: 5,
+	theme: 'material',
         chartArea:{left:50,top:50,width:'75%',height:'80%'}
     };
 
@@ -758,6 +759,7 @@ function drawCumulativeTotalChart() {
         height: 250,
         pointSize: 3,
         chartArea:{left:50,top:50,width:'75%'},
+	theme: 'material',
         hAxis: {gridlines:{count:0},
                 baselineColor:'white'},
         vAxis: {title:'Specimens'}

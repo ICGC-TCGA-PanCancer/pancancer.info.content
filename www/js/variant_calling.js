@@ -60,6 +60,7 @@ function drawVariantChart1(workflow) {
         width: '100%',
         height: 300,
         pointSize: 3,
+	theme: 'material',
 	chartArea:{left:50,top:50,width:'100%'}
     };
 
@@ -283,6 +284,7 @@ function drawVariantChart2(workflow) {
 	width: '100%',
         height: 700,
 	pointSize: 3,
+	theme: 'material',
         chartArea:{left:80,top:50,width:'75%'}
     };
 
