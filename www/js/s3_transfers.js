@@ -11,6 +11,16 @@ loadData = function(clusterNum) {
     $.getJSON(metadata+'/latest/repos.json', function(data) {repos = data});
     $.getJSON(metadata+'/latest/timestamp.json', function(data) {timestamp = data[0]});
     jobType = ['backlog', 'queued', 'verifying', 'downloading', 'uploading', 'failed', 'completed'];
+    categories = ['expected_to_be_transferred',
+		  'both_transferred', 
+		  'normal_transferred_tumor_not',
+		  'tumor_transferred_normal_not', 
+		  'both_not_transferred'];
+    category_name = {'expected_to_be_transferred':'expected to<br>be transfered',
+                     'both_transferred':'both transferred<br>&nbsp;',
+                     'normal_transferred_tumor_not':'normal transferred,<br>tumor not',
+                     'tumor_transferred_normal_not':'tumor transferred,<br>normal not',
+                     'both_not_transferred':'neither transferred<br>&nbsp;'}
     months = ['Jan','Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     colorMap = {
 	'queued':'#3366cc', 
@@ -140,38 +150,60 @@ updateHistoryTable = function() {
 }
 
 updateProjectStatusTable = function() {
-    var jsonFile = metadata+"/latest/s3_transfer_status.json";
+    var jsonFile = "gnos_metadata/latest/reports/s3_transfer_summary/donor.json";
     var table = $('#transfers_project_status');
     var tbody = $('<tbody>')
-    var tr = $('<tr>');
+    var totals = {};
+
+    $.each(categories, function(i,category) {
+	totals[category] = 0;
+    });
 
     table.empty();
 
     $.getJSON(jsonFile, function(data) {
-	header = data.shift();
 	tr = $('<tr>');
-	$.each(header, function(i,cell) {
-	    cell = cell.replace(', ','<br>');
-	    cell = cell.replace('to be ','<br>');
-	    cell = cell.replace('both not','neither');
+	$('<th>').html('Project').appendTo(tr);
+	$.each(categories, function(i,category) {
+	    cell = category_name[category];
 	    $('<th>').html(cell).appendTo(tr);
 	});
+//	$('<th>').html('Total').appendTo(tr);
 	tr.appendTo(tbody);
 
 	$.each(data, function(i,row) {
 	    tr = $('<tr>');
-	    last = row.length - 2;
-	    h1 = row.shift();
+
+	    h1 = row["project"];
 	    $('<th>').html(h1).appendTo(tr);
-	    $.each(row, function(i,count) {
+
+	    $.each(categories, function(i,category) {
 		cell = $('<td>');
-		if (i != last ) {
-		    cell.css('padding-left','50px');
-		}
-		cell.html(count).appendTo(tr);
+		count = row[category] || 0;
+		file = [h1,category,'donors.txt'].join('.');
+		link = $('<a>');
+		link.html(count);
+		link.attr('href','gnos_metadata/latest/reports/s3_transfer_summary/'+file);
+		link.attr('target','project_count');
+		link.appendTo(cell);
+		cell.css('padding-left','50px');
+		cell.appendTo(tr);
+		totals[category] += count;
 	    });
+
+//	    $('<td>').html(row_total).appendTo(tr);
 	    tr.appendTo(tbody);
 	});
+
+	tr = $('<tr>');
+	$('<th>').html('Total').appendTo(tr);
+	$.each(categories, function(i,category) {
+	    cell = $('<td>');
+	    cell.css('padding-left','50px');
+	    cell.html(totals[category]).appendTo(tr);
+	});
+
+	tr.appendTo(tbody);
     });
 
     table.append(tbody);

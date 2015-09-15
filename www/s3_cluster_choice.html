@@ -1,0 +1,10 @@
+<form name="f1">
+  <div style="font-size:large;background:ivory;border: 1px solid lightgray"><b>S3 upload cluster:</b> &nbsp;
+    <input type="radio" name="clusterNum" value=1 onchange="loadS3Page(1)" id="cluster1_button"> Cluster 1
+    <input type="radio" name="clusterNum" value=2 onchange="loadS3Page(2)" id="cluster2_button"> Cluster 2
+  </div>
+</form>
+<script type="text/javascript">
+  var choice = "cluster"+cluster+"_button";
+  $('#'+choice).prop("checked",true);
+</script>
