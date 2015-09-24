@@ -13,39 +13,29 @@
   <script type="text/javascript" src="https://www.google.com/jsapi"></script>
   <script type="text/javascript" src="http://datamaps.github.io/scripts/datamaps.world.min.js?v=1"></script>
   <script type="text/javascript" src="/js/common.js"></script>
-  <script type="text/javascript">loadJS('s3_transfers')</script>
+  <script type="text/javascript">loadJS('s3_transfers_old')</script>
 </head>
 
 <body>
   <script type="text/javascript">
   $('document').ready(function(){
-    loadS3Page(type);
+    //$("#cluster_choice").load("s3_cluster_choice.html");
+    loadS3Page(cluster);
   });
   </script>
   <div id="pancancer-header"></div>
   <div class="content">
     <center>
     <h2 class="c3" id="date_status"></h2>
-    <div id="cluster_choice" style="width:400px">
-      <form name="f1">
-	<div style="font-size:large;background:ivory;border: 1px solid lightgray"><b>Workflow type:</b> &nbsp;
-	  <input type="radio" name="typeNum" value=1 onchange="loadS3Page(1)" id="type1_button"> Sanger-VCF
-	  <input type="radio" name="typeNum" value=2 onchange="loadS3Page(2)" id="type2_button"> BWA
-	</div>
-      </form>
-      <script type="text/javascript">
-	var choice = "type"+type+"_button";
-	$('#'+choice).prop("checked",true);
-      </script>
-      <font size="small"><a href="s3_transfers_old.html">Link to older s3 transfer data</a></font>
-    </div>
+    <div id="cluster_choice" style="width:400px"></div>
     </center>
+    <h3 style="color:red">NOTE: These totals are for both BWA and Sanger-VCF file transfers</h3> 
+    <h3>Current totals</h3>
+    <div id="pie"></div>
+    <br clear="all">
     <h3>Daily totals</h3>
     <table id="history" style="float:left;width:80%" class="rounded-corner c5" summary="">
     </table>
-    <br clear="all">
-    <h3>Current totals</h3>
-    <div id="pie"></div>
     <br clear="all">
     <h3>Completed transfers</h3>
     <div id="history_chart"></div>

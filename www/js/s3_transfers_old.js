@@ -2,11 +2,11 @@
 google.load('visualization', '1', {'packages':['corechart']});
       
 var projects, repos, timestamp, jobType, months, metadata,colorMap;
-var type = 1;
+var cluster = 1;
 
-loadData = function(typeNum) {
-    type = typeNum;
-    metadata = typeNum > 1 ? 's3_metadata/BWA' : 's3_metadata/Sanger-VCF'; 
+loadData = function(clusterNum) {
+    cluster = clusterNum;
+    metadata = clusterNum > 1 ? 's3_metadata_2' : 's3_metadata'; 
     $.getJSON(metadata+'/latest/projects.json', function(data) {projects = data});
     $.getJSON(metadata+'/latest/repos.json', function(data) {repos = data});
     $.getJSON(metadata+'/latest/timestamp.json', function(data) {timestamp = data[0]});
@@ -32,7 +32,7 @@ loadData = function(typeNum) {
     };
 }
 
-loadData(type);
+loadData(cluster);
 
 updateTransferTable = function(type) {
     var jFile = metadata+'/latest/'+type+'s.json';
@@ -296,7 +296,7 @@ updateLineChart = function() {
     });
 }
 
-addTableData = function(data,dataType,div_id) {
+addTableData = function(data,type,div_id) {
     var table = new google.visualization.DataTable();
 
     table.addColumn('string','Date');
@@ -323,20 +323,13 @@ addTableData = function(data,dataType,div_id) {
 		ave = sum/values.length;
 	    }
 	    
-	    if (div_id == 'line2' && type == 1 && ave > 70) {
-		ave = 70;
-	    }
-	    if (div_id == 'line2' && type == 2 && ave > 150) {
-                ave = 150;
-            }
-
 	    row.push(ave);
 	});
 	table.addRow(row);
     });
 
     var options = {
-        title: dataType,
+        title: type,
         vAxis: {viewWindow: {min: 0}, title: 'MB/s'},
         hAxis: {slantedText: true, slantedTextAngle: 45},
         legend: { position: 'right'},
@@ -352,8 +345,8 @@ addTableData = function(data,dataType,div_id) {
     chart.draw(table,options);
 }
 
-loadS3Page = function(typeNum) {
-    loadData(typeNum);
+loadS3Page = function(clusterNum) {
+    loadData(clusterNum);
     updateTransferTable('project');
     updateTransferTable('repo');
     updatePieChart();
