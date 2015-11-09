@@ -1,3 +1,4 @@
+
 // Load the Visualization API and the piechart package.
 google.load('visualization', '1', {'packages':['corechart']});
 
@@ -6,7 +7,7 @@ var path = 'gnos_metadata/latest/reports';
 loadRepos();
 
 var params = getSearchParameters();
-var workflow = params["workflow"] || 'Sanger';
+var workflow = params["workflow"] || 'Broad';
 function selectVariantWorkflow(wf) {
     workflow = wf.value;
     loadVariantWorkflow();
@@ -239,6 +240,7 @@ function drawVariantChart2(workflow) {
     for (var i = 0; i < repos3.length; i++) {
 	var count = 0;
 	var last_count = 0;
+
         if (repos3[i] == 'pdc') {
 	    for (var j = 0;j < chicago.length;j++) {
                 num1 = today_counts[chicago[j]] || 0;
@@ -260,6 +262,7 @@ function drawVariantChart2(workflow) {
 	    diff = "+"+diff;
 	}
 
+	console.log("HERE "+repos3[i]);	
 	$('#'+repos3[i]).html('&nbsp;'+count.toString()+ " ("+diff+")");
 	//console.log(document.getElementById(cumulative_table));
 	//console.log($('#cumulative_table').html());
@@ -349,6 +352,8 @@ function loadRepos() {
         'dkfz_hpc': 'Heidelberg (HPC)',
 	'ebi': 'London',
 	'ucsc': 'Santa Cruz',
+	'azure': 'Azure',
+	'sevenbridges' : 'Seven Bridges',
 	'cghub': 'Santa Cruz',
 	'etri': 'Seoul',
 	'tokyo': 'Tokyo',
@@ -363,22 +368,22 @@ function loadRepos() {
 		];
 
     if (workflow == 'Sanger') {
-	repos2 = [ "aws_ireland", "aws_oregon", "bsc", "sanger", "pdc1_1", "pdc2_0",
-		   "dkfz", "ebi", "idash", "ucsc", "etri", "tokyo", "oicr", "Unassigned" ];
+	repos2 = [ "aws_ireland", "aws_oregon", "azure","bsc", "sanger", "pdc1_1", "pdc2_0",
+		   "dkfz", "ebi", "idash", "ucsc",  "etri", "tokyo", "oicr", "Unassigned" ];
 
-	repos3 = [ "aws_ireland", "aws_oregon", "bsc", "sanger", "pdc",
-		   "dkfz", "ebi", "idash", "ucsc", "etri", "tokyo", "oicr" ];
+	repos3 = [ "aws_ireland", "aws_oregon", "azure","bsc", "sanger", "pdc",
+		   "dkfz", "ebi", "idash", "ucsc",  "etri", "tokyo", "oicr" ];
 
 	chicago = [ "pdc(1.1+2.0)", "pdc1_1", "pdc2_0" ];
     }
     else if (workflow == 'DKFZ/EMBL') {
-	repos2 = ["aws_ireland","bsc","sanger","dkfz","dkfz_hpc","oicr","Unassigned"];
-	repos3 = ["aws_ireland","bsc","sanger","dkfz","dkfz_hpc","oicr"];
+	repos2 = ["aws_ireland","azure","bsc","sanger","dkfz","dkfz_hpc","oicr","Unassigned"];
+	repos3 = ["aws_ireland","azure","bsc","sanger","dkfz","dkfz_hpc","oicr"];
 	repo_name['dkfz'] = 'Heidelberg (OpenStack)';
     }
     else if (workflow == 'Broad') {
-	repos2 = [ "ucsc",  "Unassigned" ];
-	repos3 = [ "ucsc" ];
+	repos2 = [ "azure", "ucsc", "sevenbridges", "Unassigned" ];
+	repos3 = [ "azure", "ucsc", "sevenbridges" ];
     }
 
 }
@@ -390,6 +395,7 @@ function table_header(table) {
     var sanger_h = ' \
 <th>AWS Ireland</th> \
 <th>AWS Oregon</th> \
+<th>Azure</th> \
 <th>Barcelona</th> \
 <th>Cambridge</th> \
 <th>Chicago (PDC1.1)</th> \
@@ -404,6 +410,7 @@ function table_header(table) {
 
     var dkfz_h = ' \
 <th>AWS Ireland</th> \
+<th>Azure</th> \
 <th>Barcelona</th> \
 <th>Cambridge</th> \
 <th>Heidelberg<br>(OpenStack)</th> \
@@ -411,7 +418,9 @@ function table_header(table) {
 <th>Toronto</th>';
 
     var broad_h = ' \
-<th>Santa Cruz</th>';
+<th>Azure</th> \
+<th>Santa Cruz</th> \
+<th>Seven Bridges</th>';
 
     var h = workflow == 'Sanger'    ? sanger_h
           : workflow == 'DKFZ/EMBL' ? dkfz_h
@@ -437,6 +446,7 @@ function cumulative_table() {
   <tr><th id="thead1"></th><th id="thead2"></th></tr> \
   <tr><td>AWS Ireland</td><td id="aws_ireland"></td></tr> \
   <tr><td>AWS Oregon</td><td id="aws_oregon"></td></tr> \
+  <tr><td>Azure</td><td id="azure"></td></tr> \
   <tr><td>Barcelona</td><td id="bsc"></td></tr> \
   <tr><td>Cambridge</td><td id="sanger"></td></tr> \
   <tr><td>Chicago</td><td id="pdc"></td></tr> \
@@ -454,6 +464,7 @@ function cumulative_table() {
 <table style="float:left" class="rounded-corner"> \
   <tr><th id="thead1"></th><th id="thead2"></th></tr> \
   <tr><td>AWS Ireland</td><td id="aws_ireland"></td></tr> \
+  <tr><td>Azure</td><td id="azure"></td></tr> \
   <tr><td>Barcelona</td><td id="bsc"></td></tr> \
   <tr><td>Cambridge</td><td id="sanger"></td></tr> \
   <tr><td>Heidelberg (OpenStack)</td><td id="dkfz"></td></tr> \
@@ -466,7 +477,9 @@ function cumulative_table() {
    var broad_t = ' \
 <table style="float:left" class="rounded-corner"> \
   <tr><th id="thead1"></th><th id="thead2"></th></tr> \
+  <tr><td>Azure</td><td id="azure"></td></tr> \
   <tr><td>Santa Cruz</td><td id="ucsc"></td></tr> \
+  <tr><td>Seven Bridges</td><td id="sevenbridges"></td></tr> \
   <tr><td><b>Total</b></td><td id="total"></td></tr> \
 </table> <br clear="all" />';
 
@@ -563,7 +576,9 @@ updateLiveTable = function() {
 		       counts = json[repos2[j]];
 		       if (!counts) {
 			   console.log("no counts for "+repos2[j]);
-			   continue;
+			   counts = {};
+			   counts['Total'] = 0;
+			   counts['Called'] = 0;
 		       }
 		       total  = counts['Total'] || 0;
 		       called = counts['Called'] || 0;

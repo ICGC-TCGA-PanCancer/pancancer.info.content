@@ -5,12 +5,12 @@ var projects, repos, timestamp, jobType, months, metadata,colorMap;
 var type = 1;
 
 loadData = function(typeNum) {
-    type = typeNum;
-    metadata = typeNum > 1 ? 's3_metadata/BWA' : 's3_metadata/Sanger-VCF'; 
+    type = typeNum
+    metadata = typeNum > 1 ? 'ceph_metadata/BWA' : 'ceph_metadata/Sanger-VCF';
     $.getJSON(metadata+'/latest/projects.json', function(data) {projects = data});
     $.getJSON(metadata+'/latest/repos.json', function(data) {repos = data});
     $.getJSON(metadata+'/latest/timestamp.json', function(data) {timestamp = data[0]});
-    jobType = ['backlog', 'queued', 'verifying', 'downloading', 'uploading', 'failed', 'completed'];
+    jobType = ['backlog', 'queued', 'verifying', 'downloading', 'uploading', 'failed', 'retry', 'completed'];
     categories = ['expected_to_be_transferred',
 		  'both_transferred', 
 		  'normal_transferred_tumor_not',
@@ -28,11 +28,12 @@ loadData = function(typeNum) {
 	'downloading':'#ff9900',
 	'uploading':'#dd4477',
 	'failed':'#990099',
-	'completed':'#109618'
+	'completed':'#109618',
+	'retry':'#000000'
     };
 }
 
-loadData(type);
+loadData();
 
 updateTransferTable = function(type) {
     var jFile = metadata+'/latest/'+type+'s.json';
@@ -128,6 +129,9 @@ updateHistoryTable = function() {
 	    total = 0;
 	    $.each(jobType, function(i,job) {
 		count = date_data[job+'-jobs'];
+		if (!count) {
+		    count = 0;
+		}
 		$('<td>').html(count).appendTo(tr);
 		total = total + count;
 	    });
@@ -150,19 +154,24 @@ updateHistoryTable = function() {
 }
 
 updateProjectStatusTable = function() {
-    var jsonFile = "gnos_metadata/latest/reports/s3_transfer_summary/donor.json";
+    var jsonFile = "gnos_metadata/latest/reports/ceph_transfer_summary/donor.json";
     var table = $('#transfers_project_status');
     var tbody = $('<tbody>')
     var totals = {};
 
     table.empty();
 
+    console.log("MY TYPE IS "+type);
+
     if (type == 1) {
-	$('#project_status').css('display','none');
+        $('#project_status').css('display','none');
+	return true;
     }
     else {
-	$('#project_status').css('display','inline');
+        $('#project_status').css('display','inline');
     }
+
+
 
     $.each(categories, function(i,category) {
 	totals[category] = 0;
@@ -194,7 +203,7 @@ updateProjectStatusTable = function() {
 		file = [h1,category,'donors.txt'].join('.');
 		link = $('<a>');
 		link.html(count);
-		link.attr('href','gnos_metadata/latest/reports/s3_transfer_summary/'+file);
+		link.attr('href','gnos_metadata/latest/reports/ceph_transfer_summary/'+file);
 		link.attr('target','project_count');
 		link.appendTo(cell);
 		cell.css('padding-left','50px');
@@ -257,7 +266,7 @@ updatePieChart = function() {
         var today = dates.pop();
 
 	// Update header
-	$('#date_status').html('S3 transfers as of '+timestamp);
+	$('#date_status').html('Ceph transfers as of '+timestamp);
 
         data = all_data[today];
 
@@ -363,12 +372,10 @@ addTableData = function(data,dataType,div_id) {
     chart.draw(table,options);
 }
 
-loadS3Page = function(typeNum) {
+loadCephPage = function(typeNum) {
     loadData(typeNum);
     updateTransferTable('project');
-    updateTransferTable('repo');
     updatePieChart();
-    updateLineChart();
     updateHistoryTable();
     updateProjectStatusTable();
 }

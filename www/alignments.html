@@ -19,28 +19,6 @@
 <body>
   <div id="pancancer-header"></div>
   <div class="content">
-    <h2>Donor Alignment Status</h2>
-    <p class="c1">A comparison of donor alignment status across projects. This removes
-      test data and factors in duplication of specimens across multiple GNOS
-      repositories, producing the most accurate count of available donors we have
-      available.</p>
-    
-    <table name="x9" class="rounded-corner" summary="">
-      <thead>
-        <tr>
-          <th nowrap="nowrap">Project code</th>
-          <th>Completed donors</th>
-          <th>Normal aligned, tumor unaligned</th>
-          <th>Tumor aligned, normal unaligned</th>
-          <th>Normal and tumor unaligned</th>
-          <th>Normal aligned, tumor missing</th>
-          <th>Normal unaligned, tumor missing</th>
-          <th>Tumor aligned, normal missing</th>
-          <th>Tumor unaligned, normal missing</th>
-        </tr>
-      </thead>
-    </table>
-    
     <h2 class="c3">Alignments by Compute Sites</h2>
     <h3 id="thead0"></h3>
     <table name="live" style="float:left" class="rounded-corner c5" summary="">
@@ -48,6 +26,7 @@
         <tr>
           <th></th>
 	  <th>AWS Ireland</th>
+	  <th>Azure</th>
           <th>Chicago<br>(PDC2.0)</th>
           <th>London</th>
           <th>Seoul</th>
@@ -70,6 +49,7 @@
           <td>0</td>
           <td>0</td>
           <td>0</td>
+          <td>0</td>
         </tr>
         <tr>
           <td class="c4">Unaligned Specimens &nbsp;&nbsp;</td>
@@ -82,9 +62,11 @@
           <td>0</td>
           <td>0</td>
           <td>0</td>
+          <td>0</td>
         </tr>
         <tr>
           <td class="c4">Total Specimens</td>
+          <td>0</td>
           <td>0</td>
           <td>0</td>
           <td>0</td>
@@ -108,12 +90,32 @@
     </table>
     <br clear="all" />
 
-    </div>
     <br clear="all" />
     <div id="cumulative_total_chart" class="chart"></div>
     <div id="chart_div2" class="chart"></div>
-    
 
+    <h2>Donor Alignment Status</h2>
+    <p class="c1">A comparison of donor alignment status across projects. This removes
+      test data and factors in duplication of specimens across multiple GNOS
+      repositories, producing the most accurate count of available donors we have
+      available.</p>
+
+    <table name="x9" class="rounded-corner" summary="">
+      <thead>
+        <tr>
+          <th nowrap="nowrap">Project code</th>
+          <th>Completed donors</th>
+          <th>Normal aligned, tumor unaligned</th>
+          <th>Tumor aligned, normal unaligned</th>
+          <th>Normal and tumor unaligned</th>
+          <th>Normal aligned, tumor missing</th>
+          <th>Normal unaligned, tumor missing</th>
+          <th>Tumor aligned, normal missing</th>
+          <th>Tumor unaligned, normal missing</th>
+        </tr>
+      </thead>
+    </table>    
+  </div>
       <script type="text/javascript">
       $('document').ready(function(){
       drawAlignmentChart2();
