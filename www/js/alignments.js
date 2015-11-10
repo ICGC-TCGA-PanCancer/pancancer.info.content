@@ -8,14 +8,19 @@ var repo_name = {
     'osdc-icgc': 'Chicago(ICGC)',
     'osdc-tcga': 'Chicago(TCGA)',
     'dkfz': 'Heidelberg',
+    'azure' : 'Azure',
     'ebi': 'London',
     'cghub': 'Santa Cruz',
     'etri': 'Seoul',
-    'tokyo': 'Tokyo'
+    'tokyo': 'Tokyo',
+    'riken': 'Tokyo'
 }
-var aln_repos = ['bsc', 'osdc-icgc', 'dkfz',
+var aln_repos = ['azure','bsc', 'osdc-icgc', 'dkfz',
               'ebi', 'cghub', 'etri', 'tokyo'
             ];
+var live_aln_repos = ['bsc', 'osdc-icgc', 'dkfz',
+		 'ebi', 'cghub', 'etri', 'tokyo'
+		];
 
 
 updateTable = function(ele,jsonFile) {
@@ -112,6 +117,12 @@ updateLiveTable = function(ele) {
 		total     = parseInt(site_data['total'] || 0);
 		unaligned = parseInt(site_data['unaligned'] || 0);
 	    }
+	    else {
+		//console.log("I am on BAD repo "+aln_repos[i]);
+		aligned = 0;
+		total = 0;
+		unaligned = 0;
+	    }
 
 	    if (unaligned != total - aligned || (aligned + unaligned) != total) {
 		console.log("Something is fishy here.  The numbers don't add up: "+aligned+" "+unaligned+" "+total);
@@ -134,27 +145,27 @@ updateLiveTable = function(ele) {
 
         }
 
-        cell_1[8] = table[0].rows[1].cells[8];
-        cell_2[8] = table[0].rows[2].cells[8];
-        cell_3[8] = table[0].rows[3].cells[8];
-
-
-        cell_1[8].firstChild.data = '' + total_1;
-        cell_2[8].firstChild.data = '' + total_2;
-        cell_3[8].firstChild.data = '' + total_3;
-
-        cell_1[9] = table[0].rows[1].cells[8];
-        cell_2[9] = table[0].rows[2].cells[8];
         cell_1[9] = table[0].rows[1].cells[9];
         cell_2[9] = table[0].rows[2].cells[9];
+        cell_3[9] = table[0].rows[3].cells[9];
+
+
+        cell_1[9].firstChild.data = '' + total_1;
+        cell_2[9].firstChild.data = '' + total_2;
+        cell_3[9].firstChild.data = '' + total_3;
+
+        cell_1[10] = table[0].rows[1].cells[9];
+        cell_2[10] = table[0].rows[2].cells[9];
+        cell_1[10] = table[0].rows[1].cells[10];
+        cell_2[10] = table[0].rows[2].cells[10];
 
         var ave_1 = (total_1/total_3)*100;
         var num_1 = ave_1.toFixed(2);
         var ave_2 = (total_2/total_3)*100;
         var num_2 = ave_2.toFixed(2);
 
-        cell_1[9].firstChild.data = '' + num_1;
-        cell_2[9].firstChild.data = '' + num_2;
+        cell_1[10].firstChild.data = '' + num_1;
+        cell_2[10].firstChild.data = '' + num_2;
 
     });
 }
@@ -214,23 +225,28 @@ function loadAlignmentTable1() {
 		  var tr;
 		  
 		  for (var i = 0; i < Object.keys(json).length; i++) {
-		      if (!json[aln_repos[i]]) {
+		      //console.log(aln_repos[i]);
+		      //console.log(json[aln_repos[i]]);
+		      if (!json[live_aln_repos[i]]) {
 			  continue;
 		      }
 		      tr = $('<tr/>');
-		      tr.append("<td>" + repo_name[aln_repos[i]]
+		      tr.append("<td>" + repo_name[live_aln_repos[i]]
 				+ " ("
-				+ json[aln_repos[i]]['_ori_count'][0]
+				+ json[live_aln_repos[i]]['_ori_count'][0]
 				+ ")"
 				+ "</td>");
 		      
-		      total[0] += json[aln_repos[i]]['_ori_count'][0];
+		      total[0] += json[live_aln_repos[i]]['_ori_count'][0];
 		      
-		      for (var j = 0; j < aln_repos.length; j++) {
-			  var aligned_donors = json[aln_repos[i]][aln_repos[j]] == undefined ? 0 : json[aln_repos[i]][aln_repos[j]][0];
+		      for (var j = 0; j < live_aln_repos.length; j++) {
+			  if (!json[live_aln_repos[i]]) {
+                              continue;
+			  }
+			  var aligned_donors = json[live_aln_repos[i]][live_aln_repos[j]] == undefined ? 0 : json[live_aln_repos[i]][live_aln_repos[j]][0];
 			  var aligned_donors_url = report_data_url
                               + "live_alignment_completed_donors."
-                              + aln_repos[i] + "." + aln_repos[j] + ".txt";
+                              + live_aln_repos[i] + "." + live_aln_repos[j] + ".txt";
 			  tr.append("<td>" + (aligned_donors == 0 ? "" : "<a href='" + aligned_donors_url + "'>")
                                     + aligned_donors
 				    + (aligned_donors == 0 ? "" : "</a>")
@@ -321,21 +337,23 @@ function loadAlignmentTable3() {
         var tr;
 
         for (var i = 0; i < Object.keys(json).length; i++) {
-            tr = $('<tr/>');
-            tr.append("<td>" + repo_name[aln_repos[i]]
-                             + " ("
-                             + (json[aln_repos[i]]['_ori_count'][1] + json[aln_repos[i]]['_ori_count'][2])
-                             + ")"
-                             + "</td>");
-            //tr.append("<td>" + (json[aln_repos[i]]['_ori_count'][1] + json[aln_repos[i]]['_ori_count'][2])+ "</td>");
-            total[0] += json[aln_repos[i]]['_ori_count'][1] + json[aln_repos[i]]['_ori_count'][2];
-            
-            for (var j = 0; j < aln_repos.length; j++) {
-                var cell_value = json[aln_repos[i]][aln_repos[j]] == undefined ? 0 : (json[aln_repos[i]][aln_repos[j]][1] + json[aln_repos[i]][aln_repos[j]][2]);
+	    if (json[live_aln_repos[i]] != undefined) {
+		tr = $('<tr/>');
+		tr.append("<td>" + repo_name[live_aln_repos[i]]
+                          + " ("
+                          + (json[live_aln_repos[i]]['_ori_count'][1] + json[live_aln_repos[i]]['_ori_count'][2])
+                          + ")"
+                          + "</td>");
+		
+		total[0] += json[live_aln_repos[i]]['_ori_count'][1] + json[live_aln_repos[i]]['_ori_count'][2];
+
+            for (var j = 0; j < live_aln_repos.length; j++) {
+                var cell_value = json[live_aln_repos[i]][live_aln_repos[j]] == undefined ? 0 : (json[live_aln_repos[i]][live_aln_repos[j]][1] + json[live_aln_repos[i]][live_aln_repos[j]][2]);
                 tr.append("<td>" + cell_value + "</td>");
                 total[j+1] += cell_value;
             }
             $("table[name='x11']").append(tr);
+	    }
         }
 
         for (var i = 0; i < json.length; i++) {
@@ -356,130 +374,12 @@ function loadAlignmentTable3() {
     });
 }
 
-function train1Table() {
-    var table = document.getElementsByName("x");
-    var table2 = document.getElementsByName("x9");
-    var table3 = document.getElementsByName("x3");
-    var json_data;
-    var json_data2;
-    var json_data3;
-    var cell_1 = [];
-    var cell_2 = [];
-    var cell_3 = [];
-    var cell_4 = [];
-    var cell_5 = [];
-    var cell_6 = [];
-    var val_1 = [];
-    var val_2 = [];
-    var val_3 = [];
-    var val_4 = [];
-    var val_5 = [];
-    var val_6 = [];
-    var total_1 = 0;
-    var total_2 = 0;
-    var total_3 = 0;
-    var total_4 = 0;
-    var total_5 = 0;
-    var total_6 = 0;
-    var total_7 = 0;
-    var total_8 = 0;
-    var total_9 = 0;
-    
-    d3.json("train1.json", function(error, json) {
-	json_data = json;
-	var arr =[];
-        //for (var i = 1,j = 0; i < json_data.length/2 + 2, j < json_data.length; i++, j+=2){
-	for (var i = 0; i < json_data.length; i++){
-	    
-            cell_1[i] = table[0].rows[1].cells[i+1];
-            val_1[i] = cell_1[i].firstChild.data;
-            cell_1[i].firstChild.data = ''+json_data[i].train_1_align;
-            total_1 += json_data[i].train_1_align;
-	    
-            cell_2[i] = table[0].rows[2].cells[i+1];
-            val_2[i] = cell_2[i].firstChild.data;
-            cell_2[i].firstChild.data = ''+json_data[i].remaining;
-            total_2 += json_data[i].remaining;
-	    
-            cell_3[i] = table[0].rows[3].cells[i+1];
-            val_3[i] = cell_3[i].firstChild.data;
-            cell_3[i].firstChild.data = ''+json_data[i].total_unalign;
-            total_3 += json_data[i].total_unalign;
-	}
-	
-	cell_1[8] = table[0].rows[1].cells[8];
-	cell_2[8] = table[0].rows[2].cells[8];
-	cell_3[8] = table[0].rows[3].cells[8];
-	
-	cell_1[8].firstChild.data = '' + total_1;
-	cell_2[8].firstChild.data = '' + total_2;
-	cell_3[8].firstChild.data = '' + total_3;
-	
-	cell_1[9] = table[0].rows[1].cells[9];
-	
-	var ave = (total_1/total_3)*100;
-	var num = ave.toFixed(2);
-	
-	cell_1[9].firstChild.data = '' + num;
-	
-    });
-}
-
-function train1Map() {
-    var colors = d3.scale.category10();
-
-    //basic map config with custom fills, mercator projection
-    var map2 = new Datamap({
-        scope: 'world',
-        element: document.getElementById('container2'),
-        geographyConfig: {
-            popupOnHover: false,
-            highlightOnHover: false,
-            highlightFillColor: '#ABDDA4',
-        },
-        projection: 'mercator',
-        fills: {defaultFill: "#ABDDA4",
-                gt50: colors(Math.random() * 20),
-                gt60: "#63AFD0",
-                gt70: "#0772A1",}
-    })
-    
-    //bubbles, custom popup on hover template
-    map2.bubbles([
-	{name: "Chicago", total: '0', aligned: '0', latitude: 41.891519, longitude: -87.629159, radius: 6, fillKey: 'gt60'},
-	{name: "Chicago", total: '0', aligned: '0', latitude: 41.891519, longitude: -87.629159, radius: 6, fillKey: 'gt70'},
-	
-	{name: "Barcelona", total: '2', aligned: '2', latitude: 41.378691, longitude: 2.175547, radius: 15, fillKey: 'gt60'},
-	{name: "Barcelona", total: '2', aligned: '2', latitude: 41.378691, longitude: 2.175547, radius: 15, fillKey: 'gt70'},
-	
-	{name: "Tokyo", total: '0', aligned: '0', latitude: 35.684219, longitude: 139.755020, radius: 6, fillKey: 'gt60'},
-	{name: "Tokyo", total: '0', aligned: '0', latitude: 35.684219, longitude: 139.755020, radius: 6, fillKey: 'gt70'},
-
-	{name: "Seoul", total: '0', aligned: '0', latitude: 37.553397, longitude: 126.980624, radius: 6, fillKey: 'gt60'},
-	{name: "Seoul", total: '0', aligned: '0', latitude: 37.553397, longitude: 126.980624, radius: 6, fillKey: 'gt70'},
-
-	{name: "Heidelberg", total: '0', aligned: '0', latitude: 49.403159, longitude: 8.676061, radius: 6, fillKey: 'gt60'},
-	{name: "Heidelberg", total: '0', aligned: '0', latitude: 49.403159, longitude: 8.676061, radius: 6, fillKey: 'gt70'},
-
-	{name: "London", total: '144', aligned: '144', latitude: 51.507919, longitude: -0.123571, radius: 20, fillKey: 'gt60'},
-	{name: "London", total: '144', aligned: '144', latitude: 51.507919, longitude: -0.123571, radius: 20, fillKey: 'gt70'},
-
-	{name: "Santa Cruz", total: '670', aligned: '670', latitude: 36.971944, longitude: -122.026389, radius: 30, fillKey: 'gt70'},
-
-     ]
-		 , {
-		     popupTemplate: function(geo, data) {
-			 return "<div class='hoverinfo'>"+data.name+"<br/>Aligned: " + data.aligned + " Total: " +data.total+ "</div>";
-		     }
-		 });
-}
-
-
 function cumulative_table() {
     var t = '\
 <table class="rounded-corner" style="float:left"> \
   <tr><th id="thead1"></th><th id="thead2"></th></tr> \
   <tr><td>AWS Ireland</td><td id="aws_ireland"></td></tr> \
+  <tr><td>Azure</td><td id="azure"></td></tr> \
   <tr><td>Chicago (PDC2.0)</td><td id="pdc2_0"></td></tr> \
   <tr><td>London</td><td id="ebi"></td></tr> \
   <tr><td>Seoul</td><td id="etri"></td></tr> \
@@ -496,6 +396,7 @@ function table_header_site() {
     var h = '\
 <th nowrap>Date <br/>(recent 8 days)</th> \
 <th>AWS Ireland</th> \
+<th>Azure</th> \
 <th>Chicago<br>(PDC2.0)</th> \
 <th>London</th> \
 <th>Seoul</th> \
@@ -507,10 +408,9 @@ function table_header_site() {
     $('#site_alignments_header').html(h);
 }
 
-
 function drawAlignmentChart2() {
     loadRepos();
-
+    
     var report_data_url = 'gnos_metadata/latest/reports/specimen_alignment_summary/hist_summary_site_counts.json';
 
     var json2 = $.ajax({
@@ -527,7 +427,7 @@ function drawAlignmentChart2() {
     var chart_data = new google.visualization.DataTable();
     chart_data.addColumn('string', 'Date');
 
-    for (var i = 0; i < aln_repos_chart.length; i++) {
+    for (var i = 0; i < aln_reposx_chart.length; i++) {
         chart_data.addColumn('number', repo_name[aln_repos_chart[i]]);
     }
 
@@ -543,6 +443,10 @@ function drawAlignmentChart2() {
     for (var i = 0; i < aln_repos.length; i++) {
         //console.log(aln_repos[i]);
 	var site_data = today_counts[aln_repos[i]];
+
+	if (!site_data && aln_repos[i] == 'tokyo') {
+	    site_data = today_counts['riken'];
+	}
 
 	var count;
 	if (site_data) {
@@ -588,6 +492,7 @@ function drawAlignmentChart2() {
         width: '100%',
         height: 500,
         pointSize: 5,
+	theme: 'material',
         chartArea:{left:50,top:50,width:'75%',height:'80%'}
     };
 
@@ -685,6 +590,7 @@ function loadRepos() {
 
     repo_name = {
         'aws_ireland': 'AWS Ireland',
+	'azure': 'Azure',
         'aws_oregon': 'AWS Oregon',
         'bsc': 'Barcelona',
         'pdc': 'Chicago',
@@ -699,14 +605,15 @@ function loadRepos() {
         'cghub': 'Santa Cruz',
         'etri': 'Seoul',
         'tokyo': 'Tokyo',
+	'riken': 'Tokyo',
         'oicr': 'Toronto',
         'idash': 'San Diego',
         'sanger': 'Cambridge',
 	'unassigned': 'Unassigned'
     }
 
-    aln_repos_chart = ['aws_ireland','pdc2_0', 'ebi', 'etri', 'oicr', 'tokyo'];
-    aln_repos = ['aws_ireland','pdc2_0', 'ebi', 'etri', 'tokyo','oicr','unassigned'];
+    aln_repos_chart = ['aws_ireland','azure','pdc2_0', 'ebi', 'etri', 'oicr', 'tokyo'];
+    aln_repos = ['aws_ireland','azure','pdc2_0', 'ebi', 'etri', 'tokyo','oicr','unassigned'];
  }
 
 
@@ -758,6 +665,7 @@ function drawCumulativeTotalChart() {
         height: 250,
         pointSize: 3,
         chartArea:{left:50,top:50,width:'75%'},
+	theme: 'material',
         hAxis: {gridlines:{count:0},
                 baselineColor:'white'},
         vAxis: {title:'Specimens'}

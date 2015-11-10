@@ -34,13 +34,13 @@
 
 
 
-<h3>Data Transfer Speeds to AWS Virginia on Jul 25, 2015, 09:10:30 UTC</h3>
+<h3>Data Transfer Speeds to AWS Virginia on Nov 09, 2015, 09:37:25 UTC</h3>
 <p>This report indicates the transfer speeds seen in a single-client test between AWS Virginia and the other GNOS repositories<br>
 <b style="color:red">Red</b> means download is disabled or &lt; 1MB/s in this location, <b style="color:#FFC200">Amber</b> means &lt; 10 MB/s, and <b style="color:green">Green</b> means &gt; 10 MB/s.</p>
 
 <div>
-<!-- style="position:relative; width:800px; height:500px" -->
-<div id="container_virginia" style="width:800px; height:500px"></div>
+
+<div id="container_virginia" style="width:800px; height:500px; position:relative;"></div>
      <script>
       var colors = d3.scale.category10();
        //basic map config with custom fills, mercator projection
@@ -87,55 +87,13 @@
        
 
        
-        
-        
-        
-
-       
-
-       {name: "London", bandwidth: '27.9977496292497 MB/s', latitude: 51.507919, longitude: -0.123571, radius: 8, fillKey: 'gt100'},
-
-       
-
-       
-       
-       
-       
-       
-       
-
-       
          
-       
-
-       
-        
-        
-        
-
-       
-
-       {name: "Santa Cruz", bandwidth: '21.1680362212965 MB/s', latitude: 36.971944, longitude: -122.026389, radius: 8, fillKey: 'gt100'},
-
-       
-
-       
-       
-       
-       
-       
-       
-
-       
          
-       
-
-       
          
 
        
 
-       {name: "Chicago", bandwidth: '10.223952033303 MB/s', latitude: 41.891519, longitude: -87.629159, radius: 8, fillKey: 'gt100'},
+       {name: "Barcelona", bandwidth: '33.7103201131352 MB/s', latitude: 41.378691, longitude: 2.175547, radius: 8, fillKey: 'gt100'},
 
        
 
@@ -157,7 +115,7 @@
 
        
 
-       {name: "Seoul", bandwidth: '0.000244140625 MB/s', latitude: 37.553397, longitude: 126.980624, radius: 8, fillKey: 'gt90'},
+       {name: "Heidelberg", bandwidth: '43.461531843119 MB/s', latitude: 49.403159, longitude: 8.676061, radius: 8, fillKey: 'gt100'},
 
        
 
@@ -174,12 +132,10 @@
 
        
          
-         
-         
 
        
 
-       {name: "Heidelberg", bandwidth: '53.9244932127588 MB/s', latitude: 49.403159, longitude: 8.676061, radius: 8, fillKey: 'gt100'},
+       {name: "Chicago", bandwidth: '16.7498788630709 MB/s', latitude: 41.891519, longitude: -87.629159, radius: 8, fillKey: 'gt100'},
 
        
 
@@ -201,7 +157,73 @@
 
        
 
-       {name: "Tokyo", bandwidth: '5.31216648137458e-05 MB/s', latitude: 35.684219, longitude: 139.75502, radius: 8, fillKey: 'gt90'},
+       {name: "Tokyo", bandwidth: '36.4405675810878 MB/s', latitude: 35.684219, longitude: 139.75502, radius: 8, fillKey: 'gt100'},
+
+       
+
+       
+       
+       
+       
+       
+       
+
+       
+         
+       
+
+       
+         
+         
+         
+
+       
+
+       {name: "Seoul", bandwidth: '12.9865624490136 MB/s', latitude: 37.553397, longitude: 126.980624, radius: 8, fillKey: 'gt100'},
+
+       
+
+       
+       
+       
+       
+       
+       
+
+       
+         
+       
+
+       
+        
+        
+        
+
+       
+
+       {name: "London", bandwidth: '27.3692287192053 MB/s', latitude: 51.507919, longitude: -0.123571, radius: 8, fillKey: 'gt100'},
+
+       
+
+       
+       
+       
+       
+       
+       
+
+       
+         
+       
+
+       
+        
+        
+        
+
+       
+
+       {name: "Santa Cruz", bandwidth: '0.00435303279331752 MB/s', latitude: 36.971944, longitude: -122.026389, radius: 8, fillKey: 'gt90'},
 
        
 
@@ -216,6 +238,169 @@
 
  mapvirginia.arc([
 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+   
+ 
+
+ 
+   
+   
+   
+
+ 
+{
+    origin: {
+        latitude: 41.378691,
+        longitude: 2.175547
+    },
+    destination: {
+        latitude: 37.538346,
+        longitude: -77.461507
+    },
+    options: {
+      strokeWidth: 2,
+      strokeColor: "#33CC33"
+    }
+},
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+   
+ 
+
+ 
+   
+   
+   
+
+ 
+{
+    origin: {
+        latitude: 49.403159,
+        longitude: 8.676061
+    },
+    destination: {
+        latitude: 37.538346,
+        longitude: -77.461507
+    },
+    options: {
+      strokeWidth: 2,
+      strokeColor: "#33CC33"
+    }
+},
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+   
+ 
+
+ 
+   
+
+ 
+{
+    origin: {
+        latitude: 41.891519,
+        longitude: -87.629159
+    },
+    destination: {
+        latitude: 37.538346,
+        longitude: -77.461507
+    },
+    options: {
+      strokeWidth: 2,
+      strokeColor: "#33CC33"
+    }
+},
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+   
+ 
+
+ 
+    
+    
+    
+
+ 
+{
+    origin: {
+        latitude: 35.684219,
+        longitude: 139.75502
+    },
+    destination: {
+        latitude: 37.538346,
+        longitude: -77.461507
+    },
+    options: {
+      strokeWidth: 2,
+      strokeColor: "#33CC33"
+    }
+},
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+   
+ 
+
+ 
+   
+   
+   
+
+ 
+{
+    origin: {
+        latitude: 37.553397,
+        longitude: 126.980624
+    },
+    destination: {
+        latitude: 37.538346,
+        longitude: -77.461507
+    },
+    options: {
+      strokeWidth: 2,
+      strokeColor: "#33CC33"
+    }
+},
  
 
  
@@ -279,136 +464,6 @@
     },
     options: {
       strokeWidth: 2,
-      strokeColor: "#33CC33"
-    }
-},
- 
-
- 
- 
- 
- 
- 
- 
-
- 
-   
- 
-
- 
-   
-
- 
-{
-    origin: {
-        latitude: 41.891519,
-        longitude: -87.629159
-    },
-    destination: {
-        latitude: 37.538346,
-        longitude: -77.461507
-    },
-    options: {
-      strokeWidth: 2,
-      strokeColor: "#33CC33"
-    }
-},
- 
-
- 
- 
- 
- 
- 
- 
-
- 
-   
- 
-
- 
-   
-   
-   
-
- 
-{
-    origin: {
-        latitude: 37.553397,
-        longitude: 126.980624
-    },
-    destination: {
-        latitude: 37.538346,
-        longitude: -77.461507
-    },
-    options: {
-      strokeWidth: 2,
-      strokeColor: "#FF0000"
-    }
-},
- 
-
- 
- 
- 
- 
- 
- 
-
- 
-   
- 
-
- 
-   
-   
-   
-
- 
-{
-    origin: {
-        latitude: 49.403159,
-        longitude: 8.676061
-    },
-    destination: {
-        latitude: 37.538346,
-        longitude: -77.461507
-    },
-    options: {
-      strokeWidth: 2,
-      strokeColor: "#33CC33"
-    }
-},
- 
-
- 
- 
- 
- 
- 
- 
-
- 
-   
- 
-
- 
-    
-    
-    
-
- 
-{
-    origin: {
-        latitude: 35.684219,
-        longitude: 139.75502
-    },
-    destination: {
-        latitude: 37.538346,
-        longitude: -77.461507
-    },
-    options: {
-      strokeWidth: 2,
       strokeColor: "#FF0000"
     }
 },
@@ -451,10 +506,34 @@
   
 <tr>
   <td>cghub.ucsc.edu (Santa Cruz)</td>
-  <td>21.17</td>
-  <td>2.98</td>
-  <td>5.95</td>
-  <td>54.68</td>
+  <td>0.00</td>
+  <td>0.00</td>
+  <td>0.00</td>
+  <td>265885.29</td>
+</tr>
+
+
+
+  
+  
+  
+  
+
+  
+    
+  
+
+  
+    
+
+
+  
+<tr>
+  <td>gtrepo-bsc.annailabs.com (Barcelona)</td>
+  <td>33.71</td>
+  <td>4.74</td>
+  <td>9.48</td>
+  <td>34.33</td>
 </tr>
 
 
@@ -475,10 +554,10 @@
   
 <tr>
   <td>gtrepo-dkfz.annailabs.com (Heidelberg)</td>
-  <td>53.92</td>
-  <td>7.58</td>
-  <td>15.17</td>
-  <td>21.46</td>
+  <td>43.46</td>
+  <td>6.11</td>
+  <td>12.22</td>
+  <td>26.63</td>
 </tr>
 
 
@@ -499,10 +578,10 @@
   
 <tr>
   <td>gtrepo-ebi.annailabs.com (London)</td>
-  <td>28.00</td>
-  <td>3.94</td>
-  <td>7.87</td>
-  <td>41.34</td>
+  <td>27.37</td>
+  <td>3.85</td>
+  <td>7.70</td>
+  <td>42.29</td>
 </tr>
 
 
@@ -523,10 +602,10 @@
   
 <tr>
   <td>gtrepo-etri.annailabs.com (Seoul)</td>
-  <td>0.00</td>
-  <td>0.00</td>
-  <td>0.00</td>
-  <td>4740740.74</td>
+  <td>12.99</td>
+  <td>1.83</td>
+  <td>3.65</td>
+  <td>89.12</td>
 </tr>
 
 
@@ -546,10 +625,10 @@
   
 <tr>
   <td>gtrepo-osdc-icgc.annailabs.com (Chicago)</td>
-  <td>10.22</td>
-  <td>1.44</td>
-  <td>2.88</td>
-  <td>113.21</td>
+  <td>16.75</td>
+  <td>2.36</td>
+  <td>4.71</td>
+  <td>69.10</td>
 </tr>
 
 
@@ -570,10 +649,10 @@
   
 <tr>
   <td>gtrepo-riken.annailabs.com (Tokyo)</td>
-  <td>0.00</td>
-  <td>0.00</td>
-  <td>0.00</td>
-  <td>21787860.22</td>
+  <td>36.44</td>
+  <td>5.12</td>
+  <td>10.25</td>
+  <td>31.76</td>
 </tr>
 
 

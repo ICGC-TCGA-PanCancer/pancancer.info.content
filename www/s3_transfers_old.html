@@ -1,0 +1,61 @@
+<html>
+<head>
+  <title>ICGC PanCancer Status</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <meta name="generator" content="Geany 1.23.1" />
+  <meta charset="utf-8" http-equiv="refresh" content="600">
+  <meta name="google-site-verification" content="OzrZ5nFulNwQ1tXMi9ItSQUJV9VnyuoqZgGuh_KXyMg" />
+  <link rel="stylesheet" type="text/css" href="style1.css">
+  <link rel="stylesheet" type="text/css" href="http://bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="http://d3js.org/topojson.v1.min.js"></script>
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <script type="text/javascript" src="http://datamaps.github.io/scripts/datamaps.world.min.js?v=1"></script>
+  <script type="text/javascript" src="/js/common.js"></script>
+  <script type="text/javascript">loadJS('s3_transfers_old')</script>
+</head>
+
+<body>
+  <script type="text/javascript">
+  $('document').ready(function(){
+    //$("#cluster_choice").load("s3_cluster_choice.html");
+    loadS3Page(cluster);
+  });
+  </script>
+  <div id="pancancer-header"></div>
+  <div class="content">
+    <center>
+    <h2 class="c3" id="date_status"></h2>
+    <div id="cluster_choice" style="width:400px"></div>
+    <h3 style="color:red">NOTE: These totals are combined BWA and Sanger-VCF file transfers</h3> 
+    <font size="small"><a href="s3_transfers.html">Link to new s3 transfer data</a></font>
+    </center>
+    <h3>Daily totals</h3>
+    <table id="history" style="float:left;width:80%" class="rounded-corner c5" summary="">
+    </table>
+    <br clear="all">
+    <h3>Current totals</h3>
+    <div id="pie"></div>
+    <br clear="all">
+    <h3>Completed transfers</h3>
+    <div id="history_chart"></div>
+    <br clear="all">
+    <h3>Transfers by GNOS repository</h3>
+    <table id="transfers_repo" style="float:left;width:80%" class="rounded-corner c5" summary=""></table>
+    <br clear="all">
+    <h3>Transfers by project</h3>
+    <table id="transfers_project" style="float:left;width:80%" class="rounded-corner c5" summary="">
+    </table>
+    <br clear="all">
+    <h3>Project transfer status</h3>
+    <table id="transfers_project_status" style="float:left;width:80%" class="rounded-corner c5" summary="">
+    </table>
+    <br clear="all">
+    <h3>Transfer rates</h3>
+    <div id="line1"></div>
+    <br clear="all">
+    <div id="line2"></div>
+  </div>
+</body>
+</html>
