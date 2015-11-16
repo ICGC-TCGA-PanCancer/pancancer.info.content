@@ -22,7 +22,6 @@ var live_aln_repos = ['bsc', 'osdc-icgc', 'dkfz',
 		 'ebi', 'cghub', 'etri', 'tokyo'
 		];
 
-
 updateTable = function(ele,jsonFile) {
     var table = document.getElementsByName(ele);
     var json_data;
@@ -228,7 +227,13 @@ function loadAlignmentTable1() {
 		      //console.log(aln_repos[i]);
 		      //console.log(json[aln_repos[i]]);
 		      if (!json[live_aln_repos[i]]) {
-			  continue;
+			  if (! json[live_aln_repos[i]] && live_aln_repos[i] == 'tokyo') {
+			      console.log('tokyo failed, trying riken');
+			      live_aln_repos[i] = 'riken';
+			      if (!json[live_aln_repos[i]]) {
+				  continue;
+			      }			      
+			  }
 		      }
 		      tr = $('<tr/>');
 		      tr.append("<td>" + repo_name[live_aln_repos[i]]
@@ -337,6 +342,12 @@ function loadAlignmentTable3() {
         var tr;
 
         for (var i = 0; i < Object.keys(json).length; i++) {
+	    console.log('repo is'+live_aln_repos[i]);
+	    if (! json[live_aln_repos[i]] && live_aln_repos[i] == 'tokyo') {
+		console.log('trying riken');
+		live_aln_repos[i] = 'riken';
+	    }
+
 	    if (json[live_aln_repos[i]] != undefined) {
 		tr = $('<tr/>');
 		tr.append("<td>" + repo_name[live_aln_repos[i]]
@@ -347,12 +358,21 @@ function loadAlignmentTable3() {
 		
 		total[0] += json[live_aln_repos[i]]['_ori_count'][1] + json[live_aln_repos[i]]['_ori_count'][2];
 
-            for (var j = 0; j < live_aln_repos.length; j++) {
-                var cell_value = json[live_aln_repos[i]][live_aln_repos[j]] == undefined ? 0 : (json[live_aln_repos[i]][live_aln_repos[j]][1] + json[live_aln_repos[i]][live_aln_repos[j]][2]);
-                tr.append("<td>" + cell_value + "</td>");
-                total[j+1] += cell_value;
-            }
-            $("table[name='x11']").append(tr);
+		for (var j = 0; j < live_aln_repos.length; j++) {
+		    var cell_value = 0;
+                    if (json[live_aln_repos[i]][live_aln_repos[j]]) {
+			var data = json[live_aln_repos[i]][live_aln_repos[j]];
+			cell_value = data[1] + data[2];
+			console.log(live_aln_repos[i]+' '+live_aln_repos[j]+' '+cell_value);
+		    }
+                    tr.append("<td>" + cell_value + "</td>");
+                    total[j+1] += cell_value;
+		}
+		$("table[name='x11']").append(tr);
+	    }
+	    else {
+		console.log("Something is wrong "+live_aln_repos[i]);
+		console.log(Object.keys(json));
 	    }
         }
 
@@ -427,7 +447,7 @@ function drawAlignmentChart2() {
     var chart_data = new google.visualization.DataTable();
     chart_data.addColumn('string', 'Date');
 
-    for (var i = 0; i < aln_reposx_chart.length; i++) {
+    for (var i = 0; i < aln_repos_chart.length; i++) {
         chart_data.addColumn('number', repo_name[aln_repos_chart[i]]);
     }
 
