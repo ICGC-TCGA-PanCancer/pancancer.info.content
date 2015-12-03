@@ -2,15 +2,25 @@
 google.load('visualization', '1', {'packages':['corechart']});
       
 var projects, repos, timestamp, jobType, months, metadata,colorMap;
-var type = 1;
+var type = 3;
 
 loadData = function(typeNum) {
     type = typeNum;
-    metadata = typeNum > 1 ? 's3_metadata/BWA' : 's3_metadata/Sanger-VCF'; 
+    metadata;
+    if (typeNum == 2) {
+	metadata = 's3_metadata/BWA';
+    } 
+    else if (typeNum == 1) {
+	metadata = 's3_metadata/Sanger-VCF';
+    }
+    else if (typeNum == 3) {
+	metadata = 's3_metadata/Dkfz_embl-VCF';
+    }
+
     $.getJSON(metadata+'/latest/projects.json', function(data) {projects = data});
     $.getJSON(metadata+'/latest/repos.json', function(data) {repos = data});
     $.getJSON(metadata+'/latest/timestamp.json', function(data) {timestamp = data[0]});
-    jobType = ['backlog', 'queued', 'verifying', 'downloading', 'uploading', 'failed', 'completed'];
+    jobType = ['backlog', 'queued', 'verifying', 'downloading', 'uploading', 'failed', 'retry','suppressed','completed'];
     categories = ['expected_to_be_transferred',
 		  'both_transferred', 
 		  'normal_transferred_tumor_not',
@@ -28,7 +38,9 @@ loadData = function(typeNum) {
 	'downloading':'#ff9900',
 	'uploading':'#dd4477',
 	'failed':'#990099',
-	'completed':'#109618'
+	'completed':'#109618',
+	'suppressed':'#ff0000',
+	'retry':'#ffa500'
     };
 }
 
@@ -40,6 +52,7 @@ updateTransferTable = function(type) {
     $.getJSON(jFile, function(data) {
 	typeArray = data;
 	var jsonFile = metadata+'/latest/'+type+'_counts.json';
+	//console.log(jsonFile);
 	var table = $('#transfers_'+type);
 	var headerText = type == 'project' ? 'Project' : 'Repository';
 	
@@ -127,7 +140,7 @@ updateHistoryTable = function() {
 	    date_data = data[date];
 	    total = 0;
 	    $.each(jobType, function(i,job) {
-		count = date_data[job+'-jobs'];
+		count = date_data[job+'-jobs'] || 0;
 		$('<td>').html(count).appendTo(tr);
 		total = total + count;
 	    });
@@ -157,7 +170,8 @@ updateProjectStatusTable = function() {
 
     table.empty();
 
-    if (type == 1) {
+    // Only for BWA 
+    if (type != 2) {
 	$('#project_status').css('display','none');
     }
     else {
@@ -272,7 +286,7 @@ updatePieChart = function() {
 		if (key != 'backlog') {
 		    table.addRow([key,val]);
 		    sliceColors.push(colorMap[key]);
-		    console.log(key+' '+val);
+		    //console.log(key+' '+val);
 		}
 	    }
 	});
@@ -297,6 +311,15 @@ updatePieChart = function() {
 }
 
 updateLineChart = function() {
+    $('#transfer_rates').css('display','none');
+    return true;
+    if (metadata.match('Dkfz')) {
+        $('#transfer_rates').css('display','none');
+        return true;
+    }
+    else {
+        $('#transfer_rates').css('display','inline');
+    }
     var jsonFile = metadata+"/latest/timing.json";
 
     $.getJSON(jsonFile, function(data) {
@@ -334,7 +357,7 @@ addTableData = function(data,dataType,div_id) {
 		ave = sum/values.length;
 	    }
 	    
-	    if (div_id == 'line2' && type == 1 && ave > 70) {
+	    if (div_id == 'line2' && type != 2 && ave > 70) {
 		ave = 70;
 	    }
 	    if (div_id == 'line2' && type == 2 && ave > 150) {

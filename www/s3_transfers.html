@@ -26,9 +26,10 @@
   <div class="content">
     <center>
     <h2 class="c3" id="date_status"></h2>
-    <div id="cluster_choice" style="width:400px">
+    <div id="cluster_choice" style="width:600px">
       <form name="f1">
 	<div style="font-size:large;background:ivory;border: 1px solid lightgray"><b>Workflow type:</b> &nbsp;
+	  <input type="radio" name="typeNum" value=3 onchange="loadS3Page(3)" id="type3_button"> DKFZ_EMBL-VCF
 	  <input type="radio" name="typeNum" value=1 onchange="loadS3Page(1)" id="type1_button"> Sanger-VCF
 	  <input type="radio" name="typeNum" value=2 onchange="loadS3Page(2)" id="type2_button"> BWA
 	</div>
@@ -62,10 +63,13 @@
       </table>
       <br clear="all">
     </div>
-    <h3>Transfer rates</h3>
-    <div id="line1"></div>
-    <br clear="all">
-    <div id="line2"></div>
+    <div id="transfer_rates">
+      <h3>Transfer rates</h3>
+      <div id="line1"></div>
+      <br clear="all">
+      <div id="line2"></div>
+    </div>
+
   </div>
 </body>
 </html>
