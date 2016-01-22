@@ -1,0 +1,68 @@
+<html>
+<head>
+  <title>ICGC PanCancer Status</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <meta name="generator" content="Geany 1.23.1" />
+  <meta charset="utf-8" http-equiv="refresh" content="600">
+  <meta name="google-site-verification" content="OzrZ5nFulNwQ1tXMi9ItSQUJV9VnyuoqZgGuh_KXyMg" />
+  <link rel="stylesheet" type="text/css" href="style1.css">
+  <link rel="stylesheet" type="text/css" href="http://bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="http://d3js.org/topojson.v1.min.js"></script>
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <script type="text/javascript" src="http://datamaps.github.io/scripts/datamaps.world.min.js?v=1"></script>
+  <script type="text/javascript" src="/js/common.js"></script>
+  <script type="text/javascript">loadJS('oxog')</script>
+</head>
+
+<body>
+  <script type="text/javascript">
+  $('document').ready(function(){
+    loadOxogPage(2);
+  });
+  </script>
+  <div id="pancancer-header"></div>
+  <div class="content">
+    <center>
+    <h2 class="c3" id="date_status"></h2>
+    <div id="cluster_choice" style="width:400px">
+      <form name="f1">
+        <div style="font-size:large;background:ivory;border: 1px solid lightgray"><b>Site:</b> &nbsp;
+          <input type="radio" name="typeNum" value=1 onchange="loadOxogPage(1)" id="type1_button"> AWS
+          <input type="radio" name="typeNum" value=2 onchange="loadOxogPage(2)" id="type2_button"> Collab
+	  <input type="radio" name="typeNum" value=3 onchange="loadOxogPage(3)" id="type3_button"> UCSC
+        </div>
+      </form>
+      <script type="text/javascript">
+	if (!type) {
+	    type = 2;
+	}
+        var choice = "type"+type+"_button";
+        $('#'+choice).prop("checked",true);
+      </script>
+    </div>
+    </center>
+
+    <h3>Daily totals</h3>
+    <table id="history" style="float:left;width:80%" class="rounded-corner c5" summary="">
+    </table>
+    <br clear="all">
+    <h3>Current totals</h3>
+    <div id="pie"></div>
+    <br clear="all">
+    <h3>Completed</h3>
+    <div id="history_chart"></div>
+    <br clear="all">
+<!--
+    <h3>Transfers by GNOS repository</h3>
+    <table id="transfers_repo" style="float:left;width:80%" class="rounded-corner c5" summary=""></table>
+    <br clear="all">
+-->
+    <h3>By project</h3>
+    <table id="transfers_project" style="float:left;width:80%" class="rounded-corner c5" summary="">
+    </table>
+    <br clear="all">
+  </div>
+</body>
+</html>
