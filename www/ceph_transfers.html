@@ -26,10 +26,13 @@
   <div class="content">
     <center>
     <h2 class="c3" id="date_status"></h2>
-    <div id="cluster_choice" style="width:400px">
+    <div id="cluster_choice" style="width:900px">
       <form name="f1">
         <div style="font-size:large;background:ivory;border: 1px solid lightgray"><b>Workflow type:</b> &nbsp;
+          <input type="radio" name="typeNum" value=3 onchange="loadCephPage(3)" id="type3_button"> DKFZ_EMBL-VCF
           <input type="radio" name="typeNum" value=1 onchange="loadCephPage(1)" id="type1_button"> Sanger-VCF
+          <input type="radio" name="typeNum" value=1 onchange="loadCephPage(4)" id="type4_button"> Muse-VCF
+          <input type="radio" name="typeNum" value=1 onchange="loadCephPage(5)" id="type5_button"> Broad-VCF
           <input type="radio" name="typeNum" value=2 onchange="loadCephPage(2)" id="type2_button"> BWA
         </div>
       </form>

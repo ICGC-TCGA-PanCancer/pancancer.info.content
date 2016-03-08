@@ -1,20 +1,30 @@
 // Load the Visualization API and the piechart package.
 google.load('visualization', '1', {'packages':['corechart']});
       
-var projects, repos, timestamp, jobType, months, metadata,colorMap;
-var type = 3;
+var projects, repos, timestamp, jobType, months, metadata, colorMap, pageHeader;
+var type = 5;
 
 loadData = function(typeNum) {
     type = typeNum;
-    metadata;
     if (typeNum == 2) {
 	metadata = 's3_metadata/BWA';
+	pageHeader = 'BWA';
     } 
     else if (typeNum == 1) {
 	metadata = 's3_metadata/Sanger-VCF';
+	pageHeader = 'Sanger VCF';
     }
     else if (typeNum == 3) {
 	metadata = 's3_metadata/Dkfz_embl-VCF';
+	pageHeader = 'DKFZ-EMBL VCF';
+    }
+    else if (typeNum == 4) {
+        metadata = 's3_metadata/Muse-VCF';
+	pageHeader = 'Muse VCF';
+    }
+    else if (typeNum == 5) {
+	metadata = 's3_metadata/Broad-VCF';
+	pageHeader = 'Broad VCF';
     }
 
     $.getJSON(metadata+'/latest/projects.json', function(data) {projects = data});
@@ -56,6 +66,14 @@ updateTransferTable = function(type) {
 	var table = $('#transfers_'+type);
 	var headerText = type == 'project' ? 'Project' : 'Repository';
 	
+	if (type != 'project' && metadata == 's3_metadata/BWA') {
+	    $('#byRepo').css('display','none');
+	    return true;
+	} 
+	else {
+	    $('#byRepo').css('display','inline');
+	}
+
 	table.empty();
 	
 	$.getJSON(jsonFile, function(today_data) {
@@ -271,7 +289,7 @@ updatePieChart = function() {
         var today = dates.pop();
 
 	// Update header
-	$('#date_status').html('S3 transfers as of '+timestamp);
+	$('#date_status').html(pageHeader+' S3 transfers as of '+timestamp);
 
         data = all_data[today];
 

@@ -183,7 +183,11 @@ updatePieChart = function() {
         var today = dates.pop();
 
 	// Update header
-	$('#date_status').html('Oxog as of '+timestamp);
+	var headerText = 'Oxog as of '+timestamp;
+	if (type != 2) {
+	    headerText = "<font color='red'><b>TESTING</b> "+headerText+"</font>";
+	}
+	$('#date_status').html(headerText);
 
         data = all_data[today];
 
