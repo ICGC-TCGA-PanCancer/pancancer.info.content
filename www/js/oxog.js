@@ -184,7 +184,7 @@ updatePieChart = function() {
 
 	// Update header
 	var headerText = 'Oxog as of '+timestamp;
-	if (type != 2) {
+	if (type == 3) {
 	    headerText = "<font color='red'><b>TESTING</b> "+headerText+"</font>";
 	}
 	$('#date_status').html(headerText);
