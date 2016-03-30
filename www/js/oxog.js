@@ -4,7 +4,7 @@ google.load('visualization', '1', {'packages':['corechart']});
 var projects, repos, timestamp, jobType, months, metadata,colorMap;
 var type = 2;
 
-var types = [null,'aws','collab','ucsc'];
+var types = [null,'aws','collab','tcga','gtdownload'];
 
 loadData = function(typeNum) {
     type = typeNum
@@ -12,16 +12,15 @@ loadData = function(typeNum) {
     console.log(type + ', ' +metadata);
     $.getJSON(metadata+'/latest/projects.json', function(data) {projects = data});
     $.getJSON(metadata+'/latest/timestamp.json', function(data) {timestamp = data[0]});
-    jobType = ['backlog', 'queued', 'verifying', 'downloading', 'uploading', 'failed', 'retry', 'completed'];
+    jobType = ['backlog', 'queued', 'downloading', 'running','uploading', 'failed', 'completed'];
     months = ['Jan','Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     colorMap = {
 	'queued':'#3366cc', 
-	'verifying':'#dc3912', 
+	'running':'#dc3912', 
 	'downloading':'#ff9900',
 	'uploading':'#dd4477',
 	'failed':'#990099',
-	'completed':'#109618',
-	'retry':'#000000'
+	'completed':'#109618'
     };
 }
 
@@ -184,9 +183,9 @@ updatePieChart = function() {
 
 	// Update header
 	var headerText = 'Oxog as of '+timestamp;
-	if (type == 3) {
+	/*if (type == 3) {
 	    headerText = "<font color='red'><b>TESTING</b> "+headerText+"</font>";
-	}
+	}*/
 	$('#date_status').html(headerText);
 
         data = all_data[today];
