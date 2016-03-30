@@ -1,0 +1,149 @@
+<html>
+<head>
+  <title>ICGC PanCancer Status</title>
+  
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <meta name="generator" content="Geany 1.23.1" />
+  <meta charset="utf-8" http-equiv="refresh" content="600">
+  <meta name="google-site-verification" content="OzrZ5nFulNwQ1tXMi9ItSQUJV9VnyuoqZgGuh_KXyMg" />
+
+  <link rel="stylesheet" type="text/css" href="style1.css">
+  <link rel="stylesheet" type="text/css" href="http://bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <script type="text/javascript" src="http://datamaps.github.io/scripts/datamaps.world.min.js?v=1"></script>
+  <script type="text/javascript" src="js/common.js"></script>
+  <script type="text/javascript">loadJS(['alignments','variant_calling'])</script>
+</head>
+<body>
+<script>
+  function selectVariantWorkflow(wf) {
+    workflow = wf.value;    
+    $('#vhead1').html('Donors with '+ workflow  +' Variant Calls (Live)');
+    loadVariantData(workflow);
+  }
+
+  function loadVariantData(wf) {
+    loadVariantTable1();
+    drawVariantChart1(wf);
+  }
+
+  $( document ).ready(function(){
+    $("#variant_workflow").load("variant_workflow_choice.html");
+    loadVariantData('Sanger');
+    loadAlignmentTable1();
+    loadAlignmentTable2();
+    loadAlignmentTable3();
+  });
+</script>
+<center>
+
+  <div id="pancancer-header"></div>
+
+  <h2>ICGC/TCGA PanCancer Status</h2>
+
+<div id="variant_workflow"></div>
+
+<div id="#datatotal" style="width:911px;">
+<h2 style="float:left;" id="vhead1">Donors with Sanger Variant Calls (Live)</h2>
+<p style="float:left;">The first column shows the number of donors aligned at a repo that have variants called. The subsequent columns show the location of the results. Note: Donors aligned at cloud X may have variants computed at cloud Y and VCFs uploaded to cloud Z. Currently, the cloud performing the computation is not shown but will be at a later time.</p>
+<p>
+<br><table name ="x12" id="rounded-corner" summary="">
+<thead>
+<tr>
+    <th nowrap>Donors aligned at<br/>(donor count)</th>
+    <th>VCF at Barcelona</th>
+    <th>VCF at Chicago(ICGC)</th>
+    <th>VCF at Chicago(TCGA)</th>
+    <th>VCF at Heidelberg</th>
+    <th>VCF at London</th>
+    <th>VCF at Santa Cruz</th>
+    <th>VCF at Seoul</th>
+    <th>VCF at Tokyo</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+</p>
+</div>
+
+<div id="#datatotal" style="width:1100px;">
+<p>
+<div id="chart_div"></div>
+</p>
+</div>
+
+<div id="#datatotal" style="width:911px;">
+<h2 style="float:left;">Aligned Donor Sets (Live)</h2>
+<p style="float:left;">This table tracks the number of completed donor sets that have been synchronized from the repo that did the alignment to other repos.</p>
+<p>
+<br><table name ="x10" id="rounded-corner" summary="">
+<thead>
+<tr>
+    <th nowrap>Donors aligned at<br/>(donor count)</th>
+    <th>Available at Barcelona</th>
+    <th>Available at Chicago</th>
+    <th>Available at Heidelberg</th>
+    <th>Available at London</th>
+    <th>Available at Santa Cruz</th>
+    <th>Available at Seoul</th>
+    <th>Available at Tokyo</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+</p>
+</div>
+
+<div id="#datatotal" style="width:911px;">
+<h2 style="float:left;">Aligned Specimens (Live)</h2>
+<p style="float:left;">This table tracks the number of specimens that have been synchronized from the repo that did the alignment to other repos.</p>
+<p>
+<br><table name ="x11" id="rounded-corner" summary="">
+<thead>
+<tr>
+    <th nowrap>Specimens aligned at<br/>(specimen count)</th>
+    <th>Available at Barcelona</th>
+    <th>Available at Chicago</th>
+    <th>Available at Heidelberg</th>
+    <th>Available at London</th>
+    <th>Available at Santa Cruz</th>
+    <th>Available at Seoul</th>
+    <th>Available at Tokyo</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+</p>
+</div>
+
+<div id="#datatotal" style="width:911px;">
+<h2 style="float:left;">Total Donor Info (Live)</h2>
+<p style="float:left;">A comparison of donor alignment status across projects. This removes test data and factors in duplication of specimens across multiple GNOS repositories, producing the most accurate count of available donors we have available.</p>
+<p>
+<br><table name ="x9" id="rounded-corner" summary="">
+<thead>
+<tr>
+    <th nowrap>Project code</th>
+    <th>Completed donors</th>
+    <th>Normal aligned, tumor unaligned</th>
+    <th>Tumor aligned, normal unaligned</th>
+    <th>Normal and tumor unaligned</th>
+    <th>Normal aligned, tumor missing</th>
+    <th>Normal unaligned, tumor missing</th>
+    <th>Tumor aligned, normal missing</th>
+    <th>Tumor unaligned, normal missing</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+</p>
+</div>
+</center>
+</body>
+</html>
