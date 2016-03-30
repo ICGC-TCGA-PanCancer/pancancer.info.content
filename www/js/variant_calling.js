@@ -14,7 +14,7 @@ function selectVariantWorkflow(wf) {
 }
 
 function loadVariantWorkflow() {
-    var wf = workflow || 'Sanger';
+    var wf = workflow || 'Broad';
     setVariantHeaders(wf);
     loadVariantTable1();
     drawVariantChart1(wf);

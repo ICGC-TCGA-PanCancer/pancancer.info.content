@@ -1,60 +1,31 @@
 // Load the Visualization API and the piechart package.
 google.load('visualization', '1', {'packages':['corechart']});
       
-var projects, repos, timestamp, jobType, months, metadata, colorMap, pageHeader;
-var type = 5;
+var projects, repos, timestamp, jobType, months, metadata,colorMap;
+var type = 2;
+
+var types = [null,'aws','collab','tcga','gtdownload'];
 
 loadData = function(typeNum) {
-    type = typeNum;
-    if (typeNum == 2) {
-	metadata = 's3_metadata/BWA';
-	pageHeader = 'BWA';
-    } 
-    else if (typeNum == 1) {
-	metadata = 's3_metadata/Sanger-VCF';
-	pageHeader = 'Sanger VCF';
-    }
-    else if (typeNum == 3) {
-	metadata = 's3_metadata/Dkfz_embl-VCF';
-	pageHeader = 'DKFZ-EMBL VCF';
-    }
-    else if (typeNum == 4) {
-        metadata = 's3_metadata/Muse-VCF';
-	pageHeader = 'Muse VCF';
-    }
-    else if (typeNum == 5) {
-	metadata = 's3_metadata/Broad-VCF';
-	pageHeader = 'Broad VCF';
-    }
-
+    type = typeNum
+    metadata = 'oxog_metadata/'+types[type];
+    console.log(type + ', ' +metadata);
     $.getJSON(metadata+'/latest/projects.json', function(data) {projects = data});
-    $.getJSON(metadata+'/latest/repos.json', function(data) {repos = data});
     $.getJSON(metadata+'/latest/timestamp.json', function(data) {timestamp = data[0]});
-    jobType = ['backlog', 'queued', 'verifying', 'downloading', 'uploading', 'failed', 'retry','suppressed','completed'];
-    categories = ['expected_to_be_transferred',
-		  'both_transferred', 
-		  'normal_transferred_tumor_not',
-		  'tumor_transferred_normal_not', 
-		  'both_not_transferred'];
-    category_name = {'expected_to_be_transferred':'expected to<br>be transfered',
-                     'both_transferred':'both transferred<br>&nbsp;',
-                     'normal_transferred_tumor_not':'normal transferred,<br>tumor not',
-                     'tumor_transferred_normal_not':'tumor transferred,<br>normal not',
-                     'both_not_transferred':'neither transferred<br>&nbsp;'}
+    jobType = ['backlog', 'queued', 'downloading', 'running','uploading', 'failed', 'completed'];
     months = ['Jan','Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     colorMap = {
 	'queued':'#3366cc', 
-	'verifying':'#dc3912', 
+	'running':'#dc3912', 
 	'downloading':'#ff9900',
 	'uploading':'#dd4477',
 	'failed':'#990099',
-	'completed':'#109618',
-	'suppressed':'#ff0000',
-	'retry':'#ffa500'
+	'completed':'#109618'
     };
 }
 
 loadData(type);
+
 
 updateTransferTable = function(type) {
     var jFile = metadata+'/latest/'+type+'s.json';
@@ -62,18 +33,9 @@ updateTransferTable = function(type) {
     $.getJSON(jFile, function(data) {
 	typeArray = data;
 	var jsonFile = metadata+'/latest/'+type+'_counts.json';
-	//console.log(jsonFile);
 	var table = $('#transfers_'+type);
 	var headerText = type == 'project' ? 'Project' : 'Repository';
 	
-	if (type != 'project' && metadata == 's3_metadata/BWA') {
-	    $('#byRepo').css('display','none');
-	    return true;
-	} 
-	else {
-	    $('#byRepo').css('display','inline');
-	}
-
 	table.empty();
 	
 	$.getJSON(jsonFile, function(today_data) {
@@ -158,7 +120,10 @@ updateHistoryTable = function() {
 	    date_data = data[date];
 	    total = 0;
 	    $.each(jobType, function(i,job) {
-		count = date_data[job+'-jobs'] || 0;
+		count = date_data[job+'-jobs'];
+		if (!count) {
+		    count = 0;
+		}
 		$('<td>').html(count).appendTo(tr);
 		total = total + count;
 	    });
@@ -178,78 +143,6 @@ updateHistoryTable = function() {
 	      
     table.append(tbody);
     
-}
-
-updateProjectStatusTable = function() {
-    var jsonFile = "gnos_metadata/latest/reports/s3_transfer_summary/donor.json";
-    var table = $('#transfers_project_status');
-    var tbody = $('<tbody>')
-    var totals = {};
-
-    table.empty();
-
-    // Only for BWA 
-    if (type != 2) {
-	$('#project_status').css('display','none');
-    }
-    else {
-	$('#project_status').css('display','inline');
-    }
-
-    $.each(categories, function(i,category) {
-	totals[category] = 0;
-    });
-
-    $.getJSON(jsonFile, function(data) {
-	tr = $('<tr>');
-	$('<th>').html('Project').appendTo(tr);
-	$.each(categories, function(i,category) {
-	    cell = category_name[category];
-	    $('<th>').html(cell).appendTo(tr);
-	});
-//	$('<th>').html('Total').appendTo(tr);
-	tr.appendTo(tbody);
-
-	data.sort(function(a,b) {
-	    return parseInt(b['expected_to_be_transferred']) - parseInt(a['expected_to_be_transferred']);
-	});
-
-	$.each(data, function(i,row) {
-	    tr = $('<tr>');
-
-	    h1 = row["project"];
-	    $('<th>').html(h1).appendTo(tr);
-	    
-	    $.each(categories, function(i,category) {
-		cell = $('<td>');
-		count = row[category] || 0;
-		file = [h1,category,'donors.txt'].join('.');
-		link = $('<a>');
-		link.html(count);
-		link.attr('href','gnos_metadata/latest/reports/s3_transfer_summary/'+file);
-		link.attr('target','project_count');
-		link.appendTo(cell);
-		cell.css('padding-left','50px');
-		cell.appendTo(tr);
-		totals[category] += count;
-	    });
-
-//	    $('<td>').html(row_total).appendTo(tr);
-	    tr.appendTo(tbody);
-	});
-
-	tr = $('<tr>');
-	$('<th>').html('Total').appendTo(tr);
-	$.each(categories, function(i,category) {
-	    cell = $('<td>');
-	    cell.css('padding-left','50px');
-	    cell.html(totals[category]).appendTo(tr);
-	});
-
-	tr.appendTo(tbody);
-    });
-
-    table.append(tbody);
 }
 
 updateHistoryChart = function(rows) {
@@ -289,7 +182,11 @@ updatePieChart = function() {
         var today = dates.pop();
 
 	// Update header
-	$('#date_status').html(pageHeader+' S3 transfers as of '+timestamp);
+	var headerText = 'Oxog as of '+timestamp;
+	/*if (type == 3) {
+	    headerText = "<font color='red'><b>TESTING</b> "+headerText+"</font>";
+	}*/
+	$('#date_status').html(headerText);
 
         data = all_data[today];
 
@@ -304,7 +201,7 @@ updatePieChart = function() {
 		if (key != 'backlog') {
 		    table.addRow([key,val]);
 		    sliceColors.push(colorMap[key]);
-		    //console.log(key+' '+val);
+		    console.log(key+' '+val);
 		}
 	    }
 	});
@@ -325,26 +222,6 @@ updatePieChart = function() {
 	
         chart.draw(table, options);
 	
-    });
-}
-
-updateLineChart = function() {
-    $('#transfer_rates').css('display','none');
-    return true;
-    if (metadata.match('Dkfz')) {
-        $('#transfer_rates').css('display','none');
-        return true;
-    }
-    else {
-        $('#transfer_rates').css('display','inline');
-    }
-    var jsonFile = metadata+"/latest/timing.json";
-
-    $.getJSON(jsonFile, function(data) {
-	var download_data = data['download'];
-	var upload_data = data['upload'];
-	addTableData(download_data,'Average download speed by GNOS repository','line1');
-	addTableData(upload_data,'Average upload speed by GNOS repository','line2');	
     });
 }
 
@@ -375,7 +252,7 @@ addTableData = function(data,dataType,div_id) {
 		ave = sum/values.length;
 	    }
 	    
-	    if (div_id == 'line2' && type != 2 && ave > 70) {
+	    if (div_id == 'line2' && type == 1 && ave > 70) {
 		ave = 70;
 	    }
 	    if (div_id == 'line2' && type == 2 && ave > 150) {
@@ -404,12 +281,9 @@ addTableData = function(data,dataType,div_id) {
     chart.draw(table,options);
 }
 
-loadS3Page = function(typeNum) {
+loadOxogPage = function(typeNum) {
     loadData(typeNum);
     updateTransferTable('project');
-    updateTransferTable('repo');
     updatePieChart();
-    updateLineChart();
     updateHistoryTable();
-    updateProjectStatusTable();
 }

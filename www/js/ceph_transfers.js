@@ -1,12 +1,34 @@
 // Load the Visualization API and the piechart package.
 google.load('visualization', '1', {'packages':['corechart']});
       
-var projects, repos, timestamp, jobType, months, metadata,colorMap;
+var projects, repos, timestamp, jobType, months, metadata,colorMap,pageHeader;
 var type = 1;
 
 loadData = function(typeNum) {
     type = typeNum
     metadata = typeNum > 1 ? 'ceph_metadata/BWA' : 'ceph_metadata/Sanger-VCF';
+
+    if (typeNum == 2) {
+        metadata = 'ceph_metadata/BWA';
+        pageHeader = 'BWA';
+    }
+    else if (typeNum == 1) {
+        metadata = 'ceph_metadata/Sanger-VCF';
+        pageHeader = 'Sanger VCF';
+    }
+    else if (typeNum == 3) {
+        metadata = 'ceph_metadata/Dkfz_embl-VCF';
+        pageHeader = 'DKFZ-EMBL VCF';
+    }
+    else if (typeNum == 4) {
+        metadata = 'ceph_metadata/Muse-VCF';
+        pageHeader = 'Muse VCF';
+    }
+    else if (typeNum == 5) {
+        metadata = 'ceph_metadata/Broad-VCF';
+        pageHeader = 'Broad VCF';
+    }
+
     $.getJSON(metadata+'/latest/projects.json', function(data) {projects = data});
     $.getJSON(metadata+'/latest/repos.json', function(data) {repos = data});
     $.getJSON(metadata+'/latest/timestamp.json', function(data) {timestamp = data[0]});
@@ -102,12 +124,16 @@ updateTransferTable = function(type) {
 
 updateHistoryTable = function() {
     var jsonFile = metadata+"/latest/hist_counts.json";
+
+    console.log(jsonFile);
     var table = $('#history');
+    table.empty();
     var tbody = $('<tbody>')
     var tr = $('<tr>');
 
     table.empty();
     var totals = [];
+
 
     $.getJSON(jsonFile, function(data) {
         tr = $('<tr>');
@@ -266,7 +292,7 @@ updatePieChart = function() {
         var today = dates.pop();
 
 	// Update header
-	$('#date_status').html('Ceph transfers as of '+timestamp);
+	$('#date_status').html(pageHeader+' ceph transfers as of '+timestamp);
 
         data = all_data[today];
 

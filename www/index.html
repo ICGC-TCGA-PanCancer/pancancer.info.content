@@ -23,7 +23,7 @@
 <body>
 <script>
   function selectVariantWorkflow(wf) {
-    workflow = wf.value;    
+    workflow = wf.value || 'Broad';
     $('#vhead1').html('Donors with '+ workflow  +' Variant Calls (Live)');
     loadVariantData(workflow);
   }
@@ -33,9 +33,11 @@
     drawVariantChart1(wf);
   }
 
+
+
   $( document ).ready(function(){
     $("#variant_workflow").load("variant_workflow_choice.html");
-    loadVariantData('Sanger');
+    loadVariantData('Broad');
     loadAlignmentTable1();
     loadAlignmentTable2();
     loadAlignmentTable3();
@@ -50,7 +52,7 @@
     <div id="variant_workflow" style="width:500px"></div>
   </center>
 
-  <h2 style="float:left;" id="vhead1">Donors with Sanger Variant Calls (Live)</h2>
+  <h2 style="float:left;" id="vhead1">Donors with Broad Variant Calls (Live)</h2>
   <p style="float:left;">
     The first column shows the number of donors aligned at a repo that have variants called. The subsequent columns show the 
     location of the results. Note: Donors aligned at cloud X may have variants computed at cloud Y and VCFs uploaded to cloud 
