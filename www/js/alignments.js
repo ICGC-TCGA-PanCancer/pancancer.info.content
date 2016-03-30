@@ -112,12 +112,13 @@ updateLiveTable = function(ele) {
 	    var total = 0;
 	    var unaligned = 0;
 	    if (site_data) {
+		console.log(aln_repos[i]+' '+site_data['aligned']);
 		aligned   = parseInt(site_data['aligned'] || 0);
 		total     = parseInt(site_data['total'] || 0);
 		unaligned = parseInt(site_data['unaligned'] || 0);
 	    }
 	    else {
-		//console.log("I am on BAD repo "+aln_repos[i]);
+		console.log("I am on BAD repo "+aln_repos[i]);
 		aligned = 0;
 		total = 0;
 		unaligned = 0;
@@ -144,27 +145,27 @@ updateLiveTable = function(ele) {
 
         }
 
-        cell_1[9] = table[0].rows[1].cells[9];
-        cell_2[9] = table[0].rows[2].cells[9];
-        cell_3[9] = table[0].rows[3].cells[9];
-
-
-        cell_1[9].firstChild.data = '' + total_1;
-        cell_2[9].firstChild.data = '' + total_2;
-        cell_3[9].firstChild.data = '' + total_3;
-
-        cell_1[10] = table[0].rows[1].cells[9];
-        cell_2[10] = table[0].rows[2].cells[9];
         cell_1[10] = table[0].rows[1].cells[10];
         cell_2[10] = table[0].rows[2].cells[10];
+        cell_3[10] = table[0].rows[3].cells[10];
+
+
+        cell_1[10].firstChild.data = '' + total_1;
+        cell_2[10].firstChild.data = '' + total_2;
+        cell_3[10].firstChild.data = '' + total_3;
+
+        cell_1[11] = table[0].rows[1].cells[10];
+        cell_2[11] = table[0].rows[2].cells[10];
+        cell_1[11] = table[0].rows[1].cells[11];
+        cell_2[11] = table[0].rows[2].cells[11];
 
         var ave_1 = (total_1/total_3)*100;
         var num_1 = ave_1.toFixed(2);
         var ave_2 = (total_2/total_3)*100;
         var num_2 = ave_2.toFixed(2);
 
-        cell_1[10].firstChild.data = '' + num_1;
-        cell_2[10].firstChild.data = '' + num_2;
+        cell_1[11].firstChild.data = '' + num_1;
+        cell_2[11].firstChild.data = '' + num_2;
 
     });
 }
@@ -401,6 +402,7 @@ function cumulative_table() {
   <tr><td>AWS Ireland</td><td id="aws_ireland"></td></tr> \
   <tr><td>Azure</td><td id="azure"></td></tr> \
   <tr><td>Chicago (PDC2.0)</td><td id="pdc2_0"></td></tr> \
+  <tr><td>Heidelberg</td><td id="dkfz"></td></tr> \
   <tr><td>London</td><td id="ebi"></td></tr> \
   <tr><td>Seoul</td><td id="etri"></td></tr> \
   <tr><td>Tokyo</td><td id="tokyo"></td></tr> \
@@ -418,6 +420,7 @@ function table_header_site() {
 <th>AWS Ireland</th> \
 <th>Azure</th> \
 <th>Chicago<br>(PDC2.0)</th> \
+<th>Heidelberg</th> \
 <th>London</th> \
 <th>Seoul</th> \
 <th>Tokyo</th> \
@@ -632,8 +635,8 @@ function loadRepos() {
 	'unassigned': 'Unassigned'
     }
 
-    aln_repos_chart = ['aws_ireland','azure','pdc2_0', 'ebi', 'etri', 'oicr', 'tokyo'];
-    aln_repos = ['aws_ireland','azure','pdc2_0', 'ebi', 'etri', 'tokyo','oicr','unassigned'];
+    aln_repos_chart = ['aws_ireland','azure','pdc2_0', 'dkfz', 'ebi', 'etri', 'oicr', 'tokyo'];
+    aln_repos = ['aws_ireland','azure','pdc2_0', 'dkfz', 'ebi', 'etri', 'tokyo','oicr','unassigned'];
  }
 
 
