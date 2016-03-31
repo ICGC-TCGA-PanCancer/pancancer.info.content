@@ -9,7 +9,7 @@ var types = [null,'aws','collab','tcga','gtdownload'];
 loadData = function(typeNum) {
     type = typeNum
     metadata = 'oxog_metadata/'+types[type];
-    console.log(type + ', ' +metadata);
+//    console.log(type + ', ' +metadata);
     $.getJSON(metadata+'/latest/projects.json', function(data) {projects = data});
     $.getJSON(metadata+'/latest/timestamp.json', function(data) {timestamp = data[0]});
     jobType = ['backlog', 'queued', 'downloading', 'running','uploading', 'failed', 'completed'];
@@ -50,8 +50,8 @@ updateTransferTable = function(type) {
 		for(var j=0;j<typeArray.length;j++) {
 		    project = typeArray[j];
 		    project_data = job_data[project] || 0;
+		    total += parseInt(project_data);
 		    cols[i].push(project_data);
-		    total += project_data;
 		}
 		cols[i].push(total);
  	    });
@@ -60,8 +60,13 @@ updateTransferTable = function(type) {
 	    var header = [headerText];
 	    var tbody = $('<tbody>')
 	    var tr = $('<tr>');
+
 	    $.each(header.concat(jobType), function(i,col_head) {
-		$('<th>').html(col_head).appendTo(tr);
+		var th = $('<th>');
+		if (col_head == 'completed') {
+		    th.css('color','red');
+		}
+		th.html(col_head).appendTo(tr);
 	    });
 	    $('<th>').html('Total').appendTo(tr);
 	    tbody.append(tr);
@@ -77,6 +82,9 @@ updateTransferTable = function(type) {
 		$.each(cols, function(j,col) {
 		    cell = $('<td>');
 		    cell.css('padding-left','20px');
+		    if (j == cols.length - 1) {
+			cell.css('color','red');
+		    }
 		    cell.html(col[i]).appendTo(row);
 		    row_total += col[i];
 		});
@@ -105,9 +113,13 @@ updateHistoryTable = function() {
         tr = $('<tr>');
 	$('<th>').html('Date').appendTo(tr)
         $.each(jobType, function(i,cell) {
-            $('<th>').html(cell).appendTo(tr);
+	    th = $('<th>');
+	    if (cell == "completed") {
+		th.css('color','red');
+	    }
+            th.html(cell).appendTo(tr);
         });
-	$('<th>').html('<font color="red">Total</font>').appendTo(tr)
+	$('<th>').html('Total').appendTo(tr)
         tr.appendTo(tbody);
 
 	var dates = Object.keys(data).sort();
@@ -120,14 +132,22 @@ updateHistoryTable = function() {
 	    date_data = data[date];
 	    total = 0;
 	    $.each(jobType, function(i,job) {
-		count = date_data[job+'-jobs'];
+		var td = $('<td>'); 
+		td.css('padding-left','15px');
+		var count = date_data[job+'-jobs'];
+		if (job == 'completed') {
+		    td.css('color','red');
+		}
 		if (!count) {
 		    count = 0;
 		}
-		$('<td>').html(count).appendTo(tr);
+		
+		td.html(count).appendTo(tr);
 		total = total + count;
 	    });
-	    $('<td>').html('<font color="red">'+total+'</font>').appendTo(tr);
+	    td = $('<td>');
+	    td.css('padding-left','15px');
+	    td.html(total).appendTo(tr);
 	    tr.appendTo(tbody);
 	});
 	tbody.appendTo(table);
