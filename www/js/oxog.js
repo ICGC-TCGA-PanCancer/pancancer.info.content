@@ -176,6 +176,9 @@ updateHistoryChart = function(rows) {
 	var count = row[1];
 	var date_obj = new Date(date);
 	var date_string = date_obj.getDate()+1 + '-' + months[date_obj.getMonth()];
+	if (date_string == '32-Mar') {
+	    date_string = '1-Apr';
+	}
 	table.addRow([date_string,count]);
     });
 
